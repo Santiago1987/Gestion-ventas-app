@@ -1,0 +1,11 @@
+.prodTable {
+  height: 700px;
+  overflow-y: auto;
+  cursor: pointer;
+}
+
+.salesTable {
+  height: 700px;
+  overflow-y: auto;
+  cursor: pointer;
+}
