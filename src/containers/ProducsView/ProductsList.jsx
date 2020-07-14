@@ -53,8 +53,8 @@ const ProductsView = () => {
       product.cant = 1;
     }
 
-    dispatch(addSalesProduct(product));
     console.log("salesProducts", salesProducts);
+    dispatch(addSalesProduct(product));
   };
 
   const handleOnChange = (id) => null;
