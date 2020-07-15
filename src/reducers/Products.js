@@ -34,7 +34,7 @@ export const salesProductsReducer = (
 ) => {
   switch (type) {
     case ADD_SALES_PRODUCT:
-      return Object.assign(state, payload);
+      return [...payload];
     case REMOVE_SALES_PRODUCT:
       return [...state, ...payload];
     case REMOVE_ALL_SALES_PRODUCTS:
