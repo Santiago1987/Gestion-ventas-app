@@ -12,7 +12,7 @@ const ProductsView = () => {
   const Products = useSelector((state) => state.Products);
   const Search = useSelector((state) => state.Search);
   const selectedProd = useSelector((state) => state.selectedProd);
-  const salesProducts = useSelector((state) => state.salesProducts);
+  let salesProducts = useSelector((state) => state.salesProducts);
 
   const dispatch = useDispatch();
   const dolar = 70;
@@ -43,18 +43,21 @@ const ProductsView = () => {
 
   const handleOnDobleClick = (id) => {
     let product = {};
-    let present = salesProducts.find((s) => s.id === id);
+    let index = salesProducts.findIndex((s) => s.id === id);
 
-    if (present) {
-      present.cant++;
-      product = present;
+    console.log("index", index);
+
+    if (index !== -1) {
+      salesProducts[index].cant++;
     } else {
       product = Products.find((p) => p.id === id);
       product.cant = 1;
+      salesProducts = [...salesProducts, product];
     }
 
-    dispatch(addSalesProduct([product]));
     console.log("salesProducts", salesProducts);
+
+    dispatch(addSalesProduct(salesProducts));
   };
 
   const handleOnChange = (id) => null;
