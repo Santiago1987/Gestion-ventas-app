@@ -14,14 +14,19 @@ function App() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   return (
     <div>
+      Navigation bar
       <Nav />
       <div className="container-fluid">
+        ------------------------------------------------------------------------
+        Primera fila
         <div className="row">
           <div className="col-sm">
             <Input />
           </div>
           <div className="col-sm"></div>
         </div>
+        ------------------------------------------------------------------------
+        Segunda fila
         <div className="row">
           <div className="col-sm">
             <ProductView />
@@ -30,6 +35,8 @@ function App() {
             <Sales />
           </div>
         </div>
+        ------------------------------------------------------------------------
+        Tercera Fila
         <div className="row">
           <div
             className="col-sm shadow bg-white rounded m-3"
@@ -48,6 +55,8 @@ function App() {
             style={{ height: "60px" }}
           ></div>
         </div>
+        ------------------------------------------------------------------------
+        Modal
       </div>
       <Modal
         isOpen={modalIsOpen}
