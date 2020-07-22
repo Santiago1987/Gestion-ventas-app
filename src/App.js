@@ -20,17 +20,21 @@ function App() {
         ------------------------------------------------------------------------
         Primera fila
         <div className="row">
+          Primera columna
           <div className="col-sm">
             <Input />
           </div>
+          Segunda columna
           <div className="col-sm"></div>
         </div>
         ------------------------------------------------------------------------
         Segunda fila
         <div className="row">
+          Primera columna
           <div className="col-sm">
             <ProductView />
           </div>
+          Segunda columna
           <div className="col-sm">
             <Sales />
           </div>
@@ -38,6 +42,7 @@ function App() {
         ------------------------------------------------------------------------
         Tercera Fila
         <div className="row">
+          Primera columna
           <div
             className="col-sm shadow bg-white rounded m-3"
             style={{ height: "60px", alignItems: "center" }}
