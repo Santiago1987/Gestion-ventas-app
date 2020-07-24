@@ -42,22 +42,7 @@ const ProductsView = () => {
   };
 
   const handleOnDobleClick = (id) => {
-    let product = {};
-    let index = salesProducts.findIndex((s) => s.id === id);
-
-    console.log("index", index);
-
-    if (index !== -1) {
-      salesProducts[index].cant++;
-    } else {
-      product = Products.find((p) => p.id === id);
-      product.cant = 1;
-      salesProducts = [...salesProducts, product];
-    }
-
-    console.log("salesProducts", salesProducts);
-
-    dispatch(addSalesProduct(salesProducts));
+    dispatch(addSalesProduct(Products.find((p) => p.id === id)));
   };
 
   const handleOnChange = (id) => null;

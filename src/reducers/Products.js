@@ -6,14 +6,14 @@ import {
   REMOVE_ALL_SALES_PRODUCTS,
 } from "../actions/actionsList";
 
-const Products = {};
+const Products = [];
 const select = { id: "", table: "" };
 const salesProducts = [];
 
 const productsReducer = (state = Products, { type, payload }) => {
   switch (type) {
     case ADD_PRODUCTS:
-      return { ...state, ...payload };
+      return [...state, ...payload];
     default:
       return state;
   }
@@ -34,14 +34,7 @@ export const salesProductsReducer = (
 ) => {
   switch (type) {
     case ADD_SALES_PRODUCT:
-      return {
-        ...state,
-        ...salesProducts.find((s) => {
-          if (s === -1) return Products.find((p) => p.id === payload);
-          else if (id === payload) {
-          }
-        }),
-      };
+      return [...state, addSalesProd(payload, state)];
     case REMOVE_SALES_PRODUCT:
       return [...state, ...payload];
     case REMOVE_ALL_SALES_PRODUCTS:
@@ -52,3 +45,16 @@ export const salesProductsReducer = (
 };
 
 export default productsReducer;
+
+function addSalesProd(prod, list) {
+  console.log("prod", prod);
+  console.log("salesProducts", list);
+  let sal = list.find((s) => s.id === prod.id);
+  if (!sal) {
+    prod.cant = 1;
+    return prod;
+  }
+  console.log("sal", sal);
+  sal.cant++;
+  return sal;
+}
