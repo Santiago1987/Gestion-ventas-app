@@ -47,14 +47,12 @@ export const salesProductsReducer = (
 export default productsReducer;
 
 function addSalesProd(prod, list) {
-  console.log("prod", prod);
-  console.log("salesProducts", list);
   let sal = list.find((s) => s.id === prod.id);
   if (!sal) {
     prod.cant = 1;
-    return prod;
+    return [...list, prod];
   }
   console.log("sal", sal);
   sal.cant++;
-  return sal;
+  return [...list, sal];
 }
