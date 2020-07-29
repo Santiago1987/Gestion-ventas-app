@@ -34,7 +34,7 @@ export const salesProductsReducer = (
 ) => {
   switch (type) {
     case ADD_SALES_PRODUCT:
-      return [...state, addSalesProd(payload, state)];
+      return [...state, ...addSalesProd(payload, state)];
     case REMOVE_SALES_PRODUCT:
       return [...state, ...payload];
     case REMOVE_ALL_SALES_PRODUCTS:
@@ -48,8 +48,10 @@ export default productsReducer;
 
 function addSalesProd(prod, list) {
   let sal = list.find((s) => s.id === prod.id);
-  if (!sal) {
+
+  if (sal === undefined) {
     prod.cant = 1;
+    console.log("[...list, prod]", [...list, prod]);
     return [...list, prod];
   }
   console.log("sal", sal);
