@@ -9,10 +9,9 @@ const ProductsView = () => {
   const [Loading, setLoading] = useState(false);
 
   // Reducers
-  const Products = useSelector((state) => state.Products);
+  const Products = useSelector((state) => state.products);
   const Search = useSelector((state) => state.Search);
   const selectedProd = useSelector((state) => state.selectedProd);
-  let salesProducts = useSelector((state) => state.salesProducts);
 
   const dispatch = useDispatch();
   const dolar = 70;
