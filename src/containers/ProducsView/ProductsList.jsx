@@ -9,7 +9,7 @@ const ProductsView = () => {
   const [Loading, setLoading] = useState(false);
 
   // Reducers
-  const Products = useSelector((state) => state.products);
+  const Products = useSelector((state) => state.Products);
   const Search = useSelector((state) => state.Search);
   const selectedProd = useSelector((state) => state.selectedProd);
 
