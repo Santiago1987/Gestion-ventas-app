@@ -37,17 +37,17 @@ export const salesProductsReducer = (
 ) => {
   switch (type) {
     case ADD_SALES_PRODUCT:
-      let aux = state;
-      let index = aux.findIndex((sal) => sal.id === payload.id);
-      console.log("state", state);
-      if (index !== -1) {
-        aux[index].cant++;
-      } else {
+      let index = state.findIndex((sal) => sal.id === payload.id);
+      if (index === -1) {
         payload.cant = 1;
-        aux = [...aux, payload];
+        return [...state, payload];
       }
-      console.log("aux", aux);
-      return [...state, ...aux];
+
+      return [
+        ...state.slice(0, index),
+        Object.assign({}, state[index], state[index].cant++),
+        ...state.slice(index + 1),
+      ];
     case REMOVE_SALES_PRODUCT:
       return [...state, ...payload];
     case REMOVE_ALL_SALES_PRODUCTS:
