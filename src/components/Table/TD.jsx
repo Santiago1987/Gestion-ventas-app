@@ -13,7 +13,7 @@ const TD = ({
   return (
     <td
       style={style(type, column)}
-      className={selection(selectedProd, id)}
+      className={selection(selectedProd, id, type)}
       onClick={() => handleRowSelect(id, type)}
       onDoubleClick={() => handleOnDobleClick(id)}
       contentEditable={column === "cant" ? true : false}
@@ -62,12 +62,15 @@ function style(type, column) {
   }
 }
 
-function selection(selectedProd, idrow) {
+function selection(selectedProd, idrow, usetable) {
   let { id, table } = selectedProd;
-
-  if (table === "PRODUCTS") {
-    if (id === idrow) return "bg-primary";
+  if (usetable !== table) return null;
+  switch (table) {
+    case "PRODUCTS":
+      return id === idrow ? "bg-primary" : null;
+    case "SALES":
+      return id === idrow ? "bg-success" : null;
+    default:
+      return null;
   }
-
-  return null;
 }

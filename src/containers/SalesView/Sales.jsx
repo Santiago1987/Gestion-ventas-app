@@ -1,13 +1,20 @@
 import React, { useState } from "react";
 import Table from "../../components/Table/Table";
-import { useSelector, useDistpatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+
+import { selectProd } from "../../actions";
 
 const Sales = () => {
   //Reducers
   const salesProducts = useSelector((state) => state.salesProducts);
+  const selectedProd = useSelector((state) => state.selectedProd);
+
+  const dispatch = useDispatch();
 
   // Row selection
-  const handleRowSelect = () => null;
+  const handleRowSelect = (id, table) => {
+    dispatch(selectProd({ id: id, table: table }));
+  };
 
   const handleOnDobleClick = () => null;
 
@@ -43,6 +50,7 @@ const Sales = () => {
             items={items}
             handleRowSelect={handleRowSelect}
             handleOnDobleClick={handleOnDobleClick}
+            selectedProd={selectedProd}
           />
         </div>
       </div>
@@ -58,6 +66,7 @@ const Sales = () => {
             handleRowSelect={handleRowSelect}
             handleOnDobleClick={handleOnDobleClick}
             handleOnChange={handleOnChange}
+            selectedProd={selectedProd}
           />
         </div>
       </div>

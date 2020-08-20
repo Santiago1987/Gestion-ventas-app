@@ -33,7 +33,7 @@ const ProductsView = () => {
       dispatch(loadProducts(newData));
       setLoading(false);
     }, 3000);
-  }, [products]);
+  }, []);
 
   // Row selection
   const handleRowSelect = (id, table) => {
