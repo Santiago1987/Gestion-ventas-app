@@ -6,12 +6,13 @@ import ProductView from "./containers/ProducsView/ProductsList";
 import Sales from "./containers/SalesView/Sales";
 import Input from "./components/Input/Input";
 import ArticleModal from "../src/components/Modal/ArticleModal";
+import Btn from "./components/Button/Button";
 import "./styles.css";
 
 Modal.setAppElement("#root");
 
 function App() {
-  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [prodModalOpen, setprodModalOpen] = useState(false);
   return (
     <div>
       <Nav />
@@ -35,27 +36,33 @@ function App() {
         </div>
 
         <div className="row">
-          <div
-            className="col-sm shadow bg-white rounded m-3"
-            style={{ height: "60px", alignItems: "center" }}
-          >
-            <button
-              type="button"
-              className="btn btn-primary mt-2"
-              onClick={() => setModalIsOpen(true)}
-            >
-              Nuevo articulo
-            </button>
+          <div className="col-sm shadow bg-white rounded m-3 d-flex flex-row">
+            <Btn
+              title="Nuevo"
+              classes="btn btn-dark m-2"
+              func={setprodModalOpen}
+              styles={{ width: "100px" }}
+            />
+            <Btn
+              title="Modificar"
+              classes="btn btn-dark m-2"
+              styles={{ width: "100px" }}
+            />
+            <Btn
+              title="Borrar"
+              classes="btn btn-dark m-2"
+              styles={{ width: "100px" }}
+            />
           </div>
           <div
             className="col-sm shadow bg-white rounded m-3"
-            style={{ height: "60px" }}
+            styles={{ height: "60px" }}
           ></div>
         </div>
       </div>
       <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={() => setModalIsOpen(false)}
+        isOpen={prodModalOpen}
+        onRequestClose={() => setprodModalOpen(false)}
         shouldCloseOnOverlayClick={false}
         closeTimeoutMS={200}
         style={customStyles}
