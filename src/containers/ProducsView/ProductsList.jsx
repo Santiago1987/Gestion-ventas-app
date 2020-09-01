@@ -71,6 +71,7 @@ const ProductsView = () => {
   // Search funcionality
   if (Search === "") {
     filteredProd = Products;
+    s;
   } else {
     filteredProd = Products.filter((prod) => {
       return prod.descripcion.toLowerCase().includes(Search.toLowerCase());
