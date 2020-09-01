@@ -42,18 +42,25 @@ const Sales = () => {
 
   if (salesProducts.length === 0) {
     content = (
-      <div className="container shadow bg-white rounded py-2">
-        <Table type="SALES" titles={titles} />
-        <div className="shadow bg-white rounded salesTable">
-          <Table
-            type="SALES"
-            items={items}
-            handleRowSelect={handleRowSelect}
-            handleOnDobleClick={handleOnDobleClick}
-            selectedProd={selectedProd}
-          />
+      <>
+        <div className="mb-2 shadow bg-white rounded mt-2"></div>
+        <div className="container shadow bg-white rounded py-2">
+          <Table type="SALES" titles={titles} />
+          <div className="shadow bg-white rounded salesTable">
+            <Table
+              type="SALES"
+              items={items}
+              handleRowSelect={handleRowSelect}
+              handleOnDobleClick={handleOnDobleClick}
+              selectedProd={selectedProd}
+            />
+          </div>
         </div>
-      </div>
+        <div
+          className="col-sm shadow bg-white rounded m-3"
+          styles={{ height: "60px" }}
+        ></div>
+      </>
     );
   } else if (items.length > 0) {
     content = (

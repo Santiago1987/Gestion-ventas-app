@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import Modal from "react-modal";
 import { loadProducts, selectProd, addSalesProduct } from "../../actions";
 
 import Table from "../../components/Table/Table";
 import products from "../../data";
+import Input from "../../components/Input/Input";
+import Btn from "../../components/Button/Button";
+import ArticleModal from "../../components/Modal/ArticleModal";
 
 const ProductsView = () => {
   const [Loading, setLoading] = useState(false);
+  const [prodModalOpen, setprodModalOpen] = useState(false);
 
   // Reducers
   const Products = useSelector((state) => state.Products);
@@ -85,31 +90,92 @@ const ProductsView = () => {
       P2: prod.precio2,
     }));
   }
+  const customStyles = {
+    content: {
+      top: "50%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      marginRight: "-50%",
+      transform: "translate(-50%, -50%)",
+    },
+  };
 
   // Render
   let content = <p>Loading products... </p>;
 
   if (items.length === 0) {
     content = (
-      <div className="container shadow bg-white rounded py-2">
-        <Table type="PRODUCTS" titles={titles} />
-      </div>
+      <>
+        <Input />
+        <div className="row container shadow bg-white rounded py-2">
+          <Table type="PRODUCTS" titles={titles} />
+        </div>
+        <div className="shadow bg-white rounded m-3 d-flex flex-row">
+          <Btn
+            title="Nuevo"
+            classes="btn btn-dark m-2"
+            func={setprodModalOpen}
+            styles={{ width: "100px" }}
+          />
+          <Btn
+            title="Modificar"
+            classes="btn btn-dark m-2"
+            styles={{ width: "100px" }}
+          />
+          <Btn
+            title="Borrar"
+            classes="btn btn-dark m-2"
+            styles={{ width: "100px" }}
+          />
+        </div>
+      </>
     );
   } else if (!Loading && items.length > 0) {
     content = (
-      <div className="container shadow bg-white rounded py-2">
-        <Table type="PRODUCTS" titles={titles} />
-        <div className="shadow bg-white rounded prodTable">
-          <Table
-            type="PRODUCTS"
-            items={items}
-            handleRowSelect={handleRowSelect}
-            selectedProd={selectedProd}
-            handleOnDobleClick={handleOnDobleClick}
-            handleOnChange={handleOnChange}
+      <>
+        <Input />
+        <div className="container shadow bg-white rounded py-2">
+          <Table type="PRODUCTS" titles={titles} />
+          <div className="shadow bg-white rounded prodTable">
+            <Table
+              type="PRODUCTS"
+              items={items}
+              handleRowSelect={handleRowSelect}
+              selectedProd={selectedProd}
+              handleOnDobleClick={handleOnDobleClick}
+              handleOnChange={handleOnChange}
+            />
+          </div>
+        </div>
+        <div className="shadow bg-white rounded m-3 d-flex flex-row">
+          <Btn
+            title="Nuevo"
+            classes="btn btn-dark m-2"
+            func={setprodModalOpen}
+            styles={{ width: "100px" }}
+          />
+          <Btn
+            title="Modificar"
+            classes="btn btn-dark m-2"
+            styles={{ width: "100px" }}
+          />
+          <Btn
+            title="Borrar"
+            classes="btn btn-dark m-2"
+            styles={{ width: "100px" }}
           />
         </div>
-      </div>
+        <Modal
+          isOpen={prodModalOpen}
+          onRequestClose={() => setprodModalOpen(false)}
+          shouldCloseOnOverlayClick={false}
+          closeTimeoutMS={200}
+          style={customStyles}
+        >
+          <ArticleModal />
+        </Modal>
+      </>
     );
   } else if (!Loading && !Products && Products.length === 0) {
     console.log("error feching products data from server");

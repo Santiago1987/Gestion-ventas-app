@@ -5,7 +5,7 @@ const Search = "";
 const searchReducer = (state = Search, { type, payload }) => {
   switch (type) {
     case ADD_SEARCH:
-      return state, payload;
+      return payload;
     default:
       return state;
   }
