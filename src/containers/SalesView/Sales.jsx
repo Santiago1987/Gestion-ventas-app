@@ -43,7 +43,9 @@ const Sales = () => {
   if (salesProducts.length === 0) {
     content = (
       <>
-        <div className="mb-2 shadow bg-white rounded mt-2"></div>
+        <div className="mb-2 shadow bg-white rounded mt-2">
+          <span>Precio dolar</span>
+        </div>
         <div className="container shadow bg-white rounded py-2">
           <Table type="SALES" titles={titles} />
           <div className="shadow bg-white rounded salesTable">

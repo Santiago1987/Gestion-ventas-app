@@ -13,6 +13,10 @@ const ProductsView = () => {
   const [Loading, setLoading] = useState(false);
   const [prodModalOpen, setprodModalOpen] = useState(false);
 
+  // modal props
+  const [type, setType] = useState("");
+  const [gridType, setGridType] = useState("");
+
   // Reducers
   const Products = useSelector((state) => state.Products);
   const Search = useSelector((state) => state.Search);
@@ -50,6 +54,21 @@ const ProductsView = () => {
   };
 
   const handleOnChange = (id) => null;
+
+  const handleOnClickBtn = (typ, gtyp) => {
+    // en caso de no seleccion y que se use un boton mandar un warning
+
+    setType(typ);
+    setGridType(gtyp);
+
+    if (typ === "new") dispatch(selectProd({}));
+
+    setprodModalOpen(true);
+  };
+
+  const handleOnSubmit = () => {
+    // aca va el llamado a la bd
+  };
 
   // Columns titles
   const titles = {
@@ -111,24 +130,6 @@ const ProductsView = () => {
         <div className="row container shadow bg-white rounded py-2">
           <Table type="PRODUCTS" titles={titles} />
         </div>
-        <div className="shadow bg-white rounded m-3 d-flex flex-row">
-          <Btn
-            title="Nuevo"
-            classes="btn btn-dark m-2"
-            func={setprodModalOpen}
-            styles={{ width: "100px" }}
-          />
-          <Btn
-            title="Modificar"
-            classes="btn btn-dark m-2"
-            styles={{ width: "100px" }}
-          />
-          <Btn
-            title="Borrar"
-            classes="btn btn-dark m-2"
-            styles={{ width: "100px" }}
-          />
-        </div>
       </>
     );
   } else if (!Loading && items.length > 0) {
@@ -150,17 +151,23 @@ const ProductsView = () => {
         </div>
         <div className="shadow bg-white rounded m-3 d-flex flex-row">
           <Btn
+            type="new"
+            gridType="PRODUCTS"
             title="Nuevo"
             classes="btn btn-dark m-2"
-            func={setprodModalOpen}
+            onclick={handleOnClickBtn}
             styles={{ width: "100px" }}
           />
           <Btn
+            gridType="PRODUCTS"
+            type="update"
             title="Modificar"
             classes="btn btn-dark m-2"
             styles={{ width: "100px" }}
           />
           <Btn
+            gridType="PRODUCTS"
+            type="delete"
             title="Borrar"
             classes="btn btn-dark m-2"
             styles={{ width: "100px" }}
@@ -173,7 +180,11 @@ const ProductsView = () => {
           closeTimeoutMS={200}
           style={customStyles}
         >
-          <ArticleModal />
+          <ArticleModal
+            btnType={type}
+            gridType={gridType}
+            handleOnSubmit={handleOnSubmit}
+          />
         </Modal>
       </>
     );
