@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 
 const ArticleModal = ({ btnType, gridType, handleOnSubmit }) => {
@@ -10,6 +10,21 @@ const ArticleModal = ({ btnType, gridType, handleOnSubmit }) => {
   const selectedProd = useSelector((state) => state.selectedProd);
   const Products = useSelector((state) => state.Products);
 
+  useEffect(() => {
+    console.log("btnType", btnType);
+    console.log("selectedProd", selectedProd);
+    if (selectedProd.id !== {}) {
+      let prod = Products.find((p) => p.id === selectedProd.id);
+      if (prod !== undefined) {
+        setArticle(prod);
+        let { descripcion, precio, stock } = prod;
+        setPrecio(precio);
+        setDescription(descripcion);
+        setStock(stock);
+      }
+    }
+  }, [btnType, gridType, handleOnSubmit]);
+
   const handleOnChange = (event) => {
     if (event.target.name === "description") {
       setDescription(event.target.value);
@@ -19,17 +34,6 @@ const ArticleModal = ({ btnType, gridType, handleOnSubmit }) => {
       setStock(event.target.value);
     }
   };
-
-  if (selectedProd.id !== "") {
-    let prod = Products.find((p) => p.id === selectedProd.id);
-    if (prod.id !== null) {
-      setArticle(prod);
-      let { descripcion, precio, stock } = prod;
-      setPrecio(precio);
-      setDescription(descripcion);
-      setStock(stock);
-    }
-  }
 
   let content = <p>Error...</p>;
 
@@ -70,7 +74,17 @@ const ArticleModal = ({ btnType, gridType, handleOnSubmit }) => {
             id="stock"
           />
         </div>
-        <button className="btn btn-dark m-2" onClick={() => handleOnSubmit()}>
+        <button
+          className="btn btn-dark mx-25"
+          onClick={() =>
+            handleOnSubmit(btnType, {
+              id: Products.lenght + 1,
+              descripcion: Description,
+              precio: Precio,
+              stock: Stock,
+            })
+          }
+        >
           {btnType === "new" ? "Crear" : "Modificar"}
         </button>
       </form>

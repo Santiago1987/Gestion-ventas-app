@@ -66,8 +66,9 @@ const ProductsView = () => {
     setprodModalOpen(true);
   };
 
-  const handleOnSubmit = () => {
+  const handleOnSubmit = (type, producto) => {
     // aca va el llamado a la bd
+    if (type === "new") dispatch(loadProducts([producto]));
   };
 
   // Columns titles
@@ -163,6 +164,7 @@ const ProductsView = () => {
             type="update"
             title="Modificar"
             classes="btn btn-dark m-2"
+            onclick={handleOnClickBtn}
             styles={{ width: "100px" }}
           />
           <Btn
@@ -170,6 +172,7 @@ const ProductsView = () => {
             type="delete"
             title="Borrar"
             classes="btn btn-dark m-2"
+            onclick={handleOnClickBtn}
             styles={{ width: "100px" }}
           />
         </div>
