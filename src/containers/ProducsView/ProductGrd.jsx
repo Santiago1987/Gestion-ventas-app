@@ -31,7 +31,7 @@ const ProductGrd = () => {
       dispatch(loadProducts(newData));
       setLoading(false);
     }, 3000);
-  }, [Products, Search]);
+  }, []);
 
   // Row selection
   const handleRowSelect = (id, table) => {

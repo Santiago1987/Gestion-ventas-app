@@ -4,9 +4,9 @@ import Modal from "react-modal";
 import { loadProducts, selectProd } from "../../actions";
 
 import Input from "../../components/Input/Input";
-import Btn from "../../components/Button/Button";
 import ArticleModal from "../../components/Modal/ArticleModal";
 import ProductGrd from "./ProductGrd";
+import BtnProdList from "./BtnProdList";
 
 const ProductsView = () => {
   const [prodModalOpen, setprodModalOpen] = useState(false);
@@ -33,6 +33,10 @@ const ProductsView = () => {
     if (type === "new") dispatch(loadProducts([producto]));
   };
 
+  const handleOnCancel = () => {
+    setprodModalOpen(false);
+  };
+
   const customStyles = {
     content: {
       top: "50%",
@@ -49,32 +53,7 @@ const ProductsView = () => {
     <>
       <Input />
       <ProductGrd />
-      <div className="shadow bg-white rounded m-3 d-flex flex-row">
-        <Btn
-          type="new"
-          gridType="PRODUCTS"
-          title="Nuevo"
-          classes="btn btn-dark m-2"
-          onclick={handleOnClickBtn}
-          styles={{ width: "100px" }}
-        />
-        <Btn
-          gridType="PRODUCTS"
-          type="update"
-          title="Modificar"
-          classes="btn btn-dark m-2"
-          onclick={handleOnClickBtn}
-          styles={{ width: "100px" }}
-        />
-        <Btn
-          gridType="PRODUCTS"
-          type="delete"
-          title="Borrar"
-          classes="btn btn-dark m-2"
-          onclick={handleOnClickBtn}
-          styles={{ width: "100px" }}
-        />
-      </div>
+      <BtnProdList handleOnClickBtn={handleOnClickBtn} />
       <Modal
         isOpen={prodModalOpen}
         onRequestClose={() => setprodModalOpen(false)}
@@ -86,6 +65,7 @@ const ProductsView = () => {
           btnType={type}
           gridType={gridType}
           handleOnSubmit={handleOnSubmit}
+          handleOnCancel={handleOnCancel}
         />
       </Modal>
     </>
