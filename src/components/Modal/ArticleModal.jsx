@@ -28,7 +28,7 @@ const ArticleModal = ({
         setStock(stock);
       }
     }
-  }, [btnType, gridType, handleOnSubmit]);
+  }, []);
 
   const handleOnChange = (event) => {
     if (event.target.name === "description") {
