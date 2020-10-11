@@ -1,30 +1,24 @@
-import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { searchInput } from "../../actions/index";
+import { waitForElementToBeRemoved } from "@testing-library/react";
+import React from "react";
 
-const Input = () => {
-  const Search = useSelector((state) => state.Search);
-  const dispatch = useDispatch();
-
-  useEffect(() => {}, []);
-
-  const handleOnchange = (event) => {
-    dispatch(searchInput(event.target.value));
+const Input = ({ value, placeholder, title, handleOnchangeSearch }) => {
+  const handleOnChange = (e) => {
+    handleOnchangeSearch(e.target.value);
   };
 
   return (
     <div className="input-group mb-2 shadow bg-white rounded mt-2">
       <div className="input-group-prepend">
         <span className="input-group-text" id="basic-addon1">
-          Search
+          {title}
         </span>
       </div>
       <input
         className="form-control"
         type="text"
-        value={Search}
-        placeholder="insertar descripción"
-        onChange={handleOnchange}
+        value={value}
+        placeholder={placeholder}
+        onChange={handleOnChange}
       />
     </div>
   );
