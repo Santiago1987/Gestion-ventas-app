@@ -3,7 +3,7 @@ import Btn from "../../components/Button/Button";
 
 const BtnProdList = ({ handleOnClickBtn }) => {
   return (
-    <div className="shadow bg-white rounded m-3 d-flex flex-row">
+    <div className="shadow bg-white rounded mt-3 d-flex flex-row">
       <Btn
         type="new"
         gridType="PRODUCTS"
