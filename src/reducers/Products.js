@@ -25,7 +25,7 @@ export const selectedProdReducer = (
 ) => {
   switch (type) {
     case SELECT_PROD:
-      return { state, ...payload };
+      return { ...state, ...payload };
     default:
       return state;
   }
@@ -51,7 +51,7 @@ export const salesProductsReducer = (
     case REMOVE_SALES_PRODUCT:
       return [...state, ...payload];
     case REMOVE_ALL_SALES_PRODUCTS:
-      return [...state, ...[]];
+      return [];
     default:
       return state;
   }

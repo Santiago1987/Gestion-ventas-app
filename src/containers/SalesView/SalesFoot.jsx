@@ -1,7 +1,18 @@
 import React from "react";
+import { useSelector } from "react-redux";
+
 import Btn from "../../components/Button/Button";
 
-const SalesFoot = (handleOnClickBtn) => {
+const SalesFoot = ({ handleOnClickBtn }) => {
+  const salesProducts = useSelector((state) => state.salesProducts);
+
+  let total = 0;
+  if (salesProducts.length > 0) {
+    total += parseFloat(
+      salesProducts.map((s) => parseFloat(s.precio * s.cant))
+    );
+  }
+
   return (
     <div className="shadow bg-white rounded mt-3 d-flex flex-row justify-content-between">
       <div>
@@ -31,17 +42,33 @@ const SalesFoot = (handleOnClickBtn) => {
         />
       </div>
       <div className="d-flex flex-row">
-        <h3 style={{ fontWeight: "bold", padding: "5px", margin: "auto" }}>
+        <label
+          style={{
+            fontWeight: "bold",
+            padding: "5px",
+            margin: "auto",
+            fontSize: "30px",
+          }}
+        >
           Total:
-        </h3>
-        <h4
+        </label>
+        <input
+          type="number"
           style={{
             margin: "auto",
             marginRight: "10px",
+            width: "100px",
+            border: "1px solid black",
+            borderRadius: "5px",
+            boxShadow: "5px 10px 8px #888888",
+            fontSize: "20px",
+            MozAppearance: "textfield",
+            textAlign: "right",
+            paddingRight: "5px",
           }}
-        >
-          10.532
-        </h4>
+          value={total}
+          readOnly
+        />
       </div>
     </div>
   );
