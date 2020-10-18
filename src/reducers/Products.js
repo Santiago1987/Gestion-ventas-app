@@ -49,7 +49,7 @@ export const salesProductsReducer = (
         ...state.slice(index + 1),
       ];
     case REMOVE_SALES_PRODUCT:
-      return [...state, ...payload];
+      return state.filter((st) => st.id !== payload.id);
     case REMOVE_ALL_SALES_PRODUCTS:
       return [];
     default:

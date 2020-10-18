@@ -87,7 +87,7 @@ const ProductGrd = () => {
   // Render
   let content = (
     <>
-      <div className="row container shadow bg-white rounded py-2">
+      <div className="row container shadow bg-white rounded m-1">
         <Table type="PRODUCTS" titles={titles} />
         <p>Loading products... </p>
       </div>
@@ -97,7 +97,7 @@ const ProductGrd = () => {
   if (!Loading && items.length > 0) {
     content = (
       <>
-        <div className="container shadow bg-white rounded py-2">
+        <div className="container shadow bg-white rounded m-1">
           <Table type="PRODUCTS" titles={titles} />
           <div className="shadow bg-white rounded prodTable">
             <Table

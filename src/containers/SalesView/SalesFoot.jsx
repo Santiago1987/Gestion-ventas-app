@@ -8,9 +8,7 @@ const SalesFoot = ({ handleOnClickBtn }) => {
 
   let total = 0;
   if (salesProducts.length > 0) {
-    total += parseFloat(
-      salesProducts.map((s) => parseFloat(s.precio * s.cant))
-    );
+    total += parseFloat(salesProducts.map((s) => s.precio * s.cant));
   }
 
   return (
@@ -74,4 +72,4 @@ const SalesFoot = ({ handleOnClickBtn }) => {
   );
 };
 
-export default SalesFoot;
+export default React.memo(SalesFoot);
