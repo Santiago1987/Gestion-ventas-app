@@ -8,7 +8,11 @@ const SalesFoot = ({ handleOnClickBtn }) => {
 
   let total = 0;
   if (salesProducts.length > 0) {
-    total += parseFloat(salesProducts.map((s) => s.precio * s.cant));
+    //total += parseFloat(salesProducts.map((s) => s.precio * s.cant));
+
+    total = salesProducts.reduce((acum, s) => {
+      return s.precio * s.cant + acum;
+    }, 0);
   }
 
   return (
