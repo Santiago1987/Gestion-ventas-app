@@ -16,7 +16,7 @@ const ArticleModal = ({
   const Products = useSelector((state) => state.Products);
 
   useEffect(() => {
-    if (selectedProd.id !== {} && btnType == "update") {
+    if (selectedProd.id !== {} && btnType === "update") {
       let prod = Products.find((p) => p.id === selectedProd.id);
       if (prod !== undefined) {
         setArticle(prod);
