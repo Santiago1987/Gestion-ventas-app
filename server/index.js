@@ -13,6 +13,9 @@ app.use(morgan("dev")); //middleware que muestra informacion por cada request de
 app.use(express.json()); //para recibir o enviar formato json
 app.use(cors());
 
+// DB
+require("./database");
+
 //Routes
 app.use("/data", routes);
 

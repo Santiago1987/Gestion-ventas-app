@@ -2,12 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { loadProducts, selectProd, addSalesProduct } from "../../actions";
 
-import products from "../../data";
 import Table from "../../components/Table/Table";
+import { useHttp } from "../hooks/http";
 
 const ProductGrd = () => {
-  const [Loading, setLoading] = useState(true);
-
   // Reducers
   const Products = useSelector((state) => state.Products);
   const selectedProd = useSelector((state) => state.selectedProd);
@@ -16,22 +14,30 @@ const ProductGrd = () => {
   const dispatch = useDispatch();
   const dolar = 70;
 
+  //const [Loading, setLoading] = useState(true);
+  const [Loading, data] = useHttp(
+    "http://localhost:3000/data/article/list",
+    []
+  );
+
   useEffect(() => {
-    let data = [...products];
+    if (data !== null) {
+      let newData = data.map((d) => {
+        let { _id, descripcion, precio, stock } = d;
 
-    //fetching data from server
-    setTimeout(() => {
-      let newData = data.map((d) => ({
-        ...d,
-        precioFinal: Math.round(d.precio * dolar, 2),
-        precio1: Math.round((d.precio * dolar) / 0.9, 2),
-        precio2: Math.round(d.precio * dolar * 1.3, 2),
-      }));
-
+        return {
+          id: _id,
+          descripcion,
+          precio,
+          stock,
+          precioFinal: Math.round(precio * dolar, 2),
+          precio1: Math.round((precio * dolar) / 0.9, 2),
+          precio2: Math.round(d.precio * dolar * 1.3, 2),
+        };
+      });
       dispatch(loadProducts(newData));
-      setLoading(false);
-    }, 3000);
-  }, []);
+    }
+  }, [data]);
 
   // Row selection
   const handleRowSelect = (id, table) => {
