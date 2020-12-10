@@ -10,7 +10,7 @@ const ArticleModal = ({
   const [Description, setDescription] = useState("");
   const [Precio, setPrecio] = useState(0);
   const [Stock, setStock] = useState(0);
-  const [article, setArticle] = useState({});
+  //const [article, setArticle] = useState({});
 
   const selectedProd = useSelector((state) => state.selectedProd);
   const Products = useSelector((state) => state.Products);
@@ -19,7 +19,7 @@ const ArticleModal = ({
     if (selectedProd.id !== {} && btnType === "update") {
       let prod = Products.find((p) => p.id === selectedProd.id);
       if (prod !== undefined) {
-        setArticle(prod);
+        //setArticle(prod);
         let { descripcion, precio, stock } = prod;
         setPrecio(precio);
         setDescription(descripcion);
@@ -84,7 +84,7 @@ const ArticleModal = ({
                 className="btn btn-success w-50"
                 onClick={() =>
                   handleOnSubmit(btnType, {
-                    id: Products.lenght + 1,
+                    id: selectedProd.id,
                     descripcion: Description,
                     precio: Precio,
                     stock: Stock,
@@ -96,7 +96,7 @@ const ArticleModal = ({
               <button
                 type="button"
                 className="btn btn-danger w-50"
-                onClick={() => handleOnCancel()}
+                onClick={() => handleOnCancel(btnType, { id: selectedProd.id })}
               >
                 Cancelar
               </button>
@@ -107,7 +107,11 @@ const ArticleModal = ({
           <div>
             <h3>Esta seguro de querer borrar el producto?</h3>
             <div className="d-flex flex-md-row justify-content-around">
-              <button type="button" className="btn btn-success">
+              <button
+                type="button"
+                className="btn btn-success"
+                onClick={() => handleOnSubmit()}
+              >
                 Continuar
               </button>
               <button
@@ -124,4 +128,4 @@ const ArticleModal = ({
   return content;
 };
 
-export default ArticleModal;
+export default React.memo(ArticleModal);

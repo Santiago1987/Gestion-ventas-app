@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Modal from "react-modal";
-import { loadProducts, searchInput, selectProd } from "../../actions";
+import { searchInput, selectProd } from "../../actions";
+import axios from "axios";
 
 import Input from "../../components/Input/Input";
 import ArticleModal from "../../components/Modal/ArticleModal";
@@ -11,6 +12,7 @@ import BtnProdList from "./BtnProdList";
 const ProductsView = () => {
   const [prodModalOpen, setprodModalOpen] = useState(false);
   const dispatch = useDispatch();
+  const [response, setResponse] = useState(null);
 
   //------------------------------Search input-------------------------------------------
   const search = useSelector((state) => state.Search);
@@ -35,9 +37,42 @@ const ProductsView = () => {
     setprodModalOpen(true);
   };
 
-  const handleOnSubmit = (type, producto) => {
-    // aca va el llamado a la bd
-    if (type === "new") dispatch(loadProducts([producto]));
+  const handleOnSubmit = async (type, producto) => {
+    console.log(producto);
+
+    if (type === "new") {
+      await axios
+        .post("/data/save/newArticle", object)
+        .then((data) => {
+          setResponse(data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else if (type === "update") {
+      let { id } = producto;
+      await axios
+        .post(`/data/update/article/${id}`, producto)
+        .then((data) => {
+          setResponse(data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else if (type === "delete") {
+      let { id } = producto;
+      axios
+        .delete(`/data/delete/article/${id}`)
+        .then((data) => {
+          setResponse(data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+
+    setprodModalOpen(false);
+    return;
   };
 
   const handleOnCancel = () => {

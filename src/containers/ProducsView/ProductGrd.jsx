@@ -15,13 +15,16 @@ const ProductGrd = () => {
   const dolar = 70;
 
   //const [Loading, setLoading] = useState(true);
-  const [Loading, data] = useHttp(
+  const [Loading, getData] = useHttp(
     "http://localhost:3000/data/article/list",
-    []
+    [],
+    "GET",
+    null
   );
 
   useEffect(() => {
-    if (data !== null) {
+    if (getData !== null) {
+      let { data } = getData;
       let newData = data.map((d) => {
         let { _id, descripcion, precio, stock } = d;
 
@@ -37,7 +40,7 @@ const ProductGrd = () => {
       });
       dispatch(loadProducts(newData));
     }
-  }, [data]);
+  }, [getData]);
 
   // Row selection
   const handleRowSelect = (id, table) => {
