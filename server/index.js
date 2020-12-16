@@ -17,7 +17,7 @@ app.use(cors());
 require("./database");
 
 //Routes
-app.use("/data", routes);
+app.use("/api", routes);
 
 //Starting the server
 app.listen(app.get("port"), () => {

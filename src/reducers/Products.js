@@ -4,6 +4,8 @@ import {
   ADD_SALES_PRODUCT,
   REMOVE_SALES_PRODUCT,
   REMOVE_ALL_SALES_PRODUCTS,
+  UPDATE_PRODUCT,
+  DELETE_PRODUCT,
 } from "../actions/actionsList";
 
 const initialProducts = [];
@@ -11,9 +13,24 @@ const initialSelect = {};
 const initialSalesProducts = [];
 
 const productsReducer = (state = initialProducts, { type, payload }) => {
+  let idx = null;
   switch (type) {
     case ADD_PRODUCTS:
       return [...state, ...payload];
+    case UPDATE_PRODUCT:
+      idx = state.findIndex((s) => (s.id = payload.id));
+      if (idx === -1) return state;
+
+      let { descripcion, precio, stock } = payload;
+      return [
+        ...state.slice(0, idx - 1),
+        { ...state[idx], descripcion, precio, stock },
+        ...state.slice(idx + 1),
+      ];
+    case DELETE_PRODUCT:
+      idx = state.findIndex((s) => (s.id = payload));
+      if (idx === -1) return state;
+      return [...state.slice(0, idx - 1), ...state.slice(idx + 1)];
     default:
       return state;
   }

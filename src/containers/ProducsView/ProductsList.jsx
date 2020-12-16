@@ -1,7 +1,13 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Modal from "react-modal";
-import { searchInput, selectProd } from "../../actions";
+import {
+  searchInput,
+  selectProd,
+  loadProducts,
+  updateProduct,
+  deleteProduct,
+} from "../../actions";
 import axios from "axios";
 
 import Input from "../../components/Input/Input";
@@ -12,7 +18,7 @@ import BtnProdList from "./BtnProdList";
 const ProductsView = () => {
   const [prodModalOpen, setprodModalOpen] = useState(false);
   const dispatch = useDispatch();
-  const [response, setResponse] = useState(null);
+  const [isChange, setIsChange] = useState(false);
 
   //------------------------------Search input-------------------------------------------
   const search = useSelector((state) => state.Search);
@@ -38,40 +44,59 @@ const ProductsView = () => {
   };
 
   const handleOnSubmit = async (type, producto) => {
-    console.log(producto);
-
+    let response = null;
     if (type === "new") {
       await axios
-        .post("/data/save/newArticle", object)
-        .then((data) => {
-          setResponse(data);
+        .post("http://localhost:3000/api/save/newArticle", producto)
+        .then((res) => {
+          response = res.data;
         })
         .catch((err) => {
           console.log(err);
         });
+
+      if (response._id !== 0) {
+        let { _id, descripcion, stock, precio } = response;
+        dispatch(loadProducts([{ id: _id, descripcion, stock, precio }]));
+      }
+
+      dispatch(loadProducts([]));
     } else if (type === "update") {
       let { id } = producto;
+
       await axios
-        .post(`/data/update/article/${id}`, producto)
-        .then((data) => {
-          setResponse(data);
+        .post(`http://localhost:3000/api/update/article/${id}`, producto)
+        .then((res) => {
+          response = res.data;
         })
         .catch((err) => {
           console.log(err);
         });
+
+      if (response.id !== 0) {
+        dispatch(updateProduct(response));
+      }
     } else if (type === "delete") {
       let { id } = producto;
-      axios
-        .delete(`/data/delete/article/${id}`)
-        .then((data) => {
-          setResponse(data);
+      await axios
+        .delete(`http://localhost:3000/api/delete/article/${id}`)
+        .then((res) => {
+          response = res.data;
+          console.log("bbbbb", response);
         })
         .catch((err) => {
           console.log(err);
         });
+
+      console.log("aaaa", response);
+      if (response.id !== 0) {
+        dispatch(deleteProduct(response.id));
+      }
     }
 
     setprodModalOpen(false);
+    //setIsChange(!isChange);
+
     return;
   };
 
@@ -100,7 +125,7 @@ const ProductsView = () => {
         title="Search"
         handleOnchangeSearch={handleOnchangeSearch}
       />
-      <ProductGrd />
+      <ProductGrd change={isChange} />
       <BtnProdList handleOnClickBtn={handleOnClickBtn} />
       <Modal
         isOpen={prodModalOpen}

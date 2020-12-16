@@ -24,18 +24,21 @@ article.getArticle = async (req, res) => {
 article.saveArticle = (req, res) => {
   const articles = req.body;
   let error = "";
+  let result = null;
 
   articles.map(async (art) => {
     let { descripcion, precio, stock } = art;
     let newArticle = new Articulos({ descripcion, precio, stock });
 
     try {
-      await newArticle.save();
+      result = await newArticle.save();
     } catch (err) {
       console.log("error", err);
       error = err;
     }
   });
+
+  console.log("result", result);
 
   if (error === "") {
     res.status(200).json({ message: "ok" });
@@ -67,11 +70,14 @@ article.newArticle = async (req, res) => {
 article.updArticle = async (req, res) => {
   let id = req.params.id;
   let result = 0;
+
   try {
     result = await Articulos.updateOne({ _id: id }, req.body);
   } catch (err) {
-    res.status(400).json({ _id: 0, err });
+    res.status(400).json({ id: 0, err });
   }
+  result = req.body;
+  result.id = id;
   res.status(200).send(result);
 };
 
@@ -81,13 +87,13 @@ article.delArticle = async (req, res) => {
   const id = req.params.id;
   let result = 0;
   try {
-    result = await Articulos.remove({ _id: id });
+    result = await Articulos.deleteOne({ _id: id });
   } catch (err) {
     console.log("Error: ", err);
-    res.status(500).json({ _id: 0 });
+    res.status(500).json({ id: 0 });
   }
 
-  res.status(200).send(result);
+  res.status(200).send({ id });
 };
 
 module.exports = article;

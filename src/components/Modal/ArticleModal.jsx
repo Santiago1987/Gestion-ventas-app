@@ -110,7 +110,7 @@ const ArticleModal = ({
               <button
                 type="button"
                 className="btn btn-success"
-                onClick={() => handleOnSubmit()}
+                onClick={() => handleOnSubmit(btnType, { id: selectedProd.id })}
               >
                 Continuar
               </button>

@@ -5,11 +5,23 @@ import {
   ADD_SALES_PRODUCT,
   REMOVE_SALES_PRODUCT,
   REMOVE_ALL_SALES_PRODUCTS,
+  UPDATE_PRODUCT,
+  DELETE_PRODUCT,
 } from "./actionsList";
 
 export const loadProducts = (products) => ({
   type: ADD_PRODUCTS,
   payload: products,
+});
+
+export const updateProduct = (product) => ({
+  type: UPDATE_PRODUCT,
+  payload: product,
+});
+
+export const deleteProduct = (id) => ({
+  type: DELETE_PRODUCT,
+  payload: id,
 });
 
 export const searchInput = (input) => ({
