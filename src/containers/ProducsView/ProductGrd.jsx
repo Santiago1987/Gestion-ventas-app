@@ -5,7 +5,7 @@ import { loadProducts, selectProd, addSalesProduct } from "../../actions";
 import Table from "../../components/Table/Table";
 import { useHttp } from "../hooks/http";
 
-const ProductGrd = ({ change }) => {
+const ProductGrd = () => {
   // Reducers
   const Products = useSelector((state) => state.Products);
   const selectedProd = useSelector((state) => state.selectedProd);
@@ -16,13 +16,11 @@ const ProductGrd = ({ change }) => {
 
   //const [Loading, setLoading] = useState(true);
   const [Loading, getData] = useHttp(
-    "http://localhost:3000/data/article/list",
-    [change],
+    "http://localhost:3000/api/article/list",
+    [],
     "GET",
     null
   );
-
-  console.log("change", change);
 
   useEffect(() => {
     if (getData !== null) {
@@ -42,7 +40,7 @@ const ProductGrd = ({ change }) => {
       });
       dispatch(loadProducts(newData));
     }
-  }, [change, getData]);
+  }, [getData]);
 
   // Row selection
   const handleRowSelect = (id, table) => {

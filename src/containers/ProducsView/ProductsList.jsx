@@ -18,7 +18,6 @@ import BtnProdList from "./BtnProdList";
 const ProductsView = () => {
   const [prodModalOpen, setprodModalOpen] = useState(false);
   const dispatch = useDispatch();
-  const [isChange, setIsChange] = useState(false);
 
   //------------------------------Search input-------------------------------------------
   const search = useSelector((state) => state.Search);
@@ -30,13 +29,11 @@ const ProductsView = () => {
 
   //-----------------------------Modal--------------------------------------------
   const [type, setType] = useState("");
-  const [gridType, setGridType] = useState("");
 
   const handleOnClickBtn = (typ, gtyp) => {
     // en caso de no seleccion y que se use un boton mandar un warning
 
     setType(typ);
-    setGridType(gtyp);
 
     if (typ === "new") dispatch(selectProd({}));
 
@@ -82,20 +79,17 @@ const ProductsView = () => {
         .delete(`http://localhost:3000/api/delete/article/${id}`)
         .then((res) => {
           response = res.data;
-          console.log("bbbbb", response);
         })
         .catch((err) => {
           console.log(err);
         });
 
-      console.log("aaaa", response);
       if (response.id !== 0) {
         dispatch(deleteProduct(response.id));
       }
     }
 
     setprodModalOpen(false);
-    //setIsChange(!isChange);
 
     return;
   };
@@ -125,7 +119,7 @@ const ProductsView = () => {
         title="Search"
         handleOnchangeSearch={handleOnchangeSearch}
       />
-      <ProductGrd change={isChange} />
+      <ProductGrd />
       <BtnProdList handleOnClickBtn={handleOnClickBtn} />
       <Modal
         isOpen={prodModalOpen}
@@ -136,7 +130,6 @@ const ProductsView = () => {
       >
         <ArticleModal
           btnType={type}
-          gridType={gridType}
           handleOnSubmit={handleOnSubmit}
           handleOnCancel={handleOnCancel}
         />

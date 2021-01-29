@@ -5,7 +5,6 @@ const Articulos = require("../Models/Articulos");
 // GET: Lista de articulos
 article.getListArticles = async (req, res) => {
   const list = await Articulos.find();
-  console.log(list);
 
   res.status(200).send(list);
 };

@@ -18,17 +18,18 @@ const productsReducer = (state = initialProducts, { type, payload }) => {
     case ADD_PRODUCTS:
       return [...state, ...payload];
     case UPDATE_PRODUCT:
-      idx = state.findIndex((s) => (s.id = payload.id));
+      idx = state.findIndex((s) => s.id === payload.id);
       if (idx === -1) return state;
 
       let { descripcion, precio, stock } = payload;
+
       return [
         ...state.slice(0, idx - 1),
         { ...state[idx], descripcion, precio, stock },
         ...state.slice(idx + 1),
       ];
     case DELETE_PRODUCT:
-      idx = state.findIndex((s) => (s.id = payload));
+      idx = state.findIndex((s) => s.id === payload);
       if (idx === -1) return state;
       return [...state.slice(0, idx - 1), ...state.slice(idx + 1)];
     default:
