@@ -9,7 +9,7 @@ import {
 } from "../actions/actionsList";
 
 const initialProducts = [];
-const initialSelect = {};
+const initialSelect = { id: "", table: "" };
 const initialSalesProducts = [];
 
 const productsReducer = (state = initialProducts, { type, payload }) => {

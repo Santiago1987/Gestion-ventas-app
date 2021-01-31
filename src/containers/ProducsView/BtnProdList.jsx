@@ -1,32 +1,36 @@
 import React from "react";
 import Btn from "../../components/Button/Button";
 
-const BtnProdList = ({ handleOnClickBtn }) => {
+const BtnProdList = ({ handleOnClickBtn, disable }) => {
   return (
-    <div className="shadow bg-white rounded mt-3 d-flex flex-row">
+    <div className="shadow bg-white rounded mt-3 d-flex flex-row justify-content-around">
       <Btn
         type="new"
         gridType="PRODUCTS"
         title="Nuevo"
-        classes="btn btn-dark m-2"
+        classes="btn btn-primary active m-2"
         onclick={handleOnClickBtn}
-        styles={{ width: "100px" }}
+        styles={{ width: "150px" }}
       />
       <Btn
         gridType="PRODUCTS"
         type="update"
         title="Modificar"
-        classes="btn btn-dark m-2"
+        classes={
+          disable ? "btn btn-secondary m-2" : "btn btn-primary active m-2"
+        }
         onclick={handleOnClickBtn}
-        styles={{ width: "100px" }}
+        styles={{ width: "150px" }}
       />
       <Btn
         gridType="PRODUCTS"
         type="delete"
         title="Borrar"
-        classes="btn btn-dark m-2"
+        classes={
+          disable ? "btn btn-secondary m-2" : "btn btn-primary active m-2"
+        }
         onclick={handleOnClickBtn}
-        styles={{ width: "100px" }}
+        styles={{ width: "150px" }}
       />
     </div>
   );

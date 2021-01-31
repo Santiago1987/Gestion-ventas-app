@@ -3,9 +3,8 @@ import { useSelector } from "react-redux";
 
 import Btn from "../../components/Button/Button";
 
-const SalesFoot = ({ handleOnClickBtn }) => {
+const SalesFoot = ({ handleOnClickBtn, disable, disableFin }) => {
   const salesProducts = useSelector((state) => state.salesProducts);
-
   let total = 0;
   if (salesProducts.length > 0) {
     //total += parseFloat(salesProducts.map((s) => s.precio * s.cant));
@@ -22,7 +21,7 @@ const SalesFoot = ({ handleOnClickBtn }) => {
           type="cancel"
           gridType="SALES"
           title="Cancel"
-          classes="btn btn-danger m-2"
+          classes={disableFin ? "btn btn-secondary m-2" : "btn btn-danger m-2"}
           onclick={handleOnClickBtn}
           styles={{ width: "100px" }}
         />
@@ -30,7 +29,7 @@ const SalesFoot = ({ handleOnClickBtn }) => {
           type="remove"
           gridType="SALES"
           title="Remover"
-          classes="btn btn-dark m-2"
+          classes={disable ? "btn btn-secondary m-2" : "btn btn-dark m-2"}
           onclick={handleOnClickBtn}
           styles={{ width: "100px" }}
         />
@@ -38,7 +37,7 @@ const SalesFoot = ({ handleOnClickBtn }) => {
           type="finish"
           gridType="SALES"
           title="Finalizar"
-          classes="btn btn-success m-2"
+          classes={disableFin ? "btn btn-secondary m-2" : "btn btn-success m-2"}
           onclick={handleOnClickBtn}
           styles={{ width: "100px" }}
         />

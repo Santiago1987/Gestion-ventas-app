@@ -3,6 +3,7 @@ const article = require("../controllers/articleCotroller.js");
 
 const router = express.Router();
 
+//--------------------Articulos-----------------------------------------
 //GET: obtener lista de articulos
 router.get("/article/list", article.getListArticles);
 
@@ -20,5 +21,9 @@ router.post("/update/article/:id", article.updArticle);
 
 // DELETE: Delete article
 router.delete("/delete/article/:id", article.delArticle);
+
+//--------------------Ventas-----------------------------------------
+//POST: Guardar venta
+router.post("/save/venta");
 
 module.exports = router;

@@ -59,6 +59,7 @@ article.newArticle = async (req, res) => {
   } catch (err) {
     res.status(400).json({ _id: 0, err });
   }
+
   res.status(200).send(result);
 
   return;

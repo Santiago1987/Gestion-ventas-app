@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { removeAllSalesProducts, removeSalesProduct } from "../../actions";
 import Modal from "react-modal";
+import axios from "axios";
 
 import SalesTop from "./SalesTop";
 import SalesGrd from "./SalesGrd";
@@ -11,13 +12,17 @@ import SalesModal from "../../components/Modal/SalesModal";
 const Sales = () => {
   const [salModalOpen, setSalModalOpen] = useState(false);
   const selectedProd = useSelector((state) => state.selectedProd);
+  const salesProducts = useSelector((state) => state.salesProducts);
 
   const dispatch = useDispatch();
 
   const [type, setType] = useState("");
 
+  //---------------------------------------------------------------------------------------------------------------
+
   const handleOnClickBtn = (type, grid) => {
-    if (grid !== "SALES") return;
+    if (grid !== "SALES" || salesProducts.length < 1) return;
+    if (type === "remove" && salesProducts.table !== "SALES") return;
 
     setType(type);
     if (type === "cancel" || type === "finish") setSalModalOpen(true);
@@ -27,12 +32,58 @@ const Sales = () => {
   const handleOnSubmit = (type, gridType) => {
     setSalModalOpen(false);
     if (gridType !== "SALES") return;
+
     if (type === "cancel") dispatch(removeAllSalesProducts());
+
+    if (type === "finish") {
+      let date = new Date();
+      let artLines = [];
+      salesProducts.map((p) => {});
+
+      let total = salesProducts.reduce((acum, s) => {
+        return s.precio * s.cant + acum;
+      }, 0);
+
+      let ticket = {
+        refNum: getRefNum(date, "001"),
+        fecha: getFecha(date),
+        totalPesos: 0,
+        totlaDolares: 0,
+        Descuento: 0,
+      };
+
+      console.log("salesProducts", salesProducts);
+    }
   };
 
   const handleOnCancel = () => {
     setSalModalOpen(false);
   };
+
+  //---------------------------------------------------------------------------------------------------------------
+  // funciones de fecha
+  const getRefNum = (date, shop) => {
+    return `${shop}${date.getFullYear()}${addZero(
+      date.getMonth() + 1
+    )}${addZero(date.getDate())}${addZero(date.getHours())}${addZero(
+      date.getMinutes()
+    )}`;
+  };
+
+  const getFecha = (date) => {
+    return `${addZero(date.getDate())}/${addZero(
+      date.getMonth() + 1
+    )}/${date.getFullYear()} ${addZero(date.getHours())}:${addZero(
+      date.getMinutes()
+    )}:${addZero(date.getSeconds())}`;
+  };
+
+  const addZero = (num) => {
+    if (num.toString().length === 1) num = `0${num}`;
+    return num;
+  };
+
+  //---------------------------------------------------------------------------------------------------------------
 
   const customStyles = {
     content: {
@@ -49,7 +100,11 @@ const Sales = () => {
     <>
       <SalesTop />
       <SalesGrd />
-      <SalesFoot handleOnClickBtn={handleOnClickBtn} />
+      <SalesFoot
+        handleOnClickBtn={handleOnClickBtn}
+        disableFin={salesProducts.length < 1}
+        disable={selectedProd.table !== "SALES"}
+      />
       <Modal
         isOpen={salModalOpen}
         onRequestClose={() => setSalModalOpen(false)}

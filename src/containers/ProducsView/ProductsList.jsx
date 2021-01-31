@@ -18,6 +18,7 @@ import BtnProdList from "./BtnProdList";
 const ProductsView = () => {
   const [prodModalOpen, setprodModalOpen] = useState(false);
   const dispatch = useDispatch();
+  const selectedProd = useSelector((state) => state.selectedProd);
 
   //------------------------------Search input-------------------------------------------
   const search = useSelector((state) => state.Search);
@@ -31,9 +32,12 @@ const ProductsView = () => {
   const [type, setType] = useState("");
 
   const handleOnClickBtn = (typ, gtyp) => {
-    // en caso de no seleccion y que se use un boton mandar un warning
-
     setType(typ);
+    if (
+      (type === "update" || type === "delete") &&
+      selectedProd.table !== "PRODUCTS"
+    )
+      return;
 
     if (typ === "new") dispatch(selectProd({}));
 
@@ -120,7 +124,10 @@ const ProductsView = () => {
         handleOnchangeSearch={handleOnchangeSearch}
       />
       <ProductGrd />
-      <BtnProdList handleOnClickBtn={handleOnClickBtn} />
+      <BtnProdList
+        handleOnClickBtn={handleOnClickBtn}
+        disable={selectedProd.table !== "PRODUCTS"}
+      />
       <Modal
         isOpen={prodModalOpen}
         onRequestClose={() => setprodModalOpen(false)}
