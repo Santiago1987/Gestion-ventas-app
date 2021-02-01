@@ -13,6 +13,8 @@ const ProductGrd = () => {
 
   const dispatch = useDispatch();
   const dolar = 70;
+  const porcLocal = 10;
+  const porcML = 25;
 
   //const [Loading, setLoading] = useState(true);
   const [Loading, getData] = useHttp(
@@ -25,20 +27,20 @@ const ProductGrd = () => {
   useEffect(() => {
     if (getData !== null) {
       let { data } = getData;
-      let newData = data.map((d) => {
-        let { _id, descripcion, precio, stock } = d;
+      let Artlist = data.map((d) => {
+        let { _id, descripcion, prDolar, stock } = d;
 
         return {
           id: _id,
           descripcion,
-          precio,
+          prDolar,
           stock,
-          precioFinal: Math.round(precio * dolar, 2),
-          precio1: Math.round((precio * dolar) / 0.9, 2),
-          precio2: Math.round(d.precio * dolar * 1.3, 2),
+          prPesos: Math.round(prDolar * dolar, 2),
+          prLocal: Math.round((prDolar * dolar) / ((100 - 10) / porcLocal), 2),
+          prML: Math.round(prDolar * dolar * (porc / 100 + 1), 2),
         };
       });
-      dispatch(loadProducts(newData));
+      dispatch(loadProducts(Artlist));
     }
   }, [getData]);
 
@@ -56,13 +58,13 @@ const ProductGrd = () => {
   // Columns titles
   const titles = {
     id: "id",
-    numero: "#",
+    ingreso: "Ingreso",
     stock: "Stock",
     descr: "Descripcion",
     PUS: "Precio $US",
-    PF: "Precio Final",
-    P1: "Precio 1",
-    P2: "Precio 2",
+    PF: "Precio pesos",
+    P1: "Precio local",
+    P2: "Precio ML",
   };
 
   // Initializtions

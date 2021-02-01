@@ -13,6 +13,7 @@ const Sales = () => {
   const [salModalOpen, setSalModalOpen] = useState(false);
   const selectedProd = useSelector((state) => state.selectedProd);
   const salesProducts = useSelector((state) => state.salesProducts);
+  const Products = useSelector((state) => state.Products);
 
   const dispatch = useDispatch();
 
@@ -38,7 +39,20 @@ const Sales = () => {
     if (type === "finish") {
       let date = new Date();
       let artLines = [];
-      salesProducts.map((p) => {});
+
+      salesProducts.map((p) => {
+        let { id, descr, precio, cant, total } = p;
+        let prod = Products.find((pr) => pr.id === id);
+
+        artLines.push({
+          id,
+          descr,
+          precioPesos: precio,
+          precioDolar: prod.precio,
+          cant,
+          total,
+        });
+      });
 
       let total = salesProducts.reduce((acum, s) => {
         return s.precio * s.cant + acum;
@@ -47,12 +61,13 @@ const Sales = () => {
       let ticket = {
         refNum: getRefNum(date, "001"),
         fecha: getFecha(date),
-        totalPesos: 0,
+        totalPesos: total,
         totlaDolares: 0,
         Descuento: 0,
+        lines: artLines,
       };
 
-      console.log("salesProducts", salesProducts);
+      console.log("ticket", ticket);
     }
   };
 
