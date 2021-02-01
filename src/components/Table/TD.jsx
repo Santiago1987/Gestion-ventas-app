@@ -15,10 +15,10 @@ const TD = ({
       style={style(type, column)}
       className={selection(selectedProd, id, type)}
       onClick={() => handleRowSelect(id, type)}
-      onDoubleClick={() => handleOnDobleClick(id)}
-      contentEditable={column === "cant" ? true : false}
+      onDoubleClick={() => handleOnDobleClick(id, column)}
+      contentEditable={column === "cant" || column === "ingreso" ? true : false}
       suppressContentEditableWarning="true"
-      onChange={() => handleOnChange(id)}
+      onChange={() => handleOnChange(id, column)}
     >
       {text}
     </td>
@@ -32,16 +32,16 @@ function style(type, column) {
     switch (column) {
       case "id":
         return { display: "none" };
-      case "numero":
+      case "ingreso":
         return { width: "5%", textAlign: "center" };
       case "stock":
         return { width: "10%", textAlign: "center" };
       case "descr":
         return { width: "29%", textAlign: "start" };
       case "PUS":
-      case "PF":
-      case "P1":
-      case "P2":
+      case "PP":
+      case "PL":
+      case "PML":
         return { width: "14%", textAlign: "center" };
       default:
         return null;

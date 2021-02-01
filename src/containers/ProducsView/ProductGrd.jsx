@@ -28,16 +28,17 @@ const ProductGrd = () => {
     if (getData !== null) {
       let { data } = getData;
       let Artlist = data.map((d) => {
-        let { _id, descripcion, prDolar, stock } = d;
+        let { _id, descripcion, prDolar, stock, ingreso } = d;
 
         return {
           id: _id,
           descripcion,
           prDolar,
           stock,
+          ingreso,
           prPesos: Math.round(prDolar * dolar, 2),
           prLocal: Math.round((prDolar * dolar) / ((100 - 10) / porcLocal), 2),
-          prML: Math.round(prDolar * dolar * (porc / 100 + 1), 2),
+          prML: Math.round(prDolar * dolar * (porcML / 100 + 1), 2),
         };
       });
       dispatch(loadProducts(Artlist));
@@ -49,11 +50,23 @@ const ProductGrd = () => {
     dispatch(selectProd({ id: id, table: table }));
   };
 
-  const handleOnDobleClick = (id) => {
-    dispatch(addSalesProduct(Products.find((p) => p.id === id)));
+  const handleOnDobleClick = (id, column) => {
+    let precio = 0;
+    let articulo = Products.find((p) => p.id === id);
+
+    if (column === "PML") presio = articulo.PML;
+    else presio = articulo.PL;
+
+    dispatch(
+      addSalesProduct({
+        id: articulo.id,
+        descripcion: articulo.descripcion,
+        precio,
+      })
+    );
   };
 
-  const handleOnChange = (id) => null;
+  const handleOnChange = (id, column) => null;
 
   // Columns titles
   const titles = {
@@ -62,14 +75,13 @@ const ProductGrd = () => {
     stock: "Stock",
     descr: "Descripcion",
     PUS: "Precio $US",
-    PF: "Precio pesos",
-    P1: "Precio local",
-    P2: "Precio ML",
+    PP: "Precio pesos",
+    PL: "Precio local",
+    PML: "Precio ML",
   };
 
   // Initializtions
   let items = [];
-  let rowN = 1;
   let filteredProd = [];
 
   // Search funcionality
@@ -85,13 +97,13 @@ const ProductGrd = () => {
   if (filteredProd.length > 0) {
     items = filteredProd.map((prod) => ({
       id: prod.id,
-      number: rowN++,
+      ingreso: prod.ingreso,
       stock: prod.stock,
       descr: prod.descripcion,
-      PUS: prod.precio,
-      PF: prod.precioFinal,
-      P1: prod.precio1,
-      P2: prod.precio2,
+      PUS: prod.prDolar,
+      PP: prod.prPesos,
+      PL: prod.prLocal,
+      PML: prod.prML,
     }));
   }
 

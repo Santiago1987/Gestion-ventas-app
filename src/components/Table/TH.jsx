@@ -15,16 +15,16 @@ function style(type, column) {
     switch (column) {
       case "id":
         return { display: "none" };
-      case "numero":
+      case "ingreso":
         return { width: "5%", textAlign: "center" };
       case "stock":
         return { width: "10%", textAlign: "center" };
       case "descr":
         return { width: "29%", textAlign: "start" };
       case "PUS":
-      case "PF":
-      case "P1":
-      case "P2":
+      case "PP":
+      case "PL":
+      case "PML":
         return { width: "14%", textAlign: "start" };
       default:
         return null;

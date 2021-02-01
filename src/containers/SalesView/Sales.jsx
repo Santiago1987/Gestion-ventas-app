@@ -39,18 +39,20 @@ const Sales = () => {
     if (type === "finish") {
       let date = new Date();
       let artLines = [];
+      let totUS = 0;
 
       salesProducts.map((p) => {
-        let { id, descr, precio, cant, total } = p;
+        let { id, descr, precio, cant } = p;
         let prod = Products.find((pr) => pr.id === id);
+        totUS = prod.PUS * cant + totUS; //chequear esto
 
         artLines.push({
           id,
           descr,
           precioPesos: precio,
-          precioDolar: prod.precio,
+          precioDolar: prod.PUS,
           cant,
-          total,
+          total: precio * cant,
         });
       });
 
@@ -62,7 +64,7 @@ const Sales = () => {
         refNum: getRefNum(date, "001"),
         fecha: getFecha(date),
         totalPesos: total,
-        totlaDolares: 0,
+        totlaDolares: total,
         Descuento: 0,
         lines: artLines,
       };

@@ -57,8 +57,10 @@ const ProductsView = () => {
         });
 
       if (response._id !== 0) {
-        let { _id, descripcion, stock, precio } = response;
-        dispatch(loadProducts([{ id: _id, descripcion, stock, precio }]));
+        let { _id, descripcion, stock, prDolar, ingreso } = response;
+        dispatch(
+          loadProducts([{ id: _id, descripcion, stock, prDolar, ingreso }])
+        );
       }
 
       dispatch(loadProducts([]));

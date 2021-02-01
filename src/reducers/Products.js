@@ -12,6 +12,9 @@ const initialProducts = [];
 const initialSelect = { id: "", table: "" };
 const initialSalesProducts = [];
 
+/*
+salProd:{id,ingreso,stock,descr,PUS,PP,PL,PML}
+*/
 const productsReducer = (state = initialProducts, { type, payload }) => {
   let idx = null;
   switch (type) {
@@ -48,6 +51,10 @@ export const selectedProdReducer = (
       return state;
   }
 };
+
+/*
+salProd:{id,descripcion,precio,cant}
+*/
 
 export const salesProductsReducer = (
   state = initialSalesProducts,

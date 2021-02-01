@@ -26,8 +26,8 @@ article.saveArticle = (req, res) => {
   let result = null;
 
   articles.map(async (art) => {
-    let { descripcion, precio, stock } = art;
-    let newArticle = new Articulos({ descripcion, precio, stock });
+    let { descripcion, prDolar, stock, ingreso } = art;
+    let newArticle = new Articulos({ descripcion, prDolar, stock, ingreso });
 
     try {
       result = await newArticle.save();
@@ -36,8 +36,6 @@ article.saveArticle = (req, res) => {
       error = err;
     }
   });
-
-  console.log("result", result);
 
   if (error === "") {
     res.status(200).json({ message: "ok" });
@@ -49,9 +47,9 @@ article.saveArticle = (req, res) => {
 
 // POST: Nuevo articulo
 article.newArticle = async (req, res) => {
-  const { descripcion, stock, precio } = req.body;
+  const { descripcion, stock, prDolar, ingreso } = req.body;
 
-  let newArticle = Articulos({ descripcion, stock, precio });
+  let newArticle = Articulos({ descripcion, stock, prDolar, ingreso });
 
   let result = 0;
   try {
