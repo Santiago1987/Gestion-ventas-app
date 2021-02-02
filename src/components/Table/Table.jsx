@@ -13,7 +13,7 @@ const Table = ({
   handleOnChange,
 }) => {
   return (
-    <table className={style(type)} style={{ margin: 0 }}>
+    <table className={style(type)} style={{ margin: 0, width: "100%" }}>
       {Object.keys(titles).length > 0 ? (
         <THead columns={titles} type={type} />
       ) : null}

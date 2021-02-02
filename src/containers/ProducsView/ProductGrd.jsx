@@ -52,16 +52,20 @@ const ProductGrd = () => {
 
   const handleOnDobleClick = (id, column) => {
     let precio = 0;
+    let type = "L";
     let articulo = Products.find((p) => p.id === id);
 
-    if (column === "PML") presio = articulo.PML;
-    else presio = articulo.PL;
+    if (column === "PML") {
+      precio = articulo.prML;
+      type = "ML";
+    } else precio = articulo.prLocal;
 
     dispatch(
       addSalesProduct({
         id: articulo.id,
         descripcion: articulo.descripcion,
         precio,
+        type,
       })
     );
   };

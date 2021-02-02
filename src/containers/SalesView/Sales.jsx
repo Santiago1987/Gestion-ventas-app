@@ -23,9 +23,10 @@ const Sales = () => {
 
   const handleOnClickBtn = (type, grid) => {
     if (grid !== "SALES" || salesProducts.length < 1) return;
-    if (type === "remove" && salesProducts.table !== "SALES") return;
+    if (type === "remove" && selectedProd.table !== "SALES") return;
 
     setType(type);
+
     if (type === "cancel" || type === "finish") setSalModalOpen(true);
     else if (type === "remove") dispatch(removeSalesProduct(selectedProd));
   };
@@ -39,18 +40,16 @@ const Sales = () => {
     if (type === "finish") {
       let date = new Date();
       let artLines = [];
-      let totUS = 0;
 
       salesProducts.map((p) => {
-        let { id, descr, precio, cant } = p;
+        let { id, descripcion, precio, cant } = p;
         let prod = Products.find((pr) => pr.id === id);
-        totUS = prod.PUS * cant + totUS; //chequear esto
 
         artLines.push({
           id,
-          descr,
+          descripcion,
           precioPesos: precio,
-          precioDolar: prod.PUS,
+          precioDolar: prod.prDolar,
           cant,
           total: precio * cant,
         });
@@ -60,16 +59,20 @@ const Sales = () => {
         return s.precio * s.cant + acum;
       }, 0);
 
+      let totUS = artLines.reduce((acum, s) => {
+        return s.precioDolar * s.cant + acum;
+      }, 0);
+
       let ticket = {
         refNum: getRefNum(date, "001"),
         fecha: getFecha(date),
         totalPesos: total,
-        totlaDolares: total,
+        totlaDolares: totUS,
         Descuento: 0,
         lines: artLines,
       };
 
-      console.log("ticket", ticket);
+      //console.log("ticket", ticket);
     }
   };
 

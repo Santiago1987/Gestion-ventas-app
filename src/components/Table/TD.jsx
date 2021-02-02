@@ -33,29 +33,34 @@ function style(type, column) {
       case "id":
         return { display: "none" };
       case "ingreso":
-        return { width: "5%", textAlign: "center" };
+        return { width: "10%", textAlign: "center", verticalAlign: "middle" };
       case "stock":
-        return { width: "10%", textAlign: "center" };
+        return { width: "10%", textAlign: "center", verticalAlign: "middle" };
       case "descr":
-        return { width: "29%", textAlign: "start" };
+        return { width: "24%", textAlign: "start", verticalAlign: "middle" };
       case "PUS":
       case "PP":
       case "PL":
       case "PML":
-        return { width: "14%", textAlign: "center" };
+        return { width: "14%", textAlign: "right", verticalAlign: "middle" };
       default:
         return null;
     }
   } else if (type === "SALES") {
     switch (column) {
       case "id":
-        return { width: "5%", textAlign: "center", display: "none" };
+        return {
+          width: "5%",
+          textAlign: "center",
+          display: "none",
+          verticalAlign: "middle",
+        };
       case "descr":
-        return { width: "44%", textAlign: "start" };
+        return { width: "44%", textAlign: "start", verticalAlign: "middle" };
       case "precio":
       case "cant":
       case "total":
-        return { width: "14%", textAlign: "center" };
+        return { width: "14%", textAlign: "center", verticalAlign: "middle" };
       default:
         return null;
     }

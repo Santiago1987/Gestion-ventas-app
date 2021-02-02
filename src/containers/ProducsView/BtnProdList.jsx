@@ -8,7 +8,7 @@ const BtnProdList = ({ handleOnClickBtn, disable }) => {
         type="new"
         gridType="PRODUCTS"
         title="Nuevo"
-        classes="btn btn-primary active m-2"
+        classes="btn btn-dark active m-2"
         onclick={handleOnClickBtn}
         styles={{ width: "150px" }}
       />
@@ -16,9 +16,7 @@ const BtnProdList = ({ handleOnClickBtn, disable }) => {
         gridType="PRODUCTS"
         type="update"
         title="Modificar"
-        classes={
-          disable ? "btn btn-secondary m-2" : "btn btn-primary active m-2"
-        }
+        classes={disable ? "btn btn-secondary m-2" : "btn btn-dark active m-2"}
         onclick={handleOnClickBtn}
         styles={{ width: "150px" }}
       />
@@ -26,9 +24,7 @@ const BtnProdList = ({ handleOnClickBtn, disable }) => {
         gridType="PRODUCTS"
         type="delete"
         title="Borrar"
-        classes={
-          disable ? "btn btn-secondary m-2" : "btn btn-primary active m-2"
-        }
+        classes={disable ? "btn btn-secondary m-2" : "btn btn-dark active m-2"}
         onclick={handleOnClickBtn}
         styles={{ width: "150px" }}
       />

@@ -16,11 +16,11 @@ function style(type, column) {
       case "id":
         return { display: "none" };
       case "ingreso":
-        return { width: "5%", textAlign: "center" };
+        return { width: "10%", textAlign: "center" };
       case "stock":
         return { width: "10%", textAlign: "center" };
       case "descr":
-        return { width: "29%", textAlign: "start" };
+        return { width: "24%", textAlign: "start" };
       case "PUS":
       case "PP":
       case "PL":

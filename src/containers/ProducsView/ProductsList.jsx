@@ -34,7 +34,7 @@ const ProductsView = () => {
   const handleOnClickBtn = (typ, gtyp) => {
     setType(typ);
     if (
-      (type === "update" || type === "delete") &&
+      (typ === "update" || typ === "delete") &&
       selectedProd.table !== "PRODUCTS"
     )
       return;

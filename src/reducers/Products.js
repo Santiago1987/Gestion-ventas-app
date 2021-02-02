@@ -53,7 +53,7 @@ export const selectedProdReducer = (
 };
 
 /*
-salProd:{id,descripcion,precio,cant}
+salProd:{id,descripcion,precio,cant,type} type es por si es local o de ML
 */
 
 export const salesProductsReducer = (
@@ -62,7 +62,9 @@ export const salesProductsReducer = (
 ) => {
   switch (type) {
     case ADD_SALES_PRODUCT:
-      let index = state.findIndex((sal) => sal.id === payload.id);
+      let index = state.findIndex(
+        (sal) => sal.id === payload.id && sal.type === payload.type
+      );
       if (index === -1) {
         payload.cant = 1;
         return [...state, payload];
