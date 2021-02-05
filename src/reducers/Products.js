@@ -24,17 +24,17 @@ const productsReducer = (state = initialProducts, { type, payload }) => {
       idx = state.findIndex((s) => s.id === payload.id);
       if (idx === -1) return state;
 
-      let { descripcion, prDolar, stock } = payload;
+      let { descripcion, prDolar, stock, ingreso } = payload;
 
       return [
-        ...state.slice(0, idx - 1),
-        { ...state[idx], descripcion, prDolar, stock },
+        ...state.slice(0, idx),
+        { ...state[idx], descripcion, prDolar, stock, ingreso },
         ...state.slice(idx + 1),
       ];
     case DELETE_PRODUCT:
       idx = state.findIndex((s) => s.id === payload);
       if (idx === -1) return state;
-      return [...state.slice(0, idx - 1), ...state.slice(idx + 1)];
+      return [...state.slice(0, idx), ...state.slice(idx + 1)];
     default:
       return state;
   }

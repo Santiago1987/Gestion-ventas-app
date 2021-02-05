@@ -7,12 +7,12 @@ const SalesFoot = ({ handleOnClickBtn, disable, disableFin }) => {
   const salesProducts = useSelector((state) => state.salesProducts);
   let total = 0;
   if (salesProducts.length > 0) {
-    //total += parseFloat(salesProducts.map((s) => s.precio * s.cant));
-
     total = salesProducts.reduce((acum, s) => {
       return s.precio * s.cant + acum;
     }, 0);
   }
+
+  total = Math.round((total + Number.EPSILON) * 100) / 100;
 
   return (
     <div className="shadow bg-white rounded mt-3 d-flex flex-row justify-content-between">

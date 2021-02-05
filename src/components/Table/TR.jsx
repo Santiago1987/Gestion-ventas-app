@@ -7,7 +7,7 @@ const TR = ({
   headers = null,
   type,
   handleRowSelect,
-  selectedProd,
+  //selectedProd,
   handleOnDobleClick,
   handleOnChange,
 }) => {
@@ -33,7 +33,7 @@ const TR = ({
               id={columns["id"]}
               selected="false"
               handleRowSelect={handleRowSelect}
-              selectedProd={selectedProd}
+              //selectedProd={selectedProd}
               handleOnDobleClick={handleOnDobleClick}
               handleOnChange={handleOnChange}
             />

@@ -32,6 +32,7 @@ const Sales = () => {
   };
 
   const handleOnSubmit = (type, gridType) => {
+    let response = null;
     setSalModalOpen(false);
     if (gridType !== "SALES") return;
 
@@ -67,12 +68,20 @@ const Sales = () => {
         refNum: getRefNum(date, "001"),
         fecha: getFecha(date),
         totalPesos: total,
-        totlaDolares: totUS,
-        Descuento: 0,
+        totalDolares: totUS,
+        descuento: 0,
         lines: artLines,
       };
 
-      //console.log("ticket", ticket);
+      axios
+        .post(`http://localhost:3000/api/save/venta`, ticket)
+        .then((res) => {
+          response = res.data;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      console.log("response", response);
     }
   };
 

@@ -7,6 +7,8 @@ const recipeDetail = new Schema({
   cantidad: { type: Number, require: true },
   precioDolar: { type: Number, require: true },
   precioPesos: { type: Number, require: true },
+  descripcion: { type: String, require: true },
+  total: { type: Number, require: true },
 });
 
-module.exports = mongoose("RecipeDetail", recipeDetail);
+module.exports = mongoose.model("RecipeDetail", recipeDetail);

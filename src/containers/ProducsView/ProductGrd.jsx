@@ -8,7 +8,7 @@ import { useHttp } from "../hooks/http";
 const ProductGrd = () => {
   // Reducers
   const Products = useSelector((state) => state.Products);
-  const selectedProd = useSelector((state) => state.selectedProd);
+  //const selectedProd = useSelector((state) => state.selectedProd);
   const Search = useSelector((state) => state.Search);
 
   const dispatch = useDispatch();
@@ -36,9 +36,16 @@ const ProductGrd = () => {
           prDolar,
           stock,
           ingreso,
-          prPesos: Math.round(prDolar * dolar, 2),
-          prLocal: Math.round((prDolar * dolar) / ((100 - 10) / porcLocal), 2),
-          prML: Math.round(prDolar * dolar * (porcML / 100 + 1), 2),
+          prPesos: Math.round((prDolar * dolar + Number.EPSILON) * 100) / 100,
+          prLocal:
+            Math.round(
+              ((prDolar * dolar) / ((100 - 10) / porcLocal) + Number.EPSILON) *
+                100
+            ) / 100,
+          prML:
+            Math.round(
+              (prDolar * dolar * (porcML / 100 + 1) + Number.EPSILON) * 100
+            ) / 100,
         };
       });
       dispatch(loadProducts(Artlist));
@@ -131,7 +138,7 @@ const ProductGrd = () => {
               type="PRODUCTS"
               items={items}
               handleRowSelect={handleRowSelect}
-              selectedProd={selectedProd}
+              //selectedProd={selectedProd}
               handleOnDobleClick={handleOnDobleClick}
               handleOnChange={handleOnChange}
             />

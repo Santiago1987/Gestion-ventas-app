@@ -7,7 +7,7 @@ import Table from "../../components/Table/Table";
 const SalesGrd = () => {
   //------------------------------Reducers-------------------------------------------
   const salesProducts = useSelector((state) => state.salesProducts);
-  const selectedProd = useSelector((state) => state.selectedProd);
+  //const selectedProd = useSelector((state) => state.selectedProd);
 
   const dispatch = useDispatch();
 
@@ -53,7 +53,7 @@ const SalesGrd = () => {
               items={items}
               handleRowSelect={handleRowSelect}
               handleOnDobleClick={handleOnDobleClick}
-              selectedProd={selectedProd}
+              //selectedProd={selectedProd}
             />
           </div>
         </div>
@@ -70,7 +70,7 @@ const SalesGrd = () => {
             handleRowSelect={handleRowSelect}
             handleOnDobleClick={handleOnDobleClick}
             handleOnChange={handleOnChange}
-            selectedProd={selectedProd}
+            //selectedProd={selectedProd}
           />
         </div>
       </div>

@@ -5,6 +5,7 @@ const ArticleModal = ({ btnType, handleOnSubmit, handleOnCancel }) => {
   const [Description, setDescription] = useState("");
   const [Precio, setPrecio] = useState(0);
   const [Stock, setStock] = useState(0);
+  const [Ingreso, setIngreso] = useState(0);
   //const [article, setArticle] = useState({});
 
   const selectedProd = useSelector((state) => state.selectedProd);
@@ -15,10 +16,11 @@ const ArticleModal = ({ btnType, handleOnSubmit, handleOnCancel }) => {
       let prod = Products.find((p) => p.id === selectedProd.id);
       if (prod !== undefined) {
         //setArticle(prod);
-        let { descripcion, precio, stock } = prod;
-        setPrecio(precio);
+        let { descripcion, prDolar, stock, ingreso } = prod;
+        setPrecio(prDolar);
         setDescription(descripcion);
         setStock(stock);
+        setIngreso(ingreso);
       }
     }
   }, []);
@@ -29,7 +31,8 @@ const ArticleModal = ({ btnType, handleOnSubmit, handleOnCancel }) => {
     } else if (event.target.name === "precio") {
       setPrecio(event.target.value);
     } else if (event.target.name === "stock") {
-      setStock(event.target.value);
+      if (btnType === "new") setStock(event.target.value);
+      return;
     }
   };
 
@@ -80,8 +83,9 @@ const ArticleModal = ({ btnType, handleOnSubmit, handleOnCancel }) => {
                 handleOnSubmit(btnType, {
                   id: selectedProd.id,
                   descripcion: Description,
-                  precio: Precio,
+                  prDolar: Precio,
                   stock: Stock,
+                  ingreso: Ingreso,
                 })
               }
             >

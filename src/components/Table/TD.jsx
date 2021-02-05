@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from "react-redux";
 
 const TD = ({
   text,
@@ -6,10 +7,10 @@ const TD = ({
   column,
   id,
   handleRowSelect,
-  selectedProd,
   handleOnDobleClick,
   handleOnChange,
 }) => {
+  const selectedProd = useSelector((state) => state.selectedProd);
   return (
     <td
       style={style(type, column)}

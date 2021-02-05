@@ -1,5 +1,6 @@
 const express = require("express");
 const article = require("../controllers/articleCotroller.js");
+const ventas = require("../controllers/ventasController");
 
 const router = express.Router();
 
@@ -24,6 +25,6 @@ router.delete("/delete/article/:id", article.delArticle);
 
 //--------------------Ventas-----------------------------------------
 //POST: Guardar venta
-router.post("/save/venta");
+router.post("/save/venta", ventas.saveRecipe);
 
 module.exports = router;

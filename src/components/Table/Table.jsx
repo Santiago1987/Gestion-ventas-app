@@ -8,7 +8,7 @@ const Table = ({
   titles = [],
   items = [],
   handleRowSelect,
-  selectedProd = {},
+  //selectedProd = {},
   handleOnDobleClick,
   handleOnChange,
 }) => {
@@ -22,7 +22,7 @@ const Table = ({
           columns={items}
           type={type}
           handleRowSelect={handleRowSelect}
-          selectedProd={selectedProd}
+          //selectedProd={selectedProd}
           handleOnDobleClick={handleOnDobleClick}
           handleOnChange={handleOnChange}
         />

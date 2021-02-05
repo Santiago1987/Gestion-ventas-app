@@ -27,7 +27,9 @@ const ProductsView = () => {
     dispatch(searchInput(val));
   };
   //-------------------------------------------------------------------------
-
+  const dolar = 70;
+  const porcLocal = 10;
+  const porcML = 25;
   //-----------------------------Modal--------------------------------------------
   const [type, setType] = useState("");
 
@@ -58,8 +60,30 @@ const ProductsView = () => {
 
       if (response._id !== 0) {
         let { _id, descripcion, stock, prDolar, ingreso } = response;
+        let prPesos =
+          Math.round((prDolar * dolar + Number.EPSILON) * 100) / 100;
+        let prLocal =
+          Math.round(
+            ((prDolar * dolar) / ((100 - 10) / porcLocal) + Number.EPSILON) *
+              100
+          ) / 100;
+        let prML =
+          Math.round(
+            (prDolar * dolar * (porcML / 100 + 1) + Number.EPSILON) * 100
+          ) / 100;
         dispatch(
-          loadProducts([{ id: _id, descripcion, stock, prDolar, ingreso }])
+          loadProducts([
+            {
+              id: _id,
+              descripcion,
+              stock,
+              prDolar,
+              ingreso,
+              prPesos,
+              prLocal,
+              prML,
+            },
+          ])
         );
       }
 

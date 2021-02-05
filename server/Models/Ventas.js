@@ -9,4 +9,4 @@ const recipe = new Schema({
   Descuento: { type: Number, require: true },
 });
 
-module.exports = mongoose("Recipe", recipe);
+module.exports = mongoose.model("Recipe", recipe);
