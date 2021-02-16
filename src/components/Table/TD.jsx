@@ -8,6 +8,7 @@ const TD = ({
   id,
   handleRowSelect,
   handleOnDobleClick,
+  handleKeyPress,
   handleOnChange,
 }) => {
   const selectedProd = useSelector((state) => state.selectedProd);
@@ -16,12 +17,21 @@ const TD = ({
       style={style(type, column)}
       className={selection(selectedProd, id, type)}
       onClick={() => handleRowSelect(id, type)}
-      onDoubleClick={() => handleOnDobleClick(id, column)}
-      contentEditable={column === "cant" || column === "ingreso" ? true : false}
-      suppressContentEditableWarning="true"
-      onChange={() => handleOnChange(id, column)}
+      onDoubleClick={() => handleOnDobleClick(id, column, text)}
+      //onKeyPress={handleKeyPress}
     >
-      {text}
+      {column === "ingreso" ? (
+        <input
+          id={id}
+          style={inpStyle(column)}
+          value={text}
+          onChange={handleOnChange}
+          onKeyUp={handleKeyPress}
+          type="text"
+        />
+      ) : (
+        text
+      )}
     </td>
   );
 };
@@ -76,6 +86,22 @@ function selection(selectedProd, idrow, usetable) {
       return id === idrow ? "bg-primary" : null;
     case "SALES":
       return id === idrow ? "bg-success" : null;
+    default:
+      return null;
+  }
+}
+
+function inpStyle(col) {
+  switch (col) {
+    case "ingreso":
+      return {
+        paddin: "1px",
+        margin: 0,
+        width: "100%",
+        borderRadius: "5px",
+        border: "1px solid black",
+        textAlign: "center",
+      };
     default:
       return null;
   }

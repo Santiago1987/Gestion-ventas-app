@@ -18,7 +18,9 @@ const SalesGrd = () => {
 
   const handleOnDobleClick = () => null;
 
-  const handleOnChange = (id) => null;
+  const handleOnChange = (id, column, text) => null;
+
+  const handleKeyPress = (id, column, text) => null;
 
   //------------------------------Variables-------------------------------------------
   let titles = {
@@ -71,6 +73,7 @@ const SalesGrd = () => {
             handleOnDobleClick={handleOnDobleClick}
             handleOnChange={handleOnChange}
             //selectedProd={selectedProd}
+            handleKeyPress={handleKeyPress}
           />
         </div>
       </div>

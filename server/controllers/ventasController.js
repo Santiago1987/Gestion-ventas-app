@@ -1,12 +1,14 @@
 const ventas = {};
 const Recipe = require("../Models/Ventas");
 const RecipeDetail = require("../Models/DetalleVentas");
+const Stock = require("../Models/Stock");
 
 //------------------------------------------------------------------------
 // POST: Guardar venta
 ventas.saveRecipe = async (req, res) => {
   let result = "";
   let resLn = "";
+
   let { refNum, fecha, totalPesos, totalDolares, descuento, lines } = req.body;
 
   let error = "";
@@ -35,6 +37,7 @@ ventas.saveRecipe = async (req, res) => {
         total,
       });
       resLn = await newLn.save();
+      await Stock.movement({ cant, razon: "venta", id });
     });
   } catch (err) {
     console.log("error", err);
@@ -44,7 +47,7 @@ ventas.saveRecipe = async (req, res) => {
   if (error === "") {
     res.status(200).json(lines);
   } else {
-    res.status(400).json({ _id: 0, error });
+    res.status(400).json({ id: 0, error });
   }
   return;
 };

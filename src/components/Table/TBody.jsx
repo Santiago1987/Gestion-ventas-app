@@ -8,6 +8,7 @@ const TBody = ({
   handleRowSelect,
   //selectedProd,
   handleOnDobleClick,
+  handleKeyPress,
   handleOnChange,
 }) => {
   let rown = 0;
@@ -21,6 +22,7 @@ const TBody = ({
           type={type}
           handleRowSelect={handleRowSelect}
           //selectedProd={selectedProd}
+          handleKeyPress={handleKeyPress}
           handleOnDobleClick={handleOnDobleClick}
           handleOnChange={handleOnChange}
         />

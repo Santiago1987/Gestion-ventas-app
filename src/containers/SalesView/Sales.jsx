@@ -100,9 +100,9 @@ const Sales = () => {
   };
 
   const getFecha = (date) => {
-    return `${addZero(date.getDate())}/${addZero(
+    return `${addZero(date.getDate())}-${addZero(
       date.getMonth() + 1
-    )}/${date.getFullYear()} ${addZero(date.getHours())}:${addZero(
+    )}-${date.getFullYear()} ${addZero(date.getHours())}:${addZero(
       date.getMinutes()
     )}:${addZero(date.getSeconds())}`;
   };

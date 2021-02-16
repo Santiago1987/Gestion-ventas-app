@@ -10,6 +10,7 @@ const Table = ({
   handleRowSelect,
   //selectedProd = {},
   handleOnDobleClick,
+  handleKeyPress,
   handleOnChange,
 }) => {
   return (
@@ -23,6 +24,7 @@ const Table = ({
           type={type}
           handleRowSelect={handleRowSelect}
           //selectedProd={selectedProd}
+          handleKeyPress={handleKeyPress}
           handleOnDobleClick={handleOnDobleClick}
           handleOnChange={handleOnChange}
         />

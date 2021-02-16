@@ -1,5 +1,6 @@
 const article = {};
 const Articulos = require("../Models/Articulos");
+const Stock = require("../Models/Stock");
 
 //------------------------------------------------------------------------
 // GET: Lista de articulos
@@ -49,7 +50,7 @@ article.saveArticle = (req, res) => {
 article.newArticle = async (req, res) => {
   const { descripcion, stock, prDolar, ingreso } = req.body;
 
-  let newArticle = Articulos({ descripcion, stock, prDolar, ingreso });
+  let newArticle = new Articulos({ descripcion, stock, prDolar, ingreso });
 
   let result = 0;
   try {
@@ -57,7 +58,7 @@ article.newArticle = async (req, res) => {
   } catch (err) {
     res.status(400).json({ _id: 0, err });
   }
-
+  console.log("result", result);
   res.status(200).send(result);
 
   return;
@@ -88,10 +89,17 @@ article.delArticle = async (req, res) => {
     result = await Articulos.deleteOne({ _id: id });
   } catch (err) {
     console.log("Error: ", err);
-    res.status(500).json({ id: 0 });
+    res.status(500).json({ id: 0, error: err });
+    return;
+  }
+  let idstk = Stock.delAllMov(id);
+  if (idstk === 0) {
+    res.status(500).json({ id: 0, error: "ERROR EN BORRADO DE STOCK" });
+    return;
   }
 
   res.status(200).send({ id });
+  return;
 };
 
 module.exports = article;

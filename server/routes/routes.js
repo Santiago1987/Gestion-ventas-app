@@ -1,6 +1,7 @@
 const express = require("express");
 const article = require("../controllers/articleCotroller.js");
 const ventas = require("../controllers/ventasController");
+const stock = require("../controllers/stockController");
 
 const router = express.Router();
 
@@ -26,5 +27,8 @@ router.delete("/delete/article/:id", article.delArticle);
 //--------------------Ventas-----------------------------------------
 //POST: Guardar venta
 router.post("/save/venta", ventas.saveRecipe);
+
+//--------------------Stock-----------------------------------------
+router.post("/save/stkmov", stock.saveMov);
 
 module.exports = router;

@@ -9,6 +9,7 @@ const TR = ({
   handleRowSelect,
   //selectedProd,
   handleOnDobleClick,
+  handleKeyPress,
   handleOnChange,
 }) => {
   let Hcol = headers ? Object.keys(headers) : [];
@@ -34,6 +35,7 @@ const TR = ({
               selected="false"
               handleRowSelect={handleRowSelect}
               //selectedProd={selectedProd}
+              handleKeyPress={handleKeyPress}
               handleOnDobleClick={handleOnDobleClick}
               handleOnChange={handleOnChange}
             />

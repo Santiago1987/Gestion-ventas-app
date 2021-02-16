@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { loadProducts, selectProd, addSalesProduct } from "../../actions";
+import {
+  loadProducts,
+  selectProd,
+  addSalesProduct,
+  updateProduct,
+} from "../../actions";
+import axios from "axios";
 
 import Table from "../../components/Table/Table";
 import { useHttp } from "../hooks/http";
@@ -39,7 +45,7 @@ const ProductGrd = () => {
           prPesos: Math.round((prDolar * dolar + Number.EPSILON) * 100) / 100,
           prLocal:
             Math.round(
-              ((prDolar * dolar) / ((100 - 10) / porcLocal) + Number.EPSILON) *
+              ((prDolar * dolar) / ((100 - porcLocal) / 100) + Number.EPSILON) *
                 100
             ) / 100,
           prML:
@@ -77,7 +83,33 @@ const ProductGrd = () => {
     );
   };
 
-  const handleOnChange = (id, column) => null;
+  const handleKeyPress = (e) => {
+    let { key } = e;
+    let { value, id } = e.target;
+    let response = null;
+
+    if (key === "Enter") {
+      axios
+        .post("http://localhost:3000/api/save/stkmov", { id, cant: value })
+        .then((res) => {
+          response = res.data;
+        })
+        .catch((err) => {
+          console.log("error", err);
+        });
+    }
+  };
+
+  const handleOnChange = (e) => {
+    let { value, id } = e.target;
+    let regex = new RegExp("^([0-9])*$");
+
+    if (value.length > 5 || !regex.test(value)) return;
+
+    let articulo = Products.find((pr) => pr.id === id);
+    articulo.ingreso = value;
+    dispatch(updateProduct(articulo));
+  };
 
   // Columns titles
   const titles = {
@@ -140,6 +172,7 @@ const ProductGrd = () => {
               handleRowSelect={handleRowSelect}
               //selectedProd={selectedProd}
               handleOnDobleClick={handleOnDobleClick}
+              handleKeyPress={handleKeyPress}
               handleOnChange={handleOnChange}
             />
           </div>
