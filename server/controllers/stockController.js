@@ -4,31 +4,42 @@ const Articulos = require("../Models/Articulos");
 
 stock.movement = async ({ cant, razon, id }) => {
   let today = new Date();
-  let result = {};
-  let article = Articulos.find({ _id: id });
+  let result,
+    resArt = {};
+
+  let article = await Articulos.findById(id);
 
   if (article === {}) return article;
+
   let { stock } = article;
-  let stkFinal = stock - cant;
+  let stkFinal = 0;
+
+  if (razon === "venta") {
+    stkFinal = parseInt(stock) - parseInt(cant);
+  } else if (razon === "ingreso") {
+    stkFinal = parseInt(stock) + parseInt(cant);
+    article.ingreso = cant;
+  }
 
   let newMov = {
     variacion: cant,
     razon,
     fecha: today,
     fechaSTR: getFecha(today),
-    artId: id,
+    artID: id,
     stkFinal,
   };
+
+  article.stock = stkFinal;
 
   let newStk = new Stock(newMov);
   try {
     result = await newStk.save();
+    resArt = await Articulos.updateOne({ _id: id }, article);
   } catch (err) {
     console.log("stock error: ", err);
     return article;
   }
-
-  article.stock = stkFinal;
 
   return article;
 };
@@ -46,13 +57,12 @@ stock.delAllMov = async ({ id }) => {
   return { id };
 };
 
-stock.saveMov = (req, res) => {
-  console.log("req.body", req.body);
+stock.saveMov = async (req, res) => {
   let { id, cant } = req.body;
 
-  let art = this.movement({ cant, razon: "ingreso", id });
+  let art = await stock.movement({ cant, razon: "ingreso", id });
 
-  res.status(200).json({ id, stock: art.stock });
+  res.status(200).json(art);
 };
 
 //------------------------------------------------------------------------

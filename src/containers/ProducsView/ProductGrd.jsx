@@ -83,13 +83,13 @@ const ProductGrd = () => {
     );
   };
 
-  const handleKeyPress = (e) => {
+  const handleKeyPress = async (e) => {
     let { key } = e;
     let { value, id } = e.target;
     let response = null;
 
     if (key === "Enter") {
-      axios
+      await axios
         .post("http://localhost:3000/api/save/stkmov", { id, cant: value })
         .then((res) => {
           response = res.data;
@@ -97,6 +97,11 @@ const ProductGrd = () => {
         .catch((err) => {
           console.log("error", err);
         });
+      let { _id, descripcion, ingreso, prDolar, stock } = response;
+      if (_id === 0) return; //errrrorrr
+      dispatch(
+        updateProduct({ id: _id, descripcion, ingreso, prDolar, stock })
+      );
     }
   };
 

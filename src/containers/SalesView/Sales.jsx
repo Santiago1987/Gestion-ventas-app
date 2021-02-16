@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { removeAllSalesProducts, removeSalesProduct } from "../../actions";
+import {
+  removeAllSalesProducts,
+  removeSalesProduct,
+  updateProduct,
+} from "../../actions";
 import Modal from "react-modal";
 import axios from "axios";
 
@@ -31,7 +35,7 @@ const Sales = () => {
     else if (type === "remove") dispatch(removeSalesProduct(selectedProd));
   };
 
-  const handleOnSubmit = (type, gridType) => {
+  const handleOnSubmit = async (type, gridType) => {
     let response = null;
     setSalModalOpen(false);
     if (gridType !== "SALES") return;
@@ -66,14 +70,14 @@ const Sales = () => {
 
       let ticket = {
         refNum: getRefNum(date, "001"),
-        fecha: getFecha(date),
+        fecha: getFechaReverce(date),
         totalPesos: total,
         totalDolares: totUS,
         descuento: 0,
         lines: artLines,
       };
 
-      axios
+      await axios
         .post(`http://localhost:3000/api/save/venta`, ticket)
         .then((res) => {
           response = res.data;
@@ -81,7 +85,17 @@ const Sales = () => {
         .catch((err) => {
           console.log(err);
         });
-      console.log("response", response);
+
+      response.map((res) => {
+        let { _id, descripcion, ingreso, prDolar, stock } = res;
+        if (_id === 0) return; //errror
+
+        dispatch(
+          updateProduct({ id: _id, descripcion, ingreso, prDolar, stock })
+        );
+      });
+
+      dispatch(removeAllSalesProducts());
     }
   };
 
@@ -105,6 +119,14 @@ const Sales = () => {
     )}-${date.getFullYear()} ${addZero(date.getHours())}:${addZero(
       date.getMinutes()
     )}:${addZero(date.getSeconds())}`;
+  };
+
+  const getFechaReverce = (date) => {
+    return `${date.getFullYear()}-${addZero(date.getMonth() + 1)}-${addZero(
+      date.getDate()
+    )} ${addZero(date.getHours())}:${addZero(date.getMinutes())}:${addZero(
+      date.getSeconds()
+    )}`;
   };
 
   const addZero = (num) => {

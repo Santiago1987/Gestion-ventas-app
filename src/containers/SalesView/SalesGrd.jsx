@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { selectProd } from "../../actions/";
+import { selectProd, updateSalesProduct } from "../../actions/";
 
 import Table from "../../components/Table/Table";
 
@@ -18,7 +18,15 @@ const SalesGrd = () => {
 
   const handleOnDobleClick = () => null;
 
-  const handleOnChange = (id, column, text) => null;
+  const handleOnChange = (e) => {
+    let { value, id } = e.target;
+    let regex = new RegExp("^([0-9])*$");
+
+    if (value.length > 5 || !regex.test(value)) return;
+    let articulo = salesProducts.find((pr) => pr.id === id);
+    articulo.cant = value;
+    dispatch(updateSalesProduct(articulo));
+  };
 
   const handleKeyPress = (id, column, text) => null;
 
@@ -56,6 +64,7 @@ const SalesGrd = () => {
               handleRowSelect={handleRowSelect}
               handleOnDobleClick={handleOnDobleClick}
               //selectedProd={selectedProd}
+              handleOnChange={handleOnChange}
             />
           </div>
         </div>

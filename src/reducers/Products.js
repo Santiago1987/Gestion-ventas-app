@@ -6,6 +6,7 @@ import {
   REMOVE_ALL_SALES_PRODUCTS,
   UPDATE_PRODUCT,
   DELETE_PRODUCT,
+  UPDATE_SALES_PRODUCT,
 } from "../actions/actionsList";
 
 const initialProducts = [];
@@ -60,6 +61,7 @@ export const salesProductsReducer = (
   state = initialSalesProducts,
   { type, payload }
 ) => {
+  let idx = null;
   switch (type) {
     case ADD_SALES_PRODUCT:
       let index = state.findIndex(
@@ -79,6 +81,17 @@ export const salesProductsReducer = (
       return state.filter((st) => st.id !== payload.id);
     case REMOVE_ALL_SALES_PRODUCTS:
       return [];
+    case UPDATE_SALES_PRODUCT:
+      idx = state.findIndex((s) => s.id === payload.id);
+      if (idx === -1) return state;
+
+      let { descr, precio, cant, total } = payload;
+
+      return [
+        ...state.slice(0, idx),
+        { ...state[idx], descr, precio, cant, total },
+        ...state.slice(idx + 1),
+      ];
     default:
       return state;
   }

@@ -20,7 +20,7 @@ const TD = ({
       onDoubleClick={() => handleOnDobleClick(id, column, text)}
       //onKeyPress={handleKeyPress}
     >
-      {column === "ingreso" ? (
+      {column === "ingreso" || column === "cant" ? (
         <input
           id={id}
           style={inpStyle(column)}
@@ -94,6 +94,15 @@ function selection(selectedProd, idrow, usetable) {
 function inpStyle(col) {
   switch (col) {
     case "ingreso":
+      return {
+        paddin: "1px",
+        margin: 0,
+        width: "100%",
+        borderRadius: "5px",
+        border: "1px solid black",
+        textAlign: "center",
+      };
+    case "cant":
       return {
         paddin: "1px",
         margin: 0,
