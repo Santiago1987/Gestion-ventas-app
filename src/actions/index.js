@@ -8,6 +8,7 @@ import {
   UPDATE_PRODUCT,
   DELETE_PRODUCT,
   UPDATE_SALES_PRODUCT,
+  SET_DOLAR,
 } from "./actionsList";
 
 export const loadProducts = (products) => ({
@@ -53,4 +54,9 @@ export const removeAllSalesProducts = () => ({
 export const updateSalesProduct = (salesProd) => ({
   type: UPDATE_SALES_PRODUCT,
   payload: salesProd,
+});
+
+export const setDolar = (value) => ({
+  type: SET_DOLAR,
+  payload: value,
 });

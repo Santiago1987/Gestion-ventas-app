@@ -19,6 +19,12 @@ const ProductsView = () => {
   const [prodModalOpen, setprodModalOpen] = useState(false);
   const dispatch = useDispatch();
   const selectedProd = useSelector((state) => state.selectedProd);
+  const {
+    REACT_APP_BACKEND_URL,
+    REACT_APP_SAVE_NEWARTICLE_URL,
+    REACT_APP_UPDATE_ARTICLE_URL,
+    REACT_APP_DELETE_ARTICLE_URL,
+  } = process.env;
 
   //------------------------------Search input-------------------------------------------
   const search = useSelector((state) => state.Search);
@@ -50,7 +56,10 @@ const ProductsView = () => {
     let response = null;
     if (type === "new") {
       await axios
-        .post("http://localhost:3000/api/save/newArticle", producto)
+        .post(
+          `${REACT_APP_BACKEND_URL}${REACT_APP_SAVE_NEWARTICLE_URL}`,
+          producto
+        )
         .then((res) => {
           response = res.data;
         })
@@ -92,7 +101,10 @@ const ProductsView = () => {
       let { id } = producto;
 
       await axios
-        .post(`http://localhost:3000/api/update/article/${id}`, producto)
+        .post(
+          `${REACT_APP_BACKEND_URL}${REACT_APP_UPDATE_ARTICLE_URL}${id}`,
+          producto
+        )
         .then((res) => {
           response = res.data;
         })
@@ -106,7 +118,7 @@ const ProductsView = () => {
     } else if (type === "delete") {
       let { id } = producto;
       await axios
-        .delete(`http://localhost:3000/api/delete/article/${id}`)
+        .delete(`${REACT_APP_BACKEND_URL}${REACT_APP_DELETE_ARTICLE_URL}${id}`)
         .then((res) => {
           response = res.data;
         })

@@ -18,6 +18,8 @@ const Sales = () => {
   const selectedProd = useSelector((state) => state.selectedProd);
   const salesProducts = useSelector((state) => state.salesProducts);
   const Products = useSelector((state) => state.Products);
+  const dolar = useSelector((state) => state.dolar.value);
+  const { REACT_APP_BACKEND_URL, REACT_APP_SAVE_VENTA_URL } = process.env;
 
   const dispatch = useDispatch();
 
@@ -78,7 +80,7 @@ const Sales = () => {
       };
 
       await axios
-        .post(`http://localhost:3000/api/save/venta`, ticket)
+        .post(`${REACT_APP_BACKEND_URL}${REACT_APP_SAVE_VENTA_URL}`, ticket)
         .then((res) => {
           response = res.data;
         })
@@ -149,7 +151,7 @@ const Sales = () => {
 
   let content = (
     <>
-      <SalesTop />
+      <SalesTop dolar={dolar} />
       <SalesGrd />
       <SalesFoot
         handleOnClickBtn={handleOnClickBtn}

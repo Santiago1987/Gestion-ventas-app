@@ -16,6 +16,11 @@ const ProductGrd = () => {
   const Products = useSelector((state) => state.Products);
   //const selectedProd = useSelector((state) => state.selectedProd);
   const Search = useSelector((state) => state.Search);
+  const {
+    REACT_APP_BACKEND_URL,
+    REACT_APP_ARTICLE_LIST_URL,
+    REACT_APP_SAVE_STKMOV_URL,
+  } = process.env;
 
   const dispatch = useDispatch();
   const dolar = 70;
@@ -24,7 +29,7 @@ const ProductGrd = () => {
 
   //const [Loading, setLoading] = useState(true);
   const [Loading, getData] = useHttp(
-    "http://localhost:3000/api/article/list",
+    `${REACT_APP_BACKEND_URL}${REACT_APP_ARTICLE_LIST_URL}`,
     [],
     "GET",
     null
@@ -90,7 +95,10 @@ const ProductGrd = () => {
 
     if (key === "Enter") {
       await axios
-        .post("http://localhost:3000/api/save/stkmov", { id, cant: value })
+        .post(`${REACT_APP_BACKEND_URL}${REACT_APP_SAVE_STKMOV_URL}`, {
+          id,
+          cant: value,
+        })
         .then((res) => {
           response = res.data;
         })

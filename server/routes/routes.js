@@ -31,4 +31,9 @@ router.post("/save/venta", ventas.saveRecipe);
 //--------------------Stock-----------------------------------------
 router.post("/save/stkmov", stock.saveMov);
 
+//--------------------Settings-----------------------------------------
+router.get("/settings");
+
+router.post("/save/stkmov", stock.saveMov);
+
 module.exports = router;
