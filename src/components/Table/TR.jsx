@@ -2,6 +2,8 @@ import React from "react";
 import TH from "./TH";
 import TD from "./TD";
 
+import withStyleAndSelect from "../HOC/withStyleAndSelect";
+
 const TR = ({
   columns = null,
   headers = null,
@@ -25,21 +27,25 @@ const TR = ({
           ))
         : null}
       {Bcol.length > 0
-        ? Bcol.map((col) => (
-            <TD
-              key={coln++}
-              column={col}
-              text={columns[col]}
-              type={type}
-              id={columns["id"]}
-              selected="false"
-              handleRowSelect={handleRowSelect}
-              //selectedProd={selectedProd}
-              handleKeyPress={handleKeyPress}
-              handleOnDobleClick={handleOnDobleClick}
-              handleOnChange={handleOnChange}
-            />
-          ))
+        ? Bcol.map((col) => {
+            const td = withStyleAndSelect(
+              <TD
+                key={coln++}
+                column={col}
+                text={columns[col]}
+                type={type}
+                id={columns["id"]}
+                selected="false"
+                handleRowSelect={handleRowSelect}
+                //selectedProd={selectedProd}
+                handleKeyPress={handleKeyPress}
+                handleOnDobleClick={handleOnDobleClick}
+                handleOnChange={handleOnChange}
+              />
+            );
+            console.log("td", td);
+            return td;
+          })
         : null}
     </tr>
   );
