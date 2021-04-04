@@ -2,6 +2,7 @@ const express = require("express");
 const article = require("../controllers/articleCotroller.js");
 const ventas = require("../controllers/ventasController");
 const stock = require("../controllers/stockController");
+const settings = require("../controllers/settingsController");
 
 const router = express.Router();
 
@@ -32,8 +33,10 @@ router.post("/save/venta", ventas.saveRecipe);
 router.post("/save/stkmov", stock.saveMov);
 
 //--------------------Settings-----------------------------------------
-router.get("/settings");
+//GET: obtener los settings
+router.get("/settings", settings.getSettings);
 
-router.post("/save/stkmov", stock.saveMov);
+//POST: Guardar settings
+router.post("/settings/save", settings.saveSettings);
 
 module.exports = router;

@@ -5,7 +5,7 @@ const initialDolar = { value: 0 };
 const dolarReducer = (state = initialDolar, { type, payload }) => {
   switch (type) {
     case SET_DOLAR:
-      return { ...state, value: payload };
+      return { ...state, ...payload };
     default:
       return state;
   }

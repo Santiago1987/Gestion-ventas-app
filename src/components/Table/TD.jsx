@@ -12,6 +12,85 @@ const TD = ({
   handleOnChange,
 }) => {
   const selectedProd = useSelector((state) => state.selectedProd);
+
+  const style = (type, column) => {
+    if (type === "PRODUCTS") {
+      switch (column) {
+        case "id":
+          return { display: "none" };
+        case "ingreso":
+          return { width: "10%", textAlign: "center", verticalAlign: "middle" };
+        case "stock":
+          return { width: "10%", textAlign: "center", verticalAlign: "middle" };
+        case "descr":
+          return { width: "24%", textAlign: "start", verticalAlign: "middle" };
+        case "PUS":
+        case "PP":
+        case "PL":
+        case "PML":
+          return { width: "14%", textAlign: "right", verticalAlign: "middle" };
+        default:
+          return null;
+      }
+    } else if (type === "SALES") {
+      switch (column) {
+        case "id":
+          return {
+            width: "5%",
+            textAlign: "center",
+            display: "none",
+            verticalAlign: "middle",
+          };
+        case "descr":
+          return { width: "44%", textAlign: "start", verticalAlign: "middle" };
+        case "precio":
+        case "cant":
+        case "total":
+          return { width: "14%", textAlign: "center", verticalAlign: "middle" };
+        default:
+          return null;
+      }
+    }
+  };
+
+  const selection = (selectedProd, idrow, usetable) => {
+    let { id, table } = selectedProd;
+    if (usetable !== table) return null;
+    switch (table) {
+      case "PRODUCTS":
+        return id === idrow ? "bg-primary" : null;
+      case "SALES":
+        return id === idrow ? "bg-success" : null;
+      default:
+        return null;
+    }
+  };
+
+  const inpStyle = (col) => {
+    switch (col) {
+      case "ingreso":
+        return {
+          paddin: "1px",
+          margin: 0,
+          width: "100%",
+          borderRadius: "5px",
+          border: "1px solid black",
+          textAlign: "center",
+        };
+      case "cant":
+        return {
+          paddin: "1px",
+          margin: 0,
+          width: "100%",
+          borderRadius: "5px",
+          border: "1px solid black",
+          textAlign: "center",
+        };
+      default:
+        return null;
+    }
+  };
+
   return (
     <td
       style={style(type, column)}
@@ -37,81 +116,3 @@ const TD = ({
 };
 
 export default TD;
-
-function style(type, column) {
-  if (type === "PRODUCTS") {
-    switch (column) {
-      case "id":
-        return { display: "none" };
-      case "ingreso":
-        return { width: "10%", textAlign: "center", verticalAlign: "middle" };
-      case "stock":
-        return { width: "10%", textAlign: "center", verticalAlign: "middle" };
-      case "descr":
-        return { width: "24%", textAlign: "start", verticalAlign: "middle" };
-      case "PUS":
-      case "PP":
-      case "PL":
-      case "PML":
-        return { width: "14%", textAlign: "right", verticalAlign: "middle" };
-      default:
-        return null;
-    }
-  } else if (type === "SALES") {
-    switch (column) {
-      case "id":
-        return {
-          width: "5%",
-          textAlign: "center",
-          display: "none",
-          verticalAlign: "middle",
-        };
-      case "descr":
-        return { width: "44%", textAlign: "start", verticalAlign: "middle" };
-      case "precio":
-      case "cant":
-      case "total":
-        return { width: "14%", textAlign: "center", verticalAlign: "middle" };
-      default:
-        return null;
-    }
-  }
-}
-
-function selection(selectedProd, idrow, usetable) {
-  let { id, table } = selectedProd;
-  if (usetable !== table) return null;
-  switch (table) {
-    case "PRODUCTS":
-      return id === idrow ? "bg-primary" : null;
-    case "SALES":
-      return id === idrow ? "bg-success" : null;
-    default:
-      return null;
-  }
-}
-
-function inpStyle(col) {
-  switch (col) {
-    case "ingreso":
-      return {
-        paddin: "1px",
-        margin: 0,
-        width: "100%",
-        borderRadius: "5px",
-        border: "1px solid black",
-        textAlign: "center",
-      };
-    case "cant":
-      return {
-        paddin: "1px",
-        margin: 0,
-        width: "100%",
-        borderRadius: "5px",
-        border: "1px solid black",
-        textAlign: "center",
-      };
-    default:
-      return null;
-  }
-}
