@@ -5,7 +5,6 @@ import axios from "axios";
 import { useHttpMeth } from "../hooks/HttpMeth";
 
 const SalesTop = () => {
-  const { REACT_APP_BACKEND_URL, REACT_APP_SAVE_DOLAR } = process.env;
   const [value, setValue] = useState(0);
 
   const dolar = useSelector((state) => state.dolar);
