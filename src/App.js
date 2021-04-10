@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import Nav from "./components/Nav/Nav";
-import ProductView from "./containers/ProducsView/ProductsList";
-import Sales from "./containers/SalesView/Sales";
+import Main from "./components/MainComponents/Main";
+import Estadisticas from "./components/MainComponents/Estadisticas";
 
 import "./styles.css";
 
@@ -11,19 +12,13 @@ Modal.setAppElement("#root");
 
 function App() {
   return (
-    <div>
+    <Router>
       <Nav />
-      <div className="container-fluid">
-        <div className="row">
-          <div className="col-sm">
-            <ProductView />
-          </div>
-          <div className="col-sm">
-            <Sales />
-          </div>
-        </div>
-      </div>
-    </div>
+      <Switch>
+        <Route path="/main" exact component={Main} />
+        <Route path="/estadisticas" exact component={Estadisticas} />
+      </Switch>
+    </Router>
   );
 }
 
