@@ -22,21 +22,21 @@ const Nav = () => {
         <ul className="navbar-nav mr-auto">
           <li className="nav-item active">
             <Link to="/main">
-              <a className="nav-link" href="#">
+              <span className="nav-link" href="#">
                 Home
-              </a>
+              </span>
             </Link>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="#">
+            <span className="nav-link" href="#">
               Settings
-            </a>
+            </span>
           </li>
           <li className="nav-item">
             <Link to="/estadisticas">
-              <a className="nav-link" href="#">
+              <span className="nav-link" href="#">
                 Estadisticas
-              </a>
+              </span>
             </Link>
           </li>
         </ul>

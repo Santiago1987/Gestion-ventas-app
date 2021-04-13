@@ -1,14 +1,5 @@
 import React from "react";
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-} from "recharts";
+import Graph from "../../containers/Graphs/Graph";
 
 const Estadisticas = () => {
   const data = [
@@ -58,30 +49,16 @@ const Estadisticas = () => {
   return (
     <div className="estadisticas">
       <div className="options">
-        <div>
+        <div className="optionFilters">
           <h3>Opciones</h3>
         </div>
       </div>
       <div className="filters">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur velit
-        ea tempora sapiente suscipit animi quis vel culpa recusandae
+        <h3>Filtros</h3>
       </div>
       <div className="grafico">
         <div className="chart">
-          <LineChart
-            width={1300}
-            height={600}
-            data={data}
-            margin={{ top: 50, right: 30, left: 20, bottom: 5 }}
-          >
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
-            <YAxis />
-            <Tooltip />
-            <Legend />
-            <Line type="monotone" dataKey="pv" stroke="#8884d8" />
-            <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
-          </LineChart>
+          <Graph data={data} />
         </div>
         <div className="datos">Lorem ipsum dolor sit.</div>
       </div>
