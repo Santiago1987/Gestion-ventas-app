@@ -3,6 +3,7 @@ const article = require("../controllers/articleCotroller.js");
 const ventas = require("../controllers/ventasController");
 const stock = require("../controllers/stockController");
 const settings = require("../controllers/settingsController");
+const estadisticas = require("../controllers/estadisticasController");
 
 const router = express.Router();
 
@@ -40,3 +41,7 @@ router.get("/settings", settings.getSettings);
 router.post("/settings/save", settings.saveSettings);
 
 module.exports = router;
+
+//--------------------Estadisticas-----------------------------------------
+
+router.get("/estadisticas/ventas", estadisticas.getVentas);

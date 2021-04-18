@@ -32,7 +32,8 @@ const TD = ({
         default:
           return null;
       }
-    } else if (type === "SALES") {
+    }
+    if (type === "SALES") {
       switch (column) {
         case "id":
           return {
@@ -47,6 +48,16 @@ const TD = ({
         case "cant":
         case "total":
           return { width: "14%", textAlign: "center", verticalAlign: "middle" };
+        default:
+          return null;
+      }
+    }
+    if (type === "ESTVENTAS") {
+      switch (column) {
+        case "totalPesos":
+          return { textAlign: "center" };
+        case "totalDolares":
+          return { textAlign: "center" };
         default:
           return null;
       }

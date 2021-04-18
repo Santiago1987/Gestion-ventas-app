@@ -41,6 +41,8 @@ function style(type) {
       return "table table-hover";
     case "SALES":
       return "table table-hover";
+    case "ESTVENTAS":
+      return "table table-striped";
     default:
       return null;
   }

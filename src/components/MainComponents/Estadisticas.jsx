@@ -1,57 +1,34 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Graph from "../../containers/Graphs/Graph";
+import Opciones from "../../containers/Graphs/Opciones";
+import Data from "../../containers/Graphs/Data";
+import { useHttp } from "../../containers/hooks/http";
 
 const Estadisticas = () => {
-  const data = [
-    {
-      name: "Page A",
-      uv: 4000,
-      pv: 2400,
-      amt: 2400,
-    },
-    {
-      name: "Page B",
-      uv: 3000,
-      pv: 1398,
-      amt: 2210,
-    },
-    {
-      name: "Page C",
-      uv: 2000,
-      pv: 9800,
-      amt: 2290,
-    },
-    {
-      name: "Page D",
-      uv: 2780,
-      pv: 3908,
-      amt: 2000,
-    },
-    {
-      name: "Page E",
-      uv: 1890,
-      pv: 4800,
-      amt: 2181,
-    },
-    {
-      name: "Page F",
-      uv: 2390,
-      pv: 3800,
-      amt: 2500,
-    },
-    {
-      name: "Page G",
-      uv: 3490,
-      pv: 4300,
-      amt: 2100,
-    },
-  ];
+  const [data, setData] = useState([]);
+
+  const { REACT_APP_BACKEND_URL, REACT_APP_ESTADISTICAS_VENTAS } = process.env;
+
+  const [Loading, getData] = useHttp(
+    `${REACT_APP_BACKEND_URL}${REACT_APP_ESTADISTICAS_VENTAS}`,
+    [],
+    "GET",
+    null
+  );
+
+  useEffect(() => {
+    if (getData !== null) {
+      let { data } = getData;
+      setData(data);
+    }
+  }, [getData]);
+
+  console.log("Loading", Loading);
+
   return (
     <div className="estadisticas">
       <div className="options">
-        <div className="optionFilters">
-          <h3>Opciones</h3>
-        </div>
+        <Opciones />
       </div>
       <div className="filters">
         <h3>Filtros</h3>
@@ -60,7 +37,9 @@ const Estadisticas = () => {
         <div className="chart">
           <Graph data={data} />
         </div>
-        <div className="datos">Lorem ipsum dolor sit.</div>
+        <div className="datos">
+          <Data data={data} type="ESTVENTAS" />
+        </div>
       </div>
     </div>
   );
