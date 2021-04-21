@@ -22,9 +22,7 @@ const BarGraph = ({ data }) => {
         <XAxis dataKey="fecha" />
         <YAxis />
         <Tooltip />
-        <Legend />
-        <Bar dataKey="totalPesos" fill="#8884d8" />
-        <Bar dataKey="totalDolares" fill="#82ca9d" />
+        <Bar dataKey="total" fill="#0c5af6" />
       </BarChart>
     </>
   );

@@ -18,13 +18,11 @@ const LineGraph = ({ data }) => {
         data={data}
         margin={{ top: 50, right: 30, left: 20, bottom: 5 }}
       >
-        <CartesianGrid strokeDasharray="3 3" />
+        <CartesianGrid stroke="#eee" strokeDasharray="3 3" />
         <XAxis dataKey="fecha" />
-        <YAxis />
+        <YAxis dataKey="total" />
         <Tooltip />
-        <Legend />
-        <Line type="monotone" dataKey="totalPesos" stroke="#8884d8" />
-        <Line type="monotone" dataKey="totalDolares" stroke="#82ca9d" />
+        <Line type="monotone" dataKey="total" stroke="#8884d8" />
       </LineChart>
     </>
   );

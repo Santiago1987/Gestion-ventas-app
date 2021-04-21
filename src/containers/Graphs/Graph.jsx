@@ -1,32 +1,54 @@
 import React, { useState, useEffect } from "react";
 import LineGraph from "../../containers/Graphs/LineGraph";
 import BarGraph from "../../containers/Graphs/BarGraph";
+import GraphFooter from "../../containers/Graphs/GraphFooter";
 
 const Graph = ({ data }) => {
   const [content, setContent] = useState(<p>Loading....</p>);
-  const [type, setType] = useState("Line");
+  const [type, setType] = useState("Bar");
+  const [moneda, setMoneda] = useState("pesos");
+
+  let datos = [];
 
   useEffect(() => {
-    if (type === "Bar") setContent(<BarGraph data={data} />);
-    else if (type === "Line") setContent(<LineGraph data={data} />);
-  }, [data]);
+    if (data.length !== 0) {
+      data.map((dat) => {
+        let { fecha, totalPesos, totalDolares } = dat;
+
+        if (moneda === "pesos") {
+          datos.push({ fecha, total: totalPesos });
+          return;
+        }
+        if (moneda === "dolar") {
+          datos.push({ fecha, total: totalDolares });
+        }
+      });
+    }
+
+    if (type === "Bar") setContent(<BarGraph data={datos} />);
+    else if (type === "Line") setContent(<LineGraph data={datos} />);
+  }, [data, type, moneda]);
 
   const handleOnClickBtn = (type) => {
     if (type === "Bar") {
-      setContent(<BarGraph data={data} />);
+      setContent(<BarGraph data={datos} />);
       setType("Bar");
       return;
     }
     if (type === "Line") {
-      setContent(<LineGraph data={data} />);
+      setContent(<LineGraph data={datos} />);
       setType("Line");
       return;
     }
   };
 
+  const handleOnClickBtnMoneda = (type) => {
+    setMoneda(type);
+  };
+
   return (
     <div className="d-flex flex-column align-items-center">
-      <h3 className="p-3">Grafico de linea</h3>
+      <h3 className="p-3">Total en ventas</h3>
       <div className="d-flex">
         <button
           type="button"
@@ -39,7 +61,7 @@ const Graph = ({ data }) => {
           style={{ width: "150px" }}
           onClick={() => handleOnClickBtn("Line")}
         >
-          Line Graph
+          Lineas
         </button>
         <button
           type="button"
@@ -52,10 +74,15 @@ const Graph = ({ data }) => {
           style={{ width: "150px" }}
           onClick={() => handleOnClickBtn("Bar")}
         >
-          Bar Graph
+          Barras
         </button>
       </div>
       {content}
+      <GraphFooter
+        data={datos}
+        moneda={moneda}
+        handleOnClickBtnMoneda={handleOnClickBtnMoneda}
+      />
     </div>
   );
 };

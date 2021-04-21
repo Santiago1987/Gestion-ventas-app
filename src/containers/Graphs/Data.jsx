@@ -19,12 +19,28 @@ const Data = ({ data, type }) => {
     };
   }
 
+  const handleRowSelect = (id, table) => {};
+
+  const handleOnDobleClick = () => null;
+
+  const handleOnChange = (e) => {};
+
+  const handleKeyPress = (id, column, text) => null;
+
   if (datos.length === 0) {
     content = <p>Loading...</p>;
   } else {
     content = (
       <div className="d-flex">
-        <Table type={type} titles={titles} items={data} />
+        <Table
+          type={type}
+          titles={titles}
+          items={data}
+          handleRowSelect={handleRowSelect}
+          handleOnDobleClick={handleOnDobleClick}
+          handleOnChange={handleOnChange}
+          handleKeyPress={handleKeyPress}
+        />
       </div>
     );
   }

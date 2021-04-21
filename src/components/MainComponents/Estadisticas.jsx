@@ -1,29 +1,53 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import Graph from "../../containers/Graphs/Graph";
 import Opciones from "../../containers/Graphs/Opciones";
 import Data from "../../containers/Graphs/Data";
-import { useHttp } from "../../containers/hooks/http";
+import Filtros from "../../containers/Graphs/Filtros";
+
+import moment from "moment";
 
 const Estadisticas = () => {
   const [data, setData] = useState([]);
+  const [refresh, setFresh] = useState(false);
+
+  const [frDate, setFrDate] = useState(
+    moment(new Date()).add(-1, "months").format("YYYY-MM-DD")
+  );
+  const [toDate, setToDate] = useState(moment(new Date()).format("YYYY-MM-DD"));
 
   const { REACT_APP_BACKEND_URL, REACT_APP_ESTADISTICAS_VENTAS } = process.env;
 
-  const [Loading, getData] = useHttp(
-    `${REACT_APP_BACKEND_URL}${REACT_APP_ESTADISTICAS_VENTAS}`,
-    [],
-    "GET",
-    null
-  );
-
   useEffect(() => {
-    if (getData !== null) {
-      let { data } = getData;
-      setData(data);
-    }
-  }, [getData]);
+    getDatos();
+  }, [refresh]);
 
-  console.log("Loading", Loading);
+  const handleOnClickRefresh = (ref) => {
+    setFresh(ref);
+  };
+
+  const getDatos = async () => {
+    await axios
+      .get(`${REACT_APP_BACKEND_URL}${REACT_APP_ESTADISTICAS_VENTAS}`, {
+        params: { frDate, toDate },
+      })
+      .then((res) => {
+        setData(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const handleOnChangeFrDate = (e) => {
+    let { value } = e.target;
+    setFrDate(value);
+  };
+
+  const handleOnChangeToDate = (e) => {
+    let { value } = e.target;
+    setToDate(value);
+  };
 
   return (
     <div className="estadisticas">
@@ -31,7 +55,15 @@ const Estadisticas = () => {
         <Opciones />
       </div>
       <div className="filters">
-        <h3>Filtros</h3>
+        <Filtros
+          data={data}
+          refresh={refresh}
+          handleOnClickRefresh={handleOnClickRefresh}
+          frDate={frDate}
+          toDate={toDate}
+          handleOnChangeFrDate={handleOnChangeFrDate}
+          handleOnChangeToDate={handleOnChangeToDate}
+        />
       </div>
       <div className="grafico">
         <div className="chart">
@@ -45,4 +77,4 @@ const Estadisticas = () => {
   );
 };
 
-export default Estadisticas;
+export default React.memo(Estadisticas);

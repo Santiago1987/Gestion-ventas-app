@@ -12,8 +12,10 @@ estdisticas.getVentas = async (req, res) => {
   let response = null;
   let error = "";
   let result = [];
-  let { frDate, toDate } = req.body;
+  let { frDate, toDate } = req.query;
   const today = new Date();
+
+  if (toDate) toDate = moment(toDate + " 23:59:59");
 
   if (!toDate) toDate = moment(new Date());
   if (!frDate) frDate = moment(new Date()).add(-1, "months");
