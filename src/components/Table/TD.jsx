@@ -62,6 +62,19 @@ const TD = ({
           return null;
       }
     }
+
+    if (type === "STOCK") {
+      switch (column) {
+        case "_id":
+          return { display: "none" };
+        case "descripcion":
+          return { textAlign: "left", verticalAlign: "middle", width: "75%" };
+        case "stock":
+          return { textAlign: "center", verticalAlign: "middle", width: "25%" };
+        default:
+          return null;
+      }
+    }
   };
 
   const selection = (selectedProd, idrow, usetable) => {

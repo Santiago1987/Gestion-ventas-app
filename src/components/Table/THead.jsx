@@ -17,6 +17,8 @@ function style(type) {
       return "thead-dark";
     case "SALES":
       return "thead-dark";
+    case "STOCK":
+      return "thead-dark";
     default:
       return null;
   }

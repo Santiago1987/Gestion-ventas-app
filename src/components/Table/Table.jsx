@@ -43,6 +43,8 @@ function style(type) {
       return "table table-hover";
     case "ESTVENTAS":
       return "table table-striped";
+    case "STOCK":
+      return "table table-striped";
     default:
       return null;
   }

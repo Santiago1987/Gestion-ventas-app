@@ -6,6 +6,7 @@ import Data from "../../containers/Graphs/Data";
 import Filtros from "../../containers/Graphs/Filtros";
 
 import moment from "moment";
+import Stock from "../../containers/Stock/Stock";
 
 const Estadisticas = () => {
   const {
@@ -80,25 +81,33 @@ const Estadisticas = () => {
       <div className="options">
         <Opciones handleOnClickOpt={handleOnClickOpt} />
       </div>
-      <div className="filters">
-        <Filtros
-          data={data}
-          refresh={refresh}
-          handleOnClickRefresh={handleOnClickRefresh}
-          frDate={frDate}
-          toDate={toDate}
-          handleOnChangeFrDate={handleOnChangeFrDate}
-          handleOnChangeToDate={handleOnChangeToDate}
-        />
-      </div>
-      <div className="grafico">
-        <div className="chart">
-          <Graph data={data} opcion={opcion} />
+      {opcion == "Ventas" ? (
+        <>
+          <div className="filters">
+            <Filtros
+              data={data}
+              refresh={refresh}
+              handleOnClickRefresh={handleOnClickRefresh}
+              frDate={frDate}
+              toDate={toDate}
+              handleOnChangeFrDate={handleOnChangeFrDate}
+              handleOnChangeToDate={handleOnChangeToDate}
+            />
+          </div>
+          <div className="grafico">
+            <div className="chart">
+              <Graph data={data} opcion={opcion} />
+            </div>
+            <div className="datos">
+              <Data data={data} type="ESTVENTAS" />
+            </div>
+          </div>
+        </>
+      ) : (
+        <div className="container-fluid w-50">
+          <Stock data={data} />
         </div>
-        <div className="datos">
-          <Data data={data} type="ESTVENTAS" />
-        </div>
-      </div>
+      )}
     </div>
   );
 };

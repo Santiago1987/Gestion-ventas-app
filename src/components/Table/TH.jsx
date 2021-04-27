@@ -29,7 +29,8 @@ function style(type, column) {
       default:
         return null;
     }
-  } else if (type === "SALES") {
+  }
+  if (type === "SALES") {
     switch (column) {
       case "id":
         return { width: "5%", textAlign: "center", display: "none" };
@@ -39,6 +40,18 @@ function style(type, column) {
       case "cant":
       case "total":
         return { width: "14%", textAlign: "center" };
+      default:
+        return null;
+    }
+  }
+  if (type === "STOCK") {
+    switch (column) {
+      case "id":
+        return { display: "none" };
+      case "descripcion":
+        return { textAlign: "center", verticalAlign: "middle", width: "75%" };
+      case "stock":
+        return { textAlign: "center", verticalAlign: "middle", width: "25%" };
       default:
         return null;
     }
