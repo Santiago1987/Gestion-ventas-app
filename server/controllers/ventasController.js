@@ -2,6 +2,7 @@ const ventas = {};
 const Recipe = require("../Models/Ventas");
 const RecipeDetail = require("../Models/DetalleVentas");
 const stock = require("../controllers/stockController");
+const moment = require("moment");
 
 //------------------------------------------------------------------------
 // POST: Guardar venta
@@ -16,7 +17,7 @@ ventas.saveRecipe = async (req, res) => {
   let error = "";
   let newRecipe = new Recipe({
     refNum,
-    fecha,
+    fecha: moment.parseZone(fecha).local(),
     totalPesos,
     totalDolares,
     descuento,

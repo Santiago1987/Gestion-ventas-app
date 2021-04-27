@@ -8,6 +8,12 @@ import Filtros from "../../containers/Graphs/Filtros";
 import moment from "moment";
 
 const Estadisticas = () => {
+  const {
+    REACT_APP_BACKEND_URL,
+    REACT_APP_ESTADISTICAS_VENTAS,
+    REACT_APP_ESTADISTICAS_STOCK,
+  } = process.env;
+
   const [data, setData] = useState([]);
   const [refresh, setFresh] = useState(false);
 
@@ -15,22 +21,26 @@ const Estadisticas = () => {
     moment(new Date()).add(-1, "months").format("YYYY-MM-DD")
   );
   const [toDate, setToDate] = useState(moment(new Date()).format("YYYY-MM-DD"));
+  const [opcion, setOpcion] = useState("Ventas");
 
-  const { REACT_APP_BACKEND_URL, REACT_APP_ESTADISTICAS_VENTAS } = process.env;
+  const [url, setUrl] = useState(
+    `${REACT_APP_BACKEND_URL}${REACT_APP_ESTADISTICAS_VENTAS}`,
+    {
+      params: { frDate, toDate },
+    }
+  );
 
   useEffect(() => {
-    getDatos();
-  }, [refresh]);
+    getDatos(url);
+  }, [refresh, url]);
 
   const handleOnClickRefresh = (ref) => {
     setFresh(ref);
   };
 
-  const getDatos = async () => {
+  const getDatos = async (url) => {
     await axios
-      .get(`${REACT_APP_BACKEND_URL}${REACT_APP_ESTADISTICAS_VENTAS}`, {
-        params: { frDate, toDate },
-      })
+      .get(url)
       .then((res) => {
         setData(res.data);
       })
@@ -49,10 +59,26 @@ const Estadisticas = () => {
     setToDate(value);
   };
 
+  const handleOnClickOpt = (type) => {
+    if (type == "Ventas") {
+      setUrl(`${REACT_APP_BACKEND_URL}${REACT_APP_ESTADISTICAS_VENTAS}`, {
+        params: { frDate, toDate },
+      });
+      setOpcion(type);
+      return;
+    }
+
+    if (type == "Stock") {
+      setUrl(`${REACT_APP_BACKEND_URL}${REACT_APP_ESTADISTICAS_STOCK}`);
+      setOpcion(type);
+      return;
+    }
+  };
+
   return (
     <div className="estadisticas">
       <div className="options">
-        <Opciones />
+        <Opciones handleOnClickOpt={handleOnClickOpt} />
       </div>
       <div className="filters">
         <Filtros
@@ -67,7 +93,7 @@ const Estadisticas = () => {
       </div>
       <div className="grafico">
         <div className="chart">
-          <Graph data={data} />
+          <Graph data={data} opcion={opcion} />
         </div>
         <div className="datos">
           <Data data={data} type="ESTVENTAS" />

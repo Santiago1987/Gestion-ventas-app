@@ -45,3 +45,5 @@ module.exports = router;
 //--------------------Estadisticas-----------------------------------------
 
 router.get("/estadisticas/ventas", estadisticas.getVentas);
+
+router.get("/estadisticas/stock", estadisticas.getStock);

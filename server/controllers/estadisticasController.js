@@ -13,7 +13,6 @@ estdisticas.getVentas = async (req, res) => {
   let error = "";
   let result = [];
   let { frDate, toDate } = req.query;
-  const today = new Date();
 
   if (toDate) toDate = moment(toDate + " 23:59:59");
 
@@ -62,6 +61,69 @@ estdisticas.getVentas = async (req, res) => {
   });
 
   res.send(result).status(200);
+  return;
+};
+
+// STOCK FINALES DE LOS ARTICULOS
+estdisticas.getStock = async (req, res) => {
+  let response = null;
+  let result = [];
+  let error = "";
+
+  try {
+    response = await Articulos.find();
+  } catch (err) {
+    console.log("error " + err);
+    error = "error " + err;
+  }
+
+  if (error !== "") {
+    res.send(error).status(500);
+    return;
+  }
+
+  if (response.length > 0) {
+    result = response.map((stk) => {
+      let { _id, descripcion, stock } = stk;
+      return { _id, descripcion, stock };
+    });
+  }
+
+  res.send(result).status(200);
+  return;
+};
+
+estdisticas.getMovimientosStock = async (req, res) => {
+  let response = null;
+  let result = [];
+  let error = "";
+  let { frDate, toDate } = req.query;
+  if (toDate) toDate = moment(toDate + " 23:59:59");
+
+  if (!toDate) toDate = moment(new Date());
+  if (!frDate) frDate = moment(new Date()).add(-15, "days");
+
+  try {
+    response = await Stock.find({ fecha: { $gte: frDate, $lte: toDate } });
+  } catch (err) {
+    console.log("error " + err);
+    error = "error " + err;
+  }
+
+  if (error !== "") {
+    res.send(error).status(500);
+    return;
+  }
+
+  if (response.length > 0) {
+    result = response.map((stk) => {
+      let { variacion, razon, fecha, artID, stkFinal } = stk;
+      return { variacion, razon, fecha, artID, stkFinal };
+    });
+  }
+
+  res.send(result).status(200);
+  return;
 };
 
 module.exports = estdisticas;

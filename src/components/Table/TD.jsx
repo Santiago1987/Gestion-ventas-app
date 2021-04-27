@@ -102,6 +102,10 @@ const TD = ({
     }
   };
 
+  const handleOnClickInput = (e) => {
+    e.target.select();
+  };
+
   return (
     <td
       style={style(type, column)}
@@ -117,6 +121,7 @@ const TD = ({
           value={text}
           onChange={handleOnChange}
           onKeyUp={handleKeyPress}
+          onClick={handleOnClickInput}
           type="text"
         />
       ) : (
