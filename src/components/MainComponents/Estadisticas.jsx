@@ -4,6 +4,7 @@ import Graph from "../../containers/Graphs/Graph";
 import Opciones from "../../containers/Graphs/Opciones";
 import Data from "../../containers/Graphs/Data";
 import Filtros from "../../containers/Graphs/Filtros";
+import VentasDetalle from "../../containers/Detalle Ventas/VentasDetalle";
 
 import moment from "moment";
 import Stock from "../../containers/Stock/Stock";
@@ -25,23 +26,23 @@ const Estadisticas = () => {
   const [opcion, setOpcion] = useState("Ventas");
 
   const [url, setUrl] = useState(
-    `${REACT_APP_BACKEND_URL}${REACT_APP_ESTADISTICAS_VENTAS}`,
-    {
-      params: { frDate, toDate },
-    }
+    `${REACT_APP_BACKEND_URL}${REACT_APP_ESTADISTICAS_VENTAS}`
   );
+  const [params, setParams] = useState({
+    params: { frDate, toDate },
+  });
 
   useEffect(() => {
-    getDatos(url);
+    getDatos(url, params);
   }, [refresh, url]);
 
   const handleOnClickRefresh = (ref) => {
     setFresh(ref);
   };
 
-  const getDatos = async (url) => {
+  const getDatos = async (url, params) => {
     await axios
-      .get(url)
+      .get(url, params)
       .then((res) => {
         setData(res.data);
       })
@@ -61,53 +62,90 @@ const Estadisticas = () => {
   };
 
   const handleOnClickOpt = (type) => {
-    if (type == "Ventas") {
-      setUrl(`${REACT_APP_BACKEND_URL}${REACT_APP_ESTADISTICAS_VENTAS}`, {
-        params: { frDate, toDate },
+    if (type === "Ventas") {
+      setParams({
+        params: { frDate, toDate, detalle: false },
       });
+      setUrl(`${REACT_APP_BACKEND_URL}${REACT_APP_ESTADISTICAS_VENTAS}`);
       setOpcion(type);
       return;
     }
 
-    if (type == "Stock") {
+    if (type === "Stock") {
       setUrl(`${REACT_APP_BACKEND_URL}${REACT_APP_ESTADISTICAS_STOCK}`);
       setOpcion(type);
       return;
     }
+    if (type === "detVentas") {
+      setParams({
+        params: { frDate, toDate, detalle: true },
+      });
+      setUrl(`${REACT_APP_BACKEND_URL}${REACT_APP_ESTADISTICAS_VENTAS}`);
+      setOpcion(type);
+      return;
+    }
   };
+
+  /*------------------------------------CONTENT------------------------------------------ */
+  let content = <p>Loading...</p>;
+  if (opcion === "Ventas") {
+    content = (
+      <>
+        <div className="filters">
+          <Filtros
+            data={data}
+            refresh={refresh}
+            handleOnClickRefresh={handleOnClickRefresh}
+            frDate={frDate}
+            toDate={toDate}
+            handleOnChangeFrDate={handleOnChangeFrDate}
+            handleOnChangeToDate={handleOnChangeToDate}
+          />
+        </div>
+        <div className="grafico">
+          <div className="chart">
+            <Graph data={data} />
+          </div>
+          <div className="datos">
+            <Data data={data} type="ESTVENTAS" />
+          </div>
+        </div>
+      </>
+    );
+  }
+  if (opcion === "Stock") {
+    content = (
+      <div className="container-fluid">
+        <Stock data={data} />
+      </div>
+    );
+  }
+
+  if (opcion === "detVentas") {
+    content = (
+      <>
+        <div className="filters">
+          <Filtros
+            data={data}
+            refresh={refresh}
+            handleOnClickRefresh={handleOnClickRefresh}
+            frDate={frDate}
+            toDate={toDate}
+            handleOnChangeFrDate={handleOnChangeFrDate}
+            handleOnChangeToDate={handleOnChangeToDate}
+          />
+        </div>
+        <VentasDetalle />
+      </>
+    );
+  }
 
   return (
     <div className="estadisticas">
       <div className="options">
         <Opciones handleOnClickOpt={handleOnClickOpt} />
       </div>
-      {opcion == "Ventas" ? (
-        <>
-          <div className="filters">
-            <Filtros
-              data={data}
-              refresh={refresh}
-              handleOnClickRefresh={handleOnClickRefresh}
-              frDate={frDate}
-              toDate={toDate}
-              handleOnChangeFrDate={handleOnChangeFrDate}
-              handleOnChangeToDate={handleOnChangeToDate}
-            />
-          </div>
-          <div className="grafico">
-            <div className="chart">
-              <Graph data={data} opcion={opcion} />
-            </div>
-            <div className="datos">
-              <Data data={data} type="ESTVENTAS" />
-            </div>
-          </div>
-        </>
-      ) : (
-        <div className="container-fluid w-50">
-          <Stock data={data} />
-        </div>
-      )}
+      {content}
     </div>
   );
 };

@@ -9,14 +9,28 @@ const Opciones = ({ handleOnClickOpt }) => {
         className="btn btn-light w-100 m-1"
         onClick={() => handleOnClickOpt("Ventas")}
       >
-        Ventas
+        Totales en Ventas
+      </button>
+      <button
+        type="button"
+        className="btn btn-light w-100 m-1"
+        onClick={() => handleOnClickOpt("detAticulos")}
+      >
+        Detalles de Articulos
+      </button>
+      <button
+        type="button"
+        className="btn btn-light w-100 m-1"
+        onClick={() => handleOnClickOpt("detVentas")}
+      >
+        Detalles de ventas
       </button>
       <button
         type="button"
         className="btn btn-light w-100 m-1"
         onClick={() => handleOnClickOpt("Stock")}
       >
-        Stock
+        Historico de Stock
       </button>
     </div>
   );

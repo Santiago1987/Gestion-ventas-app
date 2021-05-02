@@ -17,3 +17,5 @@ export const DELETE_PRODUCT = "DELETE_PRODUCT";
 export const UPDATE_SALES_PRODUCT = "UPDATE_SALES_PRODUCT";
 
 export const SET_DOLAR = "SET_DOLAR";
+
+export const INI_PRODUCTS = "INI_PRODUCTS";

@@ -9,6 +9,7 @@ import {
   DELETE_PRODUCT,
   UPDATE_SALES_PRODUCT,
   SET_DOLAR,
+  INI_PRODUCTS,
 } from "./actionsList";
 
 export const loadProducts = (products) => ({
@@ -59,4 +60,9 @@ export const updateSalesProduct = (salesProd) => ({
 export const setDolar = (value) => ({
   type: SET_DOLAR,
   payload: value,
+});
+
+export const iniProducts = () => ({
+  type: INI_PRODUCTS,
+  payload: null,
 });

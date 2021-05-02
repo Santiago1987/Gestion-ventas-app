@@ -5,6 +5,7 @@ import {
   selectProd,
   addSalesProduct,
   updateProduct,
+  iniProducts,
 } from "../../actions";
 import axios from "axios";
 
@@ -36,6 +37,7 @@ const ProductGrd = () => {
   );
 
   useEffect(() => {
+    dispatch(iniProducts());
     if (getData !== null) {
       let { data } = getData;
       let Artlist = data.map((d) => {

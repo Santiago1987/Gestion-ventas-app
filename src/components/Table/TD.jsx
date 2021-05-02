@@ -62,15 +62,64 @@ const TD = ({
           return null;
       }
     }
-
     if (type === "STOCK") {
       switch (column) {
-        case "_id":
+        case "id":
           return { display: "none" };
         case "descripcion":
           return { textAlign: "left", verticalAlign: "middle", width: "75%" };
         case "stock":
           return { textAlign: "center", verticalAlign: "middle", width: "25%" };
+        default:
+          return null;
+      }
+    }
+    if (type === "STKHIS") {
+      switch (column) {
+        case "fecha":
+          return { textAlign: "center", verticalAlign: "middle", width: "20%" };
+        case "motivo":
+          return { textAlign: "left", verticalAlign: "middle", width: "50%" };
+        case "cant":
+          return { textAlign: "center", verticalAlign: "middle", width: "15%" };
+        case "stkfin":
+          return { textAlign: "center", verticalAlign: "middle", width: "15%" };
+        default:
+          return null;
+      }
+    }
+    if (type === "DET_VENTAS") {
+      switch (column) {
+        case "id":
+          return { display: "none" };
+        case "fecha":
+          return { textAlign: "center", verticalAlign: "middle", width: "20%" };
+        case "time":
+          return { textAlign: "center", verticalAlign: "middle", width: "20%" };
+        case "reference":
+          return { textAlign: "center", verticalAlign: "middle", width: "30%" };
+        case "totalPesos":
+          return { textAlign: "right", verticalAlign: "middle", width: "15%" };
+        case "totalDolares":
+          return { textAlign: "right", verticalAlign: "middle", width: "15%" };
+        default:
+          return null;
+      }
+    }
+    if (type === "DET_VENTAS_DET") {
+      switch (column) {
+        case "id":
+          return { display: "none" };
+        case "descripcion":
+          return { textAlign: "left", verticalAlign: "middle", width: "40%" };
+        case "cantidad":
+          return { textAlign: "center", verticalAlign: "middle", width: "15%" };
+        case "precioPesos":
+          return { textAlign: "right", verticalAlign: "middle", width: "15%" };
+        case "precioDolar":
+          return { textAlign: "right", verticalAlign: "middle", width: "15%" };
+        case "total":
+          return { textAlign: "right", verticalAlign: "middle", width: "15%" };
         default:
           return null;
       }
@@ -82,9 +131,13 @@ const TD = ({
     if (usetable !== table) return null;
     switch (table) {
       case "PRODUCTS":
-        return id === idrow ? "bg-primary" : null;
+        return id === idrow ? "bg-info" : null;
       case "SALES":
-        return id === idrow ? "bg-success" : null;
+        return id === idrow ? "bg-info" : null;
+      case "STOCK":
+        return id === idrow ? "bg-info" : null;
+      case "DET_VENTAS":
+        return id === idrow ? "bg-info" : null;
       default:
         return null;
     }

@@ -71,3 +71,10 @@
   flex-direction: row;
   vertical-align: middle;
 }
+
+/*------------------------------------------------------------------------------------------ */
+.stockTable {
+  height: "100%";
+  overflow-y: auto;
+  cursor: pointer;
+}

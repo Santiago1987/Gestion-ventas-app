@@ -56,4 +56,54 @@ function style(type, column) {
         return null;
     }
   }
+  if (type === "STKHIS") {
+    switch (column) {
+      case "fecha":
+        return { textAlign: "center", verticalAlign: "middle", width: "20%" };
+      case "razon":
+        return { textAlign: "center", verticalAlign: "middle", width: "50%" };
+      case "variacion":
+        return { textAlign: "center", verticalAlign: "middle", width: "15%" };
+      case "stkFinal":
+        return { textAlign: "center", verticalAlign: "middle", width: "15%" };
+      default:
+        return null;
+    }
+  }
+  if (type === "DET_VENTAS") {
+    switch (column) {
+      case "id":
+        return { display: "none" };
+      case "fecha":
+        return { textAlign: "center", verticalAlign: "middle", width: "20%" };
+      case "time":
+        return { textAlign: "center", verticalAlign: "middle", width: "20%" };
+      case "reference":
+        return { textAlign: "center", verticalAlign: "middle", width: "30%" };
+      case "totalPesos":
+        return { textAlign: "center", verticalAlign: "middle", width: "15%" };
+      case "totalDolares":
+        return { textAlign: "center", verticalAlign: "middle", width: "15%" };
+      default:
+        return null;
+    }
+  }
+  if (type === "DET_VENTAS_DET") {
+    switch (column) {
+      case "id":
+        return { display: "none" };
+      case "descripcion":
+        return { textAlign: "center", verticalAlign: "middle", width: "40%" };
+      case "cantidad":
+        return { textAlign: "center", verticalAlign: "middle", width: "15%" };
+      case "precioPesos":
+        return { textAlign: "center", verticalAlign: "middle", width: "15%" };
+      case "precioDolar":
+        return { textAlign: "center", verticalAlign: "middle", width: "15%" };
+      case "total":
+        return { textAlign: "center", verticalAlign: "middle", width: "15%" };
+      default:
+        return null;
+    }
+  }
 }

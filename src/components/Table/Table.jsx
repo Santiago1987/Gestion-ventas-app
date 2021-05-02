@@ -44,7 +44,13 @@ function style(type) {
     case "ESTVENTAS":
       return "table table-striped";
     case "STOCK":
+      return "table table-hover";
+    case "STKHIS":
       return "table table-striped";
+    case "DET_VENTAS":
+      return "table table-hover";
+    case "DET_VENTAS_DET":
+      return "table table-hover";
     default:
       return null;
   }

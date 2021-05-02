@@ -19,6 +19,12 @@ function style(type) {
       return "thead-dark";
     case "STOCK":
       return "thead-dark";
+    case "STKHIS":
+      return "thead-dark";
+    case "DET_VENTAS":
+      return "thead-dark";
+    case "DET_VENTAS_DET":
+      return "thead-dark";
     default:
       return null;
   }

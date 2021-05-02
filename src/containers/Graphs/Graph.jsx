@@ -3,7 +3,7 @@ import LineGraph from "../../containers/Graphs/LineGraph";
 import BarGraph from "../../containers/Graphs/BarGraph";
 import GraphFooter from "../../containers/Graphs/GraphFooter";
 
-const Graph = ({ data, opcion }) => {
+const Graph = ({ data }) => {
   const [content, setContent] = useState(<p>Loading....</p>);
   const [type, setType] = useState("Bar");
   const [moneda, setMoneda] = useState("pesos");
@@ -12,36 +12,26 @@ const Graph = ({ data, opcion }) => {
 
   useEffect(() => {
     if (data.length !== 0) {
-      if (opcion == "Ventas") {
-        data.map((dat) => {
-          let { fecha, totalPesos, totalDolares } = dat;
+      data.map((dat) => {
+        let { fecha, totalPesos, totalDolares } = dat;
 
-          if (moneda === "pesos") {
-            datos.push({ fecha, total: totalPesos });
-            return;
-          }
-          if (moneda === "dolar") {
-            datos.push({ fecha, total: totalDolares });
-          }
-        });
-      }
-      if (opcion == "Stock") {
-        data.map((dat) => {
-          let { _id, stock } = dat;
-          datos.push({ name: _id, value: stock });
-        });
-      }
+        if (moneda === "pesos") {
+          datos.push({ fecha, total: totalPesos });
+          return;
+        }
+        if (moneda === "dolar") {
+          datos.push({ fecha, total: totalDolares });
+          return;
+        }
+      });
     }
 
-    if ((type === "Bar") & (opcion == "Ventas")) {
+    if (type === "Bar") {
       setContent(<BarGraph data={datos} />);
       return;
     }
-    if ((type === "Line") & (opcion == "Ventas")) {
+    if (type === "Line") {
       setContent(<LineGraph data={datos} />);
-      return;
-    }
-    if (opcion == "Stock") {
       return;
     }
   }, [data, type, moneda]);
@@ -104,4 +94,4 @@ const Graph = ({ data, opcion }) => {
   );
 };
 
-export default Graph;
+export default React.memo(Graph);

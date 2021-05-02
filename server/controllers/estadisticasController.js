@@ -12,7 +12,9 @@ estdisticas.getVentas = async (req, res) => {
   let response = null;
   let error = "";
   let result = [];
-  let { frDate, toDate } = req.query;
+  let { frDate, toDate, detalle } = req.query;
+
+  console.log("detalle", detalle);
 
   if (toDate) toDate = moment(toDate + " 23:59:59");
 
@@ -36,29 +38,45 @@ estdisticas.getVentas = async (req, res) => {
     return;
   }
 
-  response.map((data) => {
-    let { fecha, totalPesos, totalDolares } = data;
-    fecha = moment(fecha).format("DD/MM/YYYY");
-    let index = result.findIndex((d) => d.fecha === fecha);
+  if (!detalle) {
+    response.map((data) => {
+      let { fecha, totalPesos, totalDolares } = data;
+      fecha = moment(fecha).format("DD/MM/YYYY");
+      let index = result.findIndex((d) => d.fecha === fecha);
 
-    if (index === -1) {
-      result.push({ fecha, totalPesos, totalDolares });
+      if (index === -1) {
+        result.push({ fecha, totalPesos, totalDolares });
+        return;
+      }
+
+      // ACUMULACION
+      result[index].totalPesos += totalPesos;
+      result[index].totalDolares += totalDolares;
+
+      //REDONDEO A DOS DECIMALES
+      result[index].totalPesos =
+        Math.round((result[index].totalPesos + Number.EPSILON) * 100) / 100;
+
+      result[index].totalDolares =
+        Math.round(result[index].totalDolares * 100) / 100;
+
       return;
-    }
+    });
+  }
+  if (detalle) {
+    response.map((data) => {
+      let { _id, fecha, refNum, totalPesos, totalDolares } = data;
 
-    // ACUMULACION
-    result[index].totalPesos += totalPesos;
-    result[index].totalDolares += totalDolares;
-
-    //REDONDEO A DOS DECIMALES
-    result[index].totalPesos =
-      Math.round((result[index].totalPesos + Number.EPSILON) * 100) / 100;
-
-    result[index].totalDolares =
-      Math.round(result[index].totalDolares * 100) / 100;
-
-    return;
-  });
+      result.push({
+        id: _id,
+        fecha: moment(fecha).format("DD/MM/YY"),
+        time: moment(fecha).format("HH:mm:ss"),
+        reference: refNum,
+        totalPesos,
+        totalDolares,
+      });
+    });
+  }
 
   res.send(result).status(200);
   return;
@@ -94,17 +112,19 @@ estdisticas.getStock = async (req, res) => {
 };
 
 estdisticas.getMovimientosStock = async (req, res) => {
+  let id = req.params.id;
+
+  if (id === undefined) {
+    res.send({ id: 0, message: "missing filter" }).status(400);
+    return;
+  }
+
   let response = null;
   let result = [];
   let error = "";
-  let { frDate, toDate } = req.query;
-  if (toDate) toDate = moment(toDate + " 23:59:59");
-
-  if (!toDate) toDate = moment(new Date());
-  if (!frDate) frDate = moment(new Date()).add(-15, "days");
 
   try {
-    response = await Stock.find({ fecha: { $gte: frDate, $lte: toDate } });
+    response = await Stock.find({ artID: id });
   } catch (err) {
     console.log("error " + err);
     error = "error " + err;
@@ -117,8 +137,8 @@ estdisticas.getMovimientosStock = async (req, res) => {
 
   if (response.length > 0) {
     result = response.map((stk) => {
-      let { variacion, razon, fecha, artID, stkFinal } = stk;
-      return { variacion, razon, fecha, artID, stkFinal };
+      let { variacion, razon, fecha, stkFinal } = stk;
+      return { variacion, razon, fecha, stkFinal };
     });
   }
 
@@ -126,4 +146,69 @@ estdisticas.getMovimientosStock = async (req, res) => {
   return;
 };
 
+estdisticas.getDetallesVentas = async (req, res) => {
+  let response = null;
+  let error = "";
+  let result = [];
+
+  let { id } = req.params;
+
+  if (id === undefined) {
+    res.send({ id: 0, message: "missing filter" }).status(400);
+    return;
+  }
+
+  try {
+    response = await VentasDetalle.find({ idRecipe: id });
+  } catch (err) {
+    console.log("error " + err);
+    error = "error " + err;
+  }
+
+  if (error !== "") {
+    res.send({ id: 0, message: error }).status(500);
+    return;
+  }
+
+  if (response.length > 0) {
+    await Promise.all(
+      response.map(async (dat) => {
+        let { _id, idArt, cantidad, precioPesos, precioDolar, total } = dat;
+
+        result.push({
+          id: _id,
+          descripcion: await getArtDescr(idArt),
+          cantidad,
+          precioPesos,
+          precioDolar,
+          total,
+        });
+
+        return;
+      })
+    );
+  }
+
+  res.send(result).status(200);
+  return;
+};
+
 module.exports = estdisticas;
+
+const getArtDescr = async (id) => {
+  let response = "";
+  let descripcion = "";
+
+  try {
+    response = await Articulos.find({ _id: id });
+  } catch (err) {
+    console.log("error " + err);
+    error = "error " + err;
+  }
+
+  if (response.length > 0) {
+    descripcion = response[0].descripcion;
+  }
+
+  return descripcion;
+};

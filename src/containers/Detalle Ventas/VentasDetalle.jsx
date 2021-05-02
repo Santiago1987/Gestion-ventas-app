@@ -5,21 +5,21 @@ import { selectProd } from "../../actions";
 import moment from "moment";
 import axios from "axios";
 
-const Stock = ({ data }) => {
+const VentasDetalles = ({ data }) => {
   const [datos, setDatos] = useState([]);
 
   //SELECT PARA VER CUANDO SE SELECCIONAN LINEAS
   const [select, setSelect] = useState(false);
 
-  //DATOS HISTORICOS DE STOCK
-  const [dataHis, setDataHis] = useState([]);
+  //DETALLE DE VENTAS
+  const [datVentas, setdatVentas] = useState([]);
 
   const selectedProd = useSelector((state) => state.selectedProd);
   const dispatch = useDispatch();
 
   const {
     REACT_APP_BACKEND_URL,
-    REACT_APP_ESTADISTICAS_STOCK_HIS,
+    REACT_APP_ESTADISTICAS_VENTAS_DETALLE,
   } = process.env;
 
   useEffect(() => {
@@ -27,42 +27,55 @@ const Stock = ({ data }) => {
     if (!select) {
       setDatos(
         data.map((dat) => {
-          let { _id, descripcion, stock } = dat;
-          return { id: _id, descripcion, stock };
+          let { id, fecha, time, reference, totalPesos, totalDolares } = dat;
+          return { id, fecha, time, reference, totalPesos, totalDolares };
         })
       );
     }
 
     let { id, table } = selectedProd;
-    if (table !== "STOCK") {
-      setDataHis([]);
+    if (table !== "DET_VENTAS") {
+      setdatVentas([]);
       return;
     }
-
     getDatos(id);
     setSelect(false);
-  }, [data, selectedProd]);
+  }, [data, selectProd]);
 
-  //OBTIENE DATOS HISTORICOS DE STOCK
+  //OBTIENE LOS DETALLES DE LAS VENTAS
   const getDatos = async (id) => {
     await axios
-      .get(`${REACT_APP_BACKEND_URL}${REACT_APP_ESTADISTICAS_STOCK_HIS}${id}`)
+      .get(
+        `${REACT_APP_BACKEND_URL}${REACT_APP_ESTADISTICAS_VENTAS_DETALLE}${id}`
+      )
       .then((res) => {
         let { data } = res;
 
-        setDataHis(
-          data
-            .map((dat) => {
-              let { variacion, razon, fecha, stkFinal } = dat;
-              fecha = moment(fecha).format("DD/MM/YYYY");
-              return { fecha, razon, variacion, stkFinal };
-            })
-            .sort((a, b) => a.fecha < b.fecha)
+        setdatVentas(
+          data.map((dat) => {
+            let {
+              id,
+              descripcion,
+              cantidad,
+              precioPesos,
+              precioDolar,
+              total,
+            } = dat;
+
+            return {
+              id,
+              descripcion,
+              cantidad,
+              precioPesos,
+              precioDolar,
+              total,
+            };
+          })
         );
       })
       .catch((err) => {
         console.log(err);
-        setDataHis([]);
+        setdatVentas([]);
       });
     return;
   };
@@ -70,19 +83,25 @@ const Stock = ({ data }) => {
   //TITULOS DE LAS TABLAS
   let titles = {
     id: "ID",
-    descripcion: "Descripcion",
-    stock: "Stock",
+    fecha: "Fecha",
+    time: "Hora",
+    reference: "Num. Referencia",
+    totalPesos: "Total Pesos",
+    totalDolares: "Total Dolares",
   };
 
-  let titleHis = {
-    fecha: "Fecha",
-    razon: "Motivo",
-    variacion: "Cantidad",
-    stkFinal: "Stock final",
+  let titleDet = {
+    id: "ID",
+    descripcion: "Descripcion",
+    cantidad: "Cantidad",
+    precioPesos: "Precio Pesos",
+    precioDolar: "Precio Dolar",
+    total: "Total",
   };
+
   /*-------------------------------------------------------------------------------*/
   const handleRowSelect = (id, table) => {
-    if (table !== "STOCK") return;
+    if (table !== "DET_VENTAS") return;
     dispatch(selectProd({ id, table }));
     setSelect(true);
   };
@@ -99,11 +118,11 @@ const Stock = ({ data }) => {
   if (datos.length > 0) {
     content = (
       <>
-        <h3 className="p-2">Historico de Stock</h3>
+        <h3 className="p-2">Detalle de Ventas</h3>
         <div className="d-flex">
           <div className="shadow bg-white rounded m-1 stockTable w-50">
             <Table
-              type={"STOCK"}
+              type={"DET_VENTAS"}
               titles={titles}
               items={datos}
               handleRowSelect={handleRowSelect}
@@ -114,9 +133,9 @@ const Stock = ({ data }) => {
           </div>
           <div className="shadow bg-white rounded m-1 stockTable w-50">
             <Table
-              type={"STKHIS"}
-              titles={titleHis}
-              items={dataHis}
+              type={"DET_VENTAS_DET"}
+              titles={titleDet}
+              items={datVentas}
               handleRowSelect={handleRowSelect}
               handleOnDobleClick={handleOnDobleClick}
               handleOnChange={handleOnChange}
@@ -130,4 +149,4 @@ const Stock = ({ data }) => {
   return content;
 };
 
-export default Stock;
+export default VentasDetalles;

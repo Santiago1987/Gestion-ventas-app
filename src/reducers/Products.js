@@ -7,6 +7,7 @@ import {
   UPDATE_PRODUCT,
   DELETE_PRODUCT,
   UPDATE_SALES_PRODUCT,
+  INI_PRODUCTS,
 } from "../actions/actionsList";
 
 const initialProducts = [];
@@ -36,6 +37,8 @@ const productsReducer = (state = initialProducts, { type, payload }) => {
       idx = state.findIndex((s) => s.id === payload);
       if (idx === -1) return state;
       return [...state.slice(0, idx), ...state.slice(idx + 1)];
+    case INI_PRODUCTS:
+      return [];
     default:
       return state;
   }
