@@ -23,13 +23,30 @@ const VentasDetalles = ({ data }) => {
   } = process.env;
 
   useEffect(() => {
+    console.log("VentasDetalles", data);
     //EVALUA SELECT PARA NO TENER QUE RECARGAR LA TABLA CADA VEZ QUE SE SELECCIONA
     if (!select) {
       setDatos(
-        data.map((dat) => {
-          let { id, fecha, time, reference, totalPesos, totalDolares } = dat;
-          return { id, fecha, time, reference, totalPesos, totalDolares };
-        })
+        data
+          .map((dat) => {
+            let { id, fecha, time, reference, totalPesos, totalDolares } = dat;
+            return { id, fecha, time, reference, totalPesos, totalDolares };
+          })
+          .sort((a, b) => {
+            let fecha1 = parseInt(
+              `${a.fecha.slice(6, 10)}${a.fecha.slice(3, 5)}${a.fecha.slice(
+                0,
+                2
+              )}`
+            );
+            let fecha2 = parseInt(
+              `${b.fecha.slice(6, 10)}${b.fecha.slice(3, 5)}${b.fecha.slice(
+                0,
+                2
+              )}`
+            );
+            return fecha1 < fecha2;
+          })
       );
     }
 
@@ -40,10 +57,11 @@ const VentasDetalles = ({ data }) => {
     }
     getDatos(id);
     setSelect(false);
-  }, [data, selectProd]);
+  }, [data, selectedProd]);
 
   //OBTIENE LOS DETALLES DE LAS VENTAS
   const getDatos = async (id) => {
+    console.log("id", id);
     await axios
       .get(
         `${REACT_APP_BACKEND_URL}${REACT_APP_ESTADISTICAS_VENTAS_DETALLE}${id}`
@@ -77,6 +95,7 @@ const VentasDetalles = ({ data }) => {
         console.log(err);
         setdatVentas([]);
       });
+    console.log("datVentas", datVentas);
     return;
   };
 

@@ -23,6 +23,7 @@ const Stock = ({ data }) => {
   } = process.env;
 
   useEffect(() => {
+    console.log("Stock", data);
     //EVALUA SELECT PARA NO TENER QUE RECARGAR LA TABLA CADA VEZ QUE SE SELECCIONA
     if (!select) {
       setDatos(

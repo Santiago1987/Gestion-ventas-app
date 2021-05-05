@@ -29,11 +29,12 @@ const Estadisticas = () => {
     `${REACT_APP_BACKEND_URL}${REACT_APP_ESTADISTICAS_VENTAS}`
   );
   const [params, setParams] = useState({
-    params: { frDate, toDate },
+    params: { frDate, toDate, detalle: false },
   });
 
   useEffect(() => {
-    getDatos(url, params);
+    if (url) getDatos(url, params);
+    setUrl(null);
   }, [refresh, url]);
 
   const handleOnClickRefresh = (ref) => {
@@ -62,6 +63,7 @@ const Estadisticas = () => {
   };
 
   const handleOnClickOpt = (type) => {
+    //porblema quie cuando cambia la url todavia no cambio el tipo y hay cmponente que reciben mnas el data
     if (type === "Ventas") {
       setParams({
         params: { frDate, toDate, detalle: false },
@@ -72,6 +74,7 @@ const Estadisticas = () => {
     }
 
     if (type === "Stock") {
+      setParams({});
       setUrl(`${REACT_APP_BACKEND_URL}${REACT_APP_ESTADISTICAS_STOCK}`);
       setOpcion(type);
       return;
@@ -135,7 +138,9 @@ const Estadisticas = () => {
             handleOnChangeToDate={handleOnChangeToDate}
           />
         </div>
-        <VentasDetalle />
+        <div className="container-fluid">
+          <VentasDetalle data={data} />
+        </div>
       </>
     );
   }

@@ -54,6 +54,8 @@ const TD = ({
     }
     if (type === "ESTVENTAS") {
       switch (column) {
+        case "fecha":
+          return { textAlign: "center" };
         case "totalPesos":
           return { textAlign: "center" };
         case "totalDolares":

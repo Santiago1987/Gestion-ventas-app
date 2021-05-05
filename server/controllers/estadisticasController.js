@@ -14,8 +14,6 @@ estdisticas.getVentas = async (req, res) => {
   let result = [];
   let { frDate, toDate, detalle } = req.query;
 
-  console.log("detalle", detalle);
-
   if (toDate) toDate = moment(toDate + " 23:59:59");
 
   if (!toDate) toDate = moment(new Date());
@@ -38,7 +36,7 @@ estdisticas.getVentas = async (req, res) => {
     return;
   }
 
-  if (!detalle) {
+  if (detalle === "false") {
     response.map((data) => {
       let { fecha, totalPesos, totalDolares } = data;
       fecha = moment(fecha).format("DD/MM/YYYY");
@@ -63,13 +61,13 @@ estdisticas.getVentas = async (req, res) => {
       return;
     });
   }
-  if (detalle) {
+  if (detalle === "true") {
     response.map((data) => {
       let { _id, fecha, refNum, totalPesos, totalDolares } = data;
-
+      fecha = moment(fecha).utc();
       result.push({
         id: _id,
-        fecha: moment(fecha).format("DD/MM/YY"),
+        fecha: moment(fecha).format("DD/MM/YYYY"),
         time: moment(fecha).format("HH:mm:ss"),
         reference: refNum,
         totalPesos,
