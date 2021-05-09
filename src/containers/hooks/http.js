@@ -18,8 +18,8 @@ export const useHttp = (url, dependecies, action, object) => {
     axios
       .get(url)
       .then((dat) => {
-        setIsLoadding(false);
         setResponse(dat);
+        setIsLoadding(false);
       })
       .catch((err) => {
         console.log(err);

@@ -5,7 +5,8 @@ import { selectProd } from "../../actions";
 import moment from "moment";
 import axios from "axios";
 
-const Stock = ({ data }) => {
+const Stock = ({ url, params, refresh }) => {
+  const [data, setData] = useState([]);
   const [datos, setDatos] = useState([]);
 
   //SELECT PARA VER CUANDO SE SELECCIONAN LINEAS
@@ -23,7 +24,10 @@ const Stock = ({ data }) => {
   } = process.env;
 
   useEffect(() => {
-    console.log("Stock", data);
+    if (url && !select) {
+      getStk(url, params);
+      return;
+    }
     //EVALUA SELECT PARA NO TENER QUE RECARGAR LA TABLA CADA VEZ QUE SE SELECCIONA
     if (!select) {
       setDatos(
@@ -42,7 +46,20 @@ const Stock = ({ data }) => {
 
     getDatos(id);
     setSelect(false);
-  }, [data, selectedProd]);
+  }, [data, selectedProd, refresh]);
+
+  const getStk = async (url, params) => {
+    await axios
+      .get(url, params)
+      .then((res) => {
+        setData(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    return;
+  };
 
   //OBTIENE DATOS HISTORICOS DE STOCK
   const getDatos = async (id) => {

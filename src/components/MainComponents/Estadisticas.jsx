@@ -16,7 +16,6 @@ const Estadisticas = () => {
     REACT_APP_ESTADISTICAS_STOCK,
   } = process.env;
 
-  const [data, setData] = useState([]);
   const [refresh, setFresh] = useState(false);
 
   const [frDate, setFrDate] = useState(
@@ -26,30 +25,27 @@ const Estadisticas = () => {
   const [opcion, setOpcion] = useState("Ventas");
 
   const [url, setUrl] = useState(
-    `${REACT_APP_BACKEND_URL}${REACT_APP_ESTADISTICAS_VENTAS}`
+    `${REACT_APP_BACKEND_URL}${REACT_APP_ESTADISTICAS_VENTAS}`,
+    {
+      params: { frDate, toDate, detalle: false },
+    }
   );
   const [params, setParams] = useState({
     params: { frDate, toDate, detalle: false },
   });
 
   useEffect(() => {
-    if (url) getDatos(url, params);
     setUrl(null);
-  }, [refresh, url]);
+    let { detalle } = params.params;
+
+    setParams({
+      params: { frDate, toDate, detalle },
+    });
+    console.log("fredate", frDate);
+  }, [url, refresh]);
 
   const handleOnClickRefresh = (ref) => {
     setFresh(ref);
-  };
-
-  const getDatos = async (url, params) => {
-    await axios
-      .get(url, params)
-      .then((res) => {
-        setData(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
   };
 
   const handleOnChangeFrDate = (e) => {
@@ -96,7 +92,6 @@ const Estadisticas = () => {
       <>
         <div className="filters">
           <Filtros
-            data={data}
             refresh={refresh}
             handleOnClickRefresh={handleOnClickRefresh}
             frDate={frDate}
@@ -106,12 +101,7 @@ const Estadisticas = () => {
           />
         </div>
         <div className="grafico">
-          <div className="chart">
-            <Graph data={data} />
-          </div>
-          <div className="datos">
-            <Data data={data} type="ESTVENTAS" />
-          </div>
+          <Graph url={url} params={params} />
         </div>
       </>
     );
@@ -119,7 +109,7 @@ const Estadisticas = () => {
   if (opcion === "Stock") {
     content = (
       <div className="container-fluid">
-        <Stock data={data} />
+        <Stock url={url} params={params} />
       </div>
     );
   }
@@ -129,7 +119,6 @@ const Estadisticas = () => {
       <>
         <div className="filters">
           <Filtros
-            data={data}
             refresh={refresh}
             handleOnClickRefresh={handleOnClickRefresh}
             frDate={frDate}
@@ -139,7 +128,7 @@ const Estadisticas = () => {
           />
         </div>
         <div className="container-fluid">
-          <VentasDetalle data={data} />
+          <VentasDetalle url={url} params={params} />
         </div>
       </>
     );

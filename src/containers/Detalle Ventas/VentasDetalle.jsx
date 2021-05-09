@@ -2,17 +2,18 @@ import React, { useEffect, useState } from "react";
 import Table from "../../components/Table/Table";
 import { useSelector, useDispatch } from "react-redux";
 import { selectProd } from "../../actions";
-import moment from "moment";
 import axios from "axios";
 
-const VentasDetalles = ({ data }) => {
-  const [datos, setDatos] = useState([]);
+const VentasDetalles = ({ url, params }) => {
+  //const [datos, setDatos] = useState([]);
 
   //SELECT PARA VER CUANDO SE SELECCIONAN LINEAS
   const [select, setSelect] = useState(false);
 
   //DETALLE DE VENTAS
   const [datVentas, setdatVentas] = useState([]);
+  const [data, setData] = useState([]);
+  const [datos, setDatos] = useState([]);
 
   const selectedProd = useSelector((state) => state.selectedProd);
   const dispatch = useDispatch();
@@ -23,9 +24,12 @@ const VentasDetalles = ({ data }) => {
   } = process.env;
 
   useEffect(() => {
-    console.log("VentasDetalles", data);
+    if (url && !select) {
+      getVentas(url, params);
+    }
+
     //EVALUA SELECT PARA NO TENER QUE RECARGAR LA TABLA CADA VEZ QUE SE SELECCIONA
-    if (!select) {
+    if (data.length > 0 && !select) {
       setDatos(
         data
           .map((dat) => {
@@ -57,11 +61,24 @@ const VentasDetalles = ({ data }) => {
     }
     getDatos(id);
     setSelect(false);
-  }, [data, selectedProd]);
+  }, [selectedProd, data]);
+
+  //VENTAS
+  const getVentas = async (url, params) => {
+    await axios
+      .get(url, params)
+      .then((res) => {
+        setData(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    return;
+  };
 
   //OBTIENE LOS DETALLES DE LAS VENTAS
   const getDatos = async (id) => {
-    console.log("id", id);
     await axios
       .get(
         `${REACT_APP_BACKEND_URL}${REACT_APP_ESTADISTICAS_VENTAS_DETALLE}${id}`
@@ -95,7 +112,6 @@ const VentasDetalles = ({ data }) => {
         console.log(err);
         setdatVentas([]);
       });
-    console.log("datVentas", datVentas);
     return;
   };
 
