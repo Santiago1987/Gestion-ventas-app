@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { selectProd } from "../../actions";
 import axios from "axios";
 
-const VentasDetalles = ({ url, params }) => {
+const VentasDetalles = ({ params }) => {
   //const [datos, setDatos] = useState([]);
 
   //SELECT PARA VER CUANDO SE SELECCIONAN LINEAS
@@ -13,45 +13,21 @@ const VentasDetalles = ({ url, params }) => {
   //DETALLE DE VENTAS
   const [datVentas, setdatVentas] = useState([]);
   const [data, setData] = useState([]);
-  const [datos, setDatos] = useState([]);
+  //const [datos, setDatos] = useState([]);
+  let datos = [];
 
   const selectedProd = useSelector((state) => state.selectedProd);
   const dispatch = useDispatch();
 
   const {
     REACT_APP_BACKEND_URL,
+    REACT_APP_ESTADISTICAS_VENTAS,
     REACT_APP_ESTADISTICAS_VENTAS_DETALLE,
   } = process.env;
 
   useEffect(() => {
-    if (url && !select) {
-      getVentas(url, params);
-    }
-
-    //EVALUA SELECT PARA NO TENER QUE RECARGAR LA TABLA CADA VEZ QUE SE SELECCIONA
-    if (data.length > 0 && !select) {
-      setDatos(
-        data
-          .map((dat) => {
-            let { id, fecha, time, reference, totalPesos, totalDolares } = dat;
-            return { id, fecha, time, reference, totalPesos, totalDolares };
-          })
-          .sort((a, b) => {
-            let fecha1 = parseInt(
-              `${a.fecha.slice(6, 10)}${a.fecha.slice(3, 5)}${a.fecha.slice(
-                0,
-                2
-              )}`
-            );
-            let fecha2 = parseInt(
-              `${b.fecha.slice(6, 10)}${b.fecha.slice(3, 5)}${b.fecha.slice(
-                0,
-                2
-              )}`
-            );
-            return fecha1 < fecha2;
-          })
-      );
+    if (!select) {
+      getVentas(params);
     }
 
     let { id, table } = selectedProd;
@@ -61,12 +37,12 @@ const VentasDetalles = ({ url, params }) => {
     }
     getDatos(id);
     setSelect(false);
-  }, [selectedProd, data]);
+  }, [selectedProd, params]);
 
   //VENTAS
-  const getVentas = async (url, params) => {
+  const getVentas = async (params) => {
     await axios
-      .get(url, params)
+      .get(`${REACT_APP_BACKEND_URL}${REACT_APP_ESTADISTICAS_VENTAS}`, params)
       .then((res) => {
         setData(res.data);
       })
@@ -147,6 +123,23 @@ const VentasDetalles = ({ url, params }) => {
 
   const handleKeyPress = (id, column, text) => null;
   /*-------------------------------------------------------------------------------*/
+
+  if (data.length) {
+    datos = data
+      .map((dat) => {
+        let { id, fecha, time, reference, totalPesos, totalDolares } = dat;
+        return { id, fecha, time, reference, totalPesos, totalDolares };
+      })
+      .sort((a, b) => {
+        let fecha1 = parseInt(
+          `${a.fecha.slice(6, 10)}${a.fecha.slice(3, 5)}${a.fecha.slice(0, 2)}`
+        );
+        let fecha2 = parseInt(
+          `${b.fecha.slice(6, 10)}${b.fecha.slice(3, 5)}${b.fecha.slice(0, 2)}`
+        );
+        return fecha1 < fecha2;
+      });
+  }
 
   let content = <h2>Loading....</h2>;
 

@@ -5,9 +5,8 @@ import { selectProd } from "../../actions";
 import moment from "moment";
 import axios from "axios";
 
-const Stock = ({ url, params, refresh }) => {
+const Stock = () => {
   const [data, setData] = useState([]);
-  const [datos, setDatos] = useState([]);
 
   //SELECT PARA VER CUANDO SE SELECCIONAN LINEAS
   const [select, setSelect] = useState(false);
@@ -20,22 +19,16 @@ const Stock = ({ url, params, refresh }) => {
 
   const {
     REACT_APP_BACKEND_URL,
+    REACT_APP_ESTADISTICAS_STOCK,
     REACT_APP_ESTADISTICAS_STOCK_HIS,
   } = process.env;
 
+  let datos = [];
+
   useEffect(() => {
-    if (url && !select) {
-      getStk(url, params);
-      return;
-    }
-    //EVALUA SELECT PARA NO TENER QUE RECARGAR LA TABLA CADA VEZ QUE SE SELECCIONA
     if (!select) {
-      setDatos(
-        data.map((dat) => {
-          let { _id, descripcion, stock } = dat;
-          return { id: _id, descripcion, stock };
-        })
-      );
+      getStk();
+      return;
     }
 
     let { id, table } = selectedProd;
@@ -46,11 +39,11 @@ const Stock = ({ url, params, refresh }) => {
 
     getDatos(id);
     setSelect(false);
-  }, [data, selectedProd, refresh]);
+  }, [selectedProd]);
 
-  const getStk = async (url, params) => {
+  const getStk = async () => {
     await axios
-      .get(url, params)
+      .get(`${REACT_APP_BACKEND_URL}${REACT_APP_ESTADISTICAS_STOCK}`)
       .then((res) => {
         setData(res.data);
       })
@@ -114,7 +107,14 @@ const Stock = ({ url, params, refresh }) => {
 
   let content = <h2>Loading....</h2>;
 
-  if (datos.length > 0) {
+  if (data.length) {
+    datos = data.map((dat) => {
+      let { _id, descripcion, stock } = dat;
+      return { id: _id, descripcion, stock };
+    });
+  }
+
+  if (datos.length) {
     content = (
       <>
         <h3 className="p-2">Historico de Stock</h3>

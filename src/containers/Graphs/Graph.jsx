@@ -6,48 +6,26 @@ import Data from "../Graphs/Data";
 
 import axios from "axios";
 
-const Graph = ({ url, params }) => {
-  //const [content, setContent] = useState(<p>Loading....</p>);
+const Graph = ({ params }) => {
+  const { REACT_APP_BACKEND_URL, REACT_APP_ESTADISTICAS_VENTAS } = process.env;
+
   const [type, setType] = useState("Bar");
   const [moneda, setMoneda] = useState("pesos");
   const [data, setData] = useState([]);
-  const [content, setContent] = useState(<p>Loading....</p>);
 
+  let content = <p>Loading....</p>;
+
+  //const [content, setContent] = useState(<p>Loading....</p>);
   let datos = [];
-
   /*------------------------------------useEffect------------------------------------------ */
   useEffect(() => {
-    console.log("fredate", params);
-    if (url) getDatos(url, params);
-    if (data.length > 0) {
-      data.map((dat) => {
-        let { fecha, totalPesos, totalDolares } = dat;
-
-        if (moneda === "pesos") {
-          datos.push({ fecha, total: totalPesos });
-          return;
-        }
-        if (moneda === "dolar") {
-          datos.push({ fecha, total: totalDolares });
-          return;
-        }
-      });
-
-      if (type === "Bar") {
-        setContent(<BarGraph data={datos} />);
-        return;
-      }
-      if (type === "Line") {
-        setContent(<LineGraph data={datos} />);
-        return;
-      }
-    }
-  }, [type, moneda, data]);
+    getDatos(params);
+  }, [params]);
 
   /*------------------------------------------------------------------------------------ */
-  const getDatos = async (url, params) => {
+  const getDatos = async (params) => {
     await axios
-      .get(url, params)
+      .get(`${REACT_APP_BACKEND_URL}${REACT_APP_ESTADISTICAS_VENTAS}`, params)
       .then((res) => {
         setData(res.data);
       })
@@ -61,12 +39,12 @@ const Graph = ({ url, params }) => {
 
   const handleOnClickBtn = (type) => {
     if (type === "Bar") {
-      setContent(<BarGraph data={datos} />);
+      content = <BarGraph data={datos} />;
       setType("Bar");
       return;
     }
     if (type === "Line") {
-      setContent(<LineGraph data={datos} />);
+      content = <LineGraph data={datos} />;
       setType("Line");
       return;
     }
@@ -77,6 +55,30 @@ const Graph = ({ url, params }) => {
   };
 
   /*------------------------------------------------------------------------------------ */
+
+  if (data.length > 0) {
+    data.map((dat) => {
+      let { fecha, totalPesos, totalDolares } = dat;
+
+      if (moneda === "pesos") {
+        datos.push({ fecha, total: totalPesos });
+        return;
+      }
+      if (moneda === "dolar") {
+        datos.push({ fecha, total: totalDolares });
+        return;
+      }
+    });
+
+    if (type === "Bar") {
+      //setContent(<BarGraph data={datos} />);
+      content = <BarGraph data={datos} />;
+    }
+    if (type === "Line") {
+      //setContent(<LineGraph data={datos} />);
+      content = <LineGraph data={datos} />;
+    }
+  }
 
   return (
     <>
