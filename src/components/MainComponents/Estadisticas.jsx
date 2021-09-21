@@ -45,7 +45,6 @@ const Estadisticas = () => {
 
   const handleOnClickOpt = (type) => {
     setOpcion("");
-    //porblema quie cuando cambia la url todavia no cambio el tipo y hay cmponente que reciben mnas el data
     if (type === "Ventas") {
       setParams({
         params: { frDate, toDate, detalle: false },

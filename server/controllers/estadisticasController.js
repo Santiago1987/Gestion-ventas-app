@@ -191,6 +191,46 @@ estdisticas.getDetallesVentas = async (req, res) => {
   return;
 };
 
+estdisticas.globalSTD = async () => {
+  let response,
+    result = [];
+  let error = "";
+
+  let toDate = moment().utc();
+  let frDate = moment(toDate).add(-1, "years");
+
+  try {
+    result = await Stock.find({ fecha: { $gte: frDate, $lte: toDate } });
+  } catch (err) {
+    console.log("error " + err);
+    error = "error " + err;
+  }
+
+  if (result.length === 0) {
+    res.send({ id: 0, message: "sever error" }).status(403);
+    return;
+  }
+
+  for (
+    let fecha = frDate;
+    fecha > toDate;
+    fecha = moment(fecha).add(1, "months")
+  ) {
+    let inimm = parseInt(moment(fecha).format("YYYYMM"));
+
+    result.map((stk) => {
+      let lista = {};
+      let mm = parseInt(moment(stk.fecha).format("YYYYMM"));
+
+      if (mm > inimm || stk.razon !== "venta") return;
+
+      let index = lista.find();
+    });
+  }
+
+  return;
+};
+
 module.exports = estdisticas;
 
 const getArtDescr = async (id) => {
