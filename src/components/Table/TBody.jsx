@@ -6,7 +6,6 @@ const TBody = ({
   columns,
   type,
   handleRowSelect,
-  //selectedProd,
   handleOnDobleClick,
   handleKeyPress,
   handleOnChange,
@@ -21,7 +20,6 @@ const TBody = ({
           columns={col}
           type={type}
           handleRowSelect={handleRowSelect}
-          //selectedProd={selectedProd}
           handleKeyPress={handleKeyPress}
           handleOnDobleClick={handleOnDobleClick}
           handleOnChange={handleOnChange}

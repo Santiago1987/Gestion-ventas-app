@@ -8,11 +8,32 @@ const Table = ({
   titles = [],
   items = [],
   handleRowSelect,
-  //selectedProd = {},
   handleOnDobleClick,
   handleKeyPress,
   handleOnChange,
 }) => {
+
+  const style = (type)=>{
+    switch (type) {
+      case "PRODUCTS":
+        return "table table-hover";
+      case "SALES":
+        return "table table-hover";
+      case "ESTVENTAS":
+        return "table table-striped";
+      case "STOCK":
+        return "table table-hover";
+      case "STKHIS":
+        return "table table-striped";
+      case "DET_VENTAS":
+        return "table table-hover";
+      case "DET_VENTAS_DET":
+        return "table table-hover";
+      default:
+        return null;
+    }
+  }
+
   return (
     <table className={style(type)} style={{ margin: 0, width: "100%" }}>
       {Object.keys(titles).length > 0 ? (
@@ -23,7 +44,6 @@ const Table = ({
           columns={items}
           type={type}
           handleRowSelect={handleRowSelect}
-          //selectedProd={selectedProd}
           handleKeyPress={handleKeyPress}
           handleOnDobleClick={handleOnDobleClick}
           handleOnChange={handleOnChange}
@@ -34,24 +54,3 @@ const Table = ({
 };
 
 export default Table;
-
-function style(type) {
-  switch (type) {
-    case "PRODUCTS":
-      return "table table-hover";
-    case "SALES":
-      return "table table-hover";
-    case "ESTVENTAS":
-      return "table table-striped";
-    case "STOCK":
-      return "table table-hover";
-    case "STKHIS":
-      return "table table-striped";
-    case "DET_VENTAS":
-      return "table table-hover";
-    case "DET_VENTAS_DET":
-      return "table table-hover";
-    default:
-      return null;
-  }
-}

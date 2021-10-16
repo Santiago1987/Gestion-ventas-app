@@ -2,8 +2,6 @@ import React from "react";
 import TH from "./TH";
 import TD from "./TD";
 
-import withStyleAndSelect from "../HOC/withStyleAndSelect";
-
 const TR = ({
   columns = null,
   headers = null,
