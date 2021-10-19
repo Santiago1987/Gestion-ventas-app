@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+/*const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const recipeDetail = new Schema({
@@ -11,4 +11,4 @@ const recipeDetail = new Schema({
   total: { type: Number, require: true },
 });
 
-module.exports = mongoose.model("RecipeDetail", recipeDetail);
+module.exports = mongoose.model("RecipeDetail", recipeDetail);*/

@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+/*const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const StockSchema = new Schema({
@@ -10,4 +10,4 @@ const StockSchema = new Schema({
   stkFinal: { type: Number, required: true },
 });
 
-module.exports = mongoose.model("Stock", StockSchema);
+module.exports = mongoose.model("Stock", StockSchema);*/
