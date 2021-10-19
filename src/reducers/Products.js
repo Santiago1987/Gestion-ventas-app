@@ -56,10 +56,6 @@ export const selectedProdReducer = (
   }
 };
 
-/*
-salProd:{id,descripcion,precio,cant,type} type es por si es local o de ML
-*/
-
 export const salesProductsReducer = (
   state = initialSalesProducts,
   { type, payload }

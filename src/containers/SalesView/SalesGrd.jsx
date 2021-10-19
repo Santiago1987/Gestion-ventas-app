@@ -1,34 +1,16 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { selectProd, updateSalesProduct } from "../../actions/";
+import { useSelector } from "react-redux";
 
 import Table from "../../components/Table/Table";
+import useSalesGRDFunctions from "../hooks/salesGRDFunctions";
 
 const SalesGrd = () => {
   //------------------------------Reducers-------------------------------------------
   const salesProducts = useSelector((state) => state.salesProducts);
-  //const selectedProd = useSelector((state) => state.selectedProd);
-
-  const dispatch = useDispatch();
 
   //------------------------------Row functions-------------------------------------------
-  const handleRowSelect = (id, table) => {
-    dispatch(selectProd({ id: id, table: table }));
-  };
-
-  const handleOnDobleClick = () => null;
-
-  const handleOnChange = (e) => {
-    let { value, id } = e.target;
-    let regex = new RegExp("^([0-9])*$");
-
-    if (value.length > 5 || !regex.test(value)) return;
-    let articulo = salesProducts.find((pr) => pr.id === id);
-    articulo.cant = value;
-    dispatch(updateSalesProduct(articulo));
-  };
-
-  const handleKeyPress = (id, column, text) => null;
+  const [handleRowSelect, handleOnDobleClick, handleOnChange, handleKeyPress] =
+    useSalesGRDFunctions();
 
   //------------------------------Variables-------------------------------------------
   let titles = {
@@ -63,7 +45,6 @@ const SalesGrd = () => {
               items={items}
               handleRowSelect={handleRowSelect}
               handleOnDobleClick={handleOnDobleClick}
-              //selectedProd={selectedProd}
               handleOnChange={handleOnChange}
             />
           </div>
@@ -81,7 +62,6 @@ const SalesGrd = () => {
             handleRowSelect={handleRowSelect}
             handleOnDobleClick={handleOnDobleClick}
             handleOnChange={handleOnChange}
-            //selectedProd={selectedProd}
             handleKeyPress={handleKeyPress}
           />
         </div>

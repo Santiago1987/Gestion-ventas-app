@@ -16,7 +16,7 @@ const ProductGrd = () => {
     handleOnDobleClick,
     handleKeyPress,
     handleOnChange,
-  ] = useProductGRDFunctions;
+  ] = useProductGRDFunctions();
 
   const { REACT_APP_BACKEND_URL, REACT_APP_ARTICLE_LIST_URL } = process.env;
 
