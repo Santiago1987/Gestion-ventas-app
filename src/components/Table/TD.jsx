@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { useTDStyles } from "../../containers/hooks/TDStyles";
+import useTDStyles from "../../containers/hooks/TDStyles";
 
 const TD = ({
   text,
@@ -14,7 +14,7 @@ const TD = ({
 }) => {
   const selectedProd = useSelector((state) => state.selectedProd);
 
-  const style = useTDStyles()
+  const style = useTDStyles();
 
   const selection = (selectedProd, idrow, usetable) => {
     let { id, table } = selectedProd;

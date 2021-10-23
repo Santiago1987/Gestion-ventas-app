@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { loadProducts, iniProducts } from "../../actions";
+import { iniProducts } from "../../actions";
 import Table from "../../components/Table/Table";
 import { useHttp } from "../hooks/http";
 import useProductGRDFunctions from "../hooks/productGRDFunctions";
@@ -34,7 +34,6 @@ const ProductGrd = () => {
     if (getData !== null) {
       let { data } = getData;
       getListOfProducts(data);
-      dispatch(loadProducts(Artlist));
     }
   }, [getData]);
 

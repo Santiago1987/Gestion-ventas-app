@@ -8,12 +8,10 @@ const ArtciculoSchema = new Schema({
   ingreso: { type: Number, required: true },
   stockMove: [
     {
-      productID: { type: String, required: true },
       variacion: { type: Number, required: true },
       razon: { type: String, required: true },
       fecha: { type: Date, required: true },
       fechaSTR: { type: String, require: true },
-      stkFinal: { type: Number, required: true },
     },
   ],
 });

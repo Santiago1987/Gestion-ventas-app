@@ -7,15 +7,26 @@ const stock = require("../controllers/stockController");
 // GET: Lista de articulos
 article.getListArticles = async (req, res) => {
   const list = await Articulos.find();
+  let result = [];
 
-  res.status(200).send(list);
+  list.map((art) => {
+    let { _id, descripcion, prDolar, stock, ingreso } = art;
+    result.push({ _id, descripcion, prDolar, stock, ingreso });
+  });
+
+  res.status(200).send(result);
 };
 
 // GET: Unico articulo
 article.getArticle = async (req, res) => {
   const article = await Articulos.findById(req.params.id);
 
-  res.status(200).send(article);
+  let { _id, descripcion, prDolar, stock, ingreso } = article;
+
+  let result = {};
+  result = { _id, descripcion, prDolar, stock, ingreso };
+
+  res.status(200).send(result);
 
   return;
 };
@@ -26,10 +37,17 @@ article.saveArticle = (req, res) => {
   const articles = req.body;
   let error = "";
   let result = null;
+  let stockMove = [];
 
   articles.map(async (art) => {
     let { descripcion, prDolar, stock, ingreso } = art;
-    let newArticle = new Articulos({ descripcion, prDolar, stock, ingreso });
+    let newArticle = new Articulos({
+      descripcion,
+      prDolar,
+      stock,
+      ingreso,
+      stockMove,
+    });
 
     try {
       result = await newArticle.save();
@@ -50,8 +68,15 @@ article.saveArticle = (req, res) => {
 // POST: Nuevo articulo
 article.newArticle = async (req, res) => {
   const { descripcion, stock, prDolar, ingreso } = req.body;
+  let stockMove = [];
 
-  let newArticle = new Articulos({ descripcion, stock, prDolar, ingreso });
+  let newArticle = new Articulos({
+    descripcion,
+    stock,
+    prDolar,
+    ingreso,
+    stockMove,
+  });
 
   let result = 0;
   try {

@@ -1,5 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
-import { addSalesProduct, loadProducts, selectProd } from "../../actions";
+import {
+  addSalesProduct,
+  loadProducts,
+  selectProd,
+  updateProduct,
+} from "../../actions";
+import axios from "axios";
 
 const useProductGRDFunctions = () => {
   // List of products
@@ -22,14 +28,14 @@ const useProductGRDFunctions = () => {
   // Get list of products from database
   const getListOfProducts = (data) => {
     let artlist = data.map((art) => {
-      let { _id, description, prDolar, stock, arraivals } = art;
+      let { _id, descripcion, prDolar, stock, ingreso } = art;
 
       return {
         id: _id,
-        description,
+        descripcion,
         prDolar,
         stock,
-        arraivals,
+        ingreso,
         prPesos: Math.round((prDolar * dolar + Number.EPSILON) * 100) / 100,
         prLocal:
           Math.round(
@@ -48,7 +54,7 @@ const useProductGRDFunctions = () => {
 
   // Row selection
   const handleRowSelect = (id, table) => {
-    dispatch(selectProd(id, table));
+    dispatch(selectProd({ id, table }));
   };
 
   // functin to select an article for sale
@@ -62,7 +68,7 @@ const useProductGRDFunctions = () => {
     if (column === "PML") {
       precio = product.prMl;
       type = "ML";
-    } else precio = prduct.prLocal;
+    } else precio = product.prLocal;
 
     dispatch(
       addSalesProduct({
@@ -107,7 +113,7 @@ const useProductGRDFunctions = () => {
 
     if (value.length > 5 || !regex.test(value)) return;
 
-    let articulo = Products.find((pr) => pr.id === id);
+    let articulo = productList.find((pr) => pr.id === id);
     articulo.ingreso = value;
     dispatch(updateProduct(articulo));
   };
