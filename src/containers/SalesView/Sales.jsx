@@ -90,6 +90,7 @@ const Sales = () => {
 
       response.map((res) => {
         let { _id, descripcion, ingreso, prDolar, stock } = res;
+
         if (_id === 0) return; //errror
 
         dispatch(

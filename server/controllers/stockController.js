@@ -1,45 +1,38 @@
 const stock = {};
-const Stock = require("../Models/Stock");
 const Articulos = require("../Models/Articulos");
 
 stock.movement = async ({ cant, razon, id }) => {
   let today = new Date();
-  let result,
-    resArt = {};
 
   let article = await Articulos.findById(id);
 
   if (article === {}) return article;
 
   let { stock } = article;
-  let stkFinal = 0;
 
   if (razon === "venta") {
-    stkFinal = parseInt(stock) - parseInt(cant);
+    stkfinal = parseInt(stock) - parseInt(cant);
   } else if (razon === "ingreso") {
-    stkFinal = parseInt(stock) + parseInt(cant);
-    article.ingreso = cant;
+    stkfinal = parseInt(stock) + parseInt(cant);
   }
 
-  let newMov = {
+  let newmov = {
     variacion: cant,
     razon,
     fecha: today,
     fechaSTR: getFecha(today),
-    artID: id,
-    stkFinal,
   };
 
-  article.stock = stkFinal;
-
-  let newStk = new Stock(newMov);
   try {
-    result = await newStk.save();
-    resArt = await Articulos.updateOne({ _id: id }, article);
+    await Articulos.updateOne(
+      { _id: id },
+      { stock: stkfinal, $push: { stockMove: newmov } }
+    );
   } catch (err) {
     console.log("stock error: ", err);
     return article;
   }
+  article = await Articulos.findById(id);
 
   return article;
 };

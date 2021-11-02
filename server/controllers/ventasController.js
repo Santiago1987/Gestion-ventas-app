@@ -1,6 +1,5 @@
 const ventas = {};
-const Recipe = require("../Models/Ventas");
-const RecipeDetail = require("../Models/DetalleVentas");
+const Receipt = require("../Models/Ventas");
 const stock = require("../controllers/stockController");
 const moment = require("moment");
 
@@ -8,42 +7,50 @@ const moment = require("moment");
 // POST: Guardar venta
 ventas.saveRecipe = async (req, res) => {
   let result = "";
-  let resLn = "";
-  let stkLn = null;
   let stkupd = [];
+  let ditails = [];
 
   let { refNum, fecha, totalPesos, totalDolares, descuento, lines } = req.body;
-
   let error = "";
-  let newRecipe = new Recipe({
-    refNum,
-    fecha: moment.parseZone(fecha).local(),
-    totalPesos,
-    totalDolares,
-    descuento,
-  });
 
   try {
-    result = await newRecipe.save();
-    let index = result._id;
+    let receipt = {
+      refNum,
+      fecha: moment.parseZone(fecha).local(),
+      totalPesos,
+      totalDolares,
+      descuento,
+      ditails,
+    };
+
+    let newReceipt = new Receipt(receipt);
+    result = await newReceipt.save();
+
+    let idHead = result._id;
 
     await Promise.all(
       lines.map(async (ln) => {
         let { id, descripcion, precioPesos, precioDolar, cant, total } = ln;
 
-        let newLn = new RecipeDetail({
-          idRecipe: index,
-          idArt: id,
+        let newLn = {
+          idArticle: id,
           descripcion,
           precioPesos,
           precioDolar,
           cantidad: cant,
           total,
-        });
+        };
 
-        resLn = await newLn.save();
+        let detres = await Receipt.updateOne(
+          { _id: idHead },
+          {
+            $push: {
+              details: newLn,
+            },
+          }
+        );
+
         stkLn = await stock.movement({ cant, razon: "venta", id });
-
         stkupd.push(stkLn);
       })
     );

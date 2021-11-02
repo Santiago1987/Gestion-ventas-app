@@ -122,7 +122,7 @@ estdisticas.getMovimientosStock = async (req, res) => {
   let error = "";
 
   try {
-    response = await Stock.find({ artID: id });
+    response = await Articulos.findOne({ _id: id }, { stockMove: 1 });
   } catch (err) {
     console.log("error " + err);
     error = "error " + err;
@@ -133,8 +133,12 @@ estdisticas.getMovimientosStock = async (req, res) => {
     return;
   }
 
-  if (response.length > 0) {
-    result = response.map((stk) => {
+  console.log("response", response);
+
+  let { stockMove } = response;
+
+  if (stockMove.length > 0) {
+    result = stockMove.map((stk) => {
       let { variacion, razon, fecha, stkFinal } = stk;
       return { variacion, razon, fecha, stkFinal };
     });
@@ -157,7 +161,7 @@ estdisticas.getDetallesVentas = async (req, res) => {
   }
 
   try {
-    response = await VentasDetalle.find({ idRecipe: id });
+    response = await Ventas.findOne({ _id: id }, { details: 1 });
   } catch (err) {
     console.log("error " + err);
     error = "error " + err;
@@ -168,23 +172,23 @@ estdisticas.getDetallesVentas = async (req, res) => {
     return;
   }
 
-  if (response.length > 0) {
-    await Promise.all(
-      response.map(async (dat) => {
-        let { _id, idArt, cantidad, precioPesos, precioDolar, total } = dat;
+  let { details } = response;
 
-        result.push({
-          id: _id,
-          descripcion: await getArtDescr(idArt),
-          cantidad,
-          precioPesos,
-          precioDolar,
-          total,
-        });
+  if (details.length > 0) {
+    details.map(async (dat) => {
+      let { _id, cantidad, descripcion, precioPesos, precioDolar, total } = dat;
 
-        return;
-      })
-    );
+      result.push({
+        id: _id,
+        descripcion,
+        cantidad,
+        precioPesos,
+        precioDolar,
+        total,
+      });
+
+      return;
+    });
   }
 
   res.send(result).status(200);

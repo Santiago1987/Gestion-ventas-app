@@ -72,7 +72,7 @@ const ProductGrd = () => {
       PUS: prod.prDolar,
       PP: prod.prPesos,
       PL: prod.prLocal,
-      PML: prod.prML,
+      PML: prod.prMl,
     }));
   }
 
