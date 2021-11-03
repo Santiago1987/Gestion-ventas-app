@@ -65,6 +65,34 @@ article.saveArticle = (req, res) => {
   return;
 };
 
+// POST: SAVE IMPORT ARTICLE FROIM EXCEL FILE
+article.saveFile = (list) => {
+  let stockMove = [];
+  if (list.length < 0) {
+    console.log("Error no articles list");
+    return;
+  }
+  list.map(async (art) => {
+    let { descripcion, prDolar, stock, ingreso } = art;
+    let newArticle = new Articulos({
+      descripcion,
+      prDolar,
+      stock,
+      ingreso,
+      stockMove,
+    });
+
+    try {
+      result = await newArticle.save();
+    } catch (err) {
+      console.log("error", err);
+      error = err;
+    }
+  });
+
+  console.log("Proccess finished");
+};
+
 // POST: Nuevo articulo
 article.newArticle = async (req, res) => {
   const { descripcion, stock, prDolar, ingreso } = req.body;

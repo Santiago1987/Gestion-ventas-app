@@ -1,16 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { setDolar } from "../../actions";
-import axios from "axios";
-import { useHttpMeth } from "../hooks/HttpMeth";
+import { useSelector } from "react-redux";
 
 const SalesTop = () => {
   const [value, setValue] = useState(0);
 
   const dolar = useSelector((state) => state.dolar);
-  const dispatch = useDispatch();
-
-  const [isLoading, http] = useHttpMeth();
 
   useEffect(() => {
     let { value } = dolar;

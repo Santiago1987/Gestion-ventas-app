@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 mongoose
-  .connect("mongodb://localhost/gestionVentasApp", {
+  .connect("mongodb://localhost/electronicHerDB", {
     useCreateIndex: true,
     useNewUrlParser: true,
     useFindAndModify: false,
