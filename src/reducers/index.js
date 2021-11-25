@@ -4,14 +4,14 @@ import productsReducer, {
   salesProductsReducer,
 } from "./Products";
 import searchReducer from "./Search";
-import dolarReducer from "./Dolar";
+import settingsReducer from "./Settings";
 
 const rootReducers = combineReducers({
   Products: productsReducer,
   Search: searchReducer,
   selectedProd: selectedProdReducer,
   salesProducts: salesProductsReducer,
-  dolar: dolarReducer,
+  settings: settingsReducer,
 });
 
 export default rootReducers;

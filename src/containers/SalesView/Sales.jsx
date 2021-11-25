@@ -18,8 +18,9 @@ const Sales = () => {
   const selectedProd = useSelector((state) => state.selectedProd);
   const salesProducts = useSelector((state) => state.salesProducts);
   const Products = useSelector((state) => state.Products);
-  const dolar = useSelector((state) => state.dolar.value);
   const { REACT_APP_BACKEND_URL, REACT_APP_SAVE_VENTA_URL } = process.env;
+  const settings = useSelector((state) => state.settings);
+  const { dolar } = settings;
 
   const dispatch = useDispatch();
 

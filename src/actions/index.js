@@ -8,7 +8,7 @@ import {
   UPDATE_PRODUCT,
   DELETE_PRODUCT,
   UPDATE_SALES_PRODUCT,
-  SET_DOLAR,
+  SET_SETTINGS,
   INI_PRODUCTS,
 } from "./actionsList";
 
@@ -57,9 +57,9 @@ export const updateSalesProduct = (salesProd) => ({
   payload: salesProd,
 });
 
-export const setDolar = (value) => ({
-  type: SET_DOLAR,
-  payload: value,
+export const setSettings = (setting) => ({
+  type: SET_SETTINGS,
+  payload: setting,
 });
 
 export const iniProducts = () => ({

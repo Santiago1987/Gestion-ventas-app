@@ -33,9 +33,13 @@ const ProductsView = () => {
     dispatch(searchInput(val));
   };
   //-------------------------------------------------------------------------
-  const dolar = 70;
+
+  const settings = useSelector((state) => state.settings);
+  const { dolar, porcLocal, porcML } = settings;
+
+  /*const dolar = 70;
   const porcLocal = 10;
-  const porcML = 25;
+  const porcML = 25;*/
   //-----------------------------Modal--------------------------------------------
   const [type, setType] = useState("");
 

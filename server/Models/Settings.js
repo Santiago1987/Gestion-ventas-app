@@ -1,8 +1,9 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
-const SetttingSchema = new Schema({
-  dolar: { type: Number, required: true },
+const SettingSchema = new Schema({
+  name: { type: String, require: true },
+  value: { type: String, require: true },
 });
 
-module.exports = mongoose.model("Settings", SetttingSchema);
+module.exports = mongoose.model("Settings", SettingSchema);

@@ -1,36 +1,59 @@
 const settings = {};
-
 const Settings = require("../Models/Settings");
 
 //------------------------------------------------------------------------
 //GET: obtener los settings
 settings.getSettings = async (req, res) => {
-  const sett = await Settings.find();
+  const settings = await Settings.find();
 
-  res.status(200).send(sett);
+  const values = Object.values(settings);
+
+  let result = {};
+
+  for (i = 0; i < values.length; i++) {
+    let { name, value } = values[i];
+    let sett = {};
+    sett[name] = value;
+    result = { ...result, ...sett };
+  }
+
+  res.status(200).send(result);
 };
 
 //------------------------------------------------------------------------
 // POST: guardado de los settings
 settings.saveSettings = async (req, res) => {
-  const { dolar } = req.body;
-  let error = "";
+  const body = req.body;
+  let settings = [];
 
-  let newSettings = new Settings({ dolar });
+  const names = Object.keys(body);
+  const values = Object.values(body);
 
-  try {
-    result = await newSettings.save();
-  } catch (err) {
-    console.log("error", err);
-    error = err;
+  for (i = 0; i < names.length; i++) {
+    let sett = { name: names[i], value: values[i] };
+    settings.push(sett);
   }
 
-  if (error === "") {
-    res.status(200).json({ _id: 1, dolar });
-  } else {
-    es.status(400).json({ _id: 0, error });
-  }
+  if (settings.length === 0) return;
 
+  Promise.all(
+    settings.map(async (s) => {
+      let { name, value } = s;
+
+      let result = await Settings.find({ name });
+
+      if (result.length === 0) {
+        let dbSett = new Settings(s);
+        await dbSett.save();
+      }
+
+      await Settings.updateOne({ name }, { value });
+
+      /*let dbSett = new Settings(s);*/
+    })
+  );
+
+  res.status(200).json({ _id: 0, message: "settings saved" });
   return;
 };
 

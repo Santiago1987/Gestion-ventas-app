@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
-const SalesTop = () => {
+const SalesTop = ({ dolar }) => {
   const [value, setValue] = useState(0);
 
-  const dolar = useSelector((state) => state.dolar);
-
   useEffect(() => {
-    let { value } = dolar;
-    setValue(value);
+    setValue(dolar);
   }, []);
 
   //console.log("isLoading",isLoading)
