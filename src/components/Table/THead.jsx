@@ -2,8 +2,7 @@ import React from "react";
 import TR from "./TR";
 
 const THead = ({ columns, type }) => {
-
-  const style = (type)=>{
+  const style = (type) => {
     switch (type) {
       case "PRODUCTS":
         return "thead-dark";
@@ -17,10 +16,12 @@ const THead = ({ columns, type }) => {
         return "thead-dark";
       case "DET_VENTAS_DET":
         return "thead-dark";
+      case "SETTINGS":
+        return "thead-dark";
       default:
         return null;
-  }
-}
+    }
+  };
 
   return (
     <thead className={style(type)}>
@@ -30,5 +31,3 @@ const THead = ({ columns, type }) => {
 };
 
 export default THead;
-
-

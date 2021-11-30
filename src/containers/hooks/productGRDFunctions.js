@@ -15,15 +15,6 @@ const useProductGRDFunctions = () => {
   const settings = useSelector((state) => state.settings);
   const { dolar, porcLocal, porcML } = settings;
 
-  /*// Dolar price
-  const dolar = 70;
-
-  // Percentage of local increase
-  const porcLocal = 10;
-
-  // Percentage of Mercado Libre increase
-  const porcML = 25;*/
-
   // enviroment variables: URL for backoffice
   const { REACT_APP_BACKEND_URL, REACT_APP_SAVE_STKMOV_URL } = process.env;
 

@@ -53,6 +53,15 @@ const TD = ({
           border: "1px solid black",
           textAlign: "center",
         };
+      case "value":
+        return {
+          paddin: "1px",
+          margin: 0,
+          width: "100%",
+          borderRadius: "5px",
+          border: "1px solid black",
+          textAlign: "center",
+        };
       default:
         return null;
     }
@@ -70,7 +79,7 @@ const TD = ({
       onDoubleClick={() => handleOnDobleClick(id, column, text)}
       //onKeyPress={handleKeyPress}
     >
-      {column === "ingreso" || column === "cant" ? (
+      {column === "ingreso" || column === "cant" || column === "value" ? (
         <input
           id={id}
           style={inpStyle(column)}

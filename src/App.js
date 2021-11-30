@@ -7,6 +7,7 @@ import Main from "./components/MainComponents/Main";
 import Estadisticas from "./components/MainComponents/Estadisticas";
 
 import "./styles.css";
+import Settings from "./components/MainComponents/Settings";
 
 Modal.setAppElement("#root");
 
@@ -17,6 +18,7 @@ function App() {
       <Switch>
         <Route path="/main" exact component={Main} />
         <Route path="/estadisticas" exact component={Estadisticas} />
+        <Route path="/settings" exact component={Settings} />
       </Switch>
     </Router>
   );

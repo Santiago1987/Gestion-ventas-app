@@ -7,7 +7,6 @@ export const useHttp = (url, dependecies, action, object) => {
 
   useEffect(() => {
     setIsLoadding(true);
-    console.log("http request to:" + url);
 
     if (action === "GET" && url) get(url);
     else if (action === "POST" && url) post(url, object);

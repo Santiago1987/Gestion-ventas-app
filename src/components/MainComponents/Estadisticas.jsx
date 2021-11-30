@@ -69,7 +69,11 @@ const Estadisticas = () => {
   };
 
   /*------------------------------------CONTENT------------------------------------------ */
-  let content = <p>Loading...</p>;
+  let content = (
+    <div className="spinner-border" role="status">
+      <span className="sr-only">Loading...</span>
+    </div>
+  );
   if (opcion === "Ventas") {
     content = (
       <>
@@ -128,4 +132,4 @@ const Estadisticas = () => {
   );
 };
 
-export default React.memo(Estadisticas);
+export default Estadisticas;

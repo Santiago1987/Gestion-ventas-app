@@ -12,8 +12,7 @@ const Table = ({
   handleKeyPress,
   handleOnChange,
 }) => {
-
-  const style = (type)=>{
+  const style = (type) => {
     switch (type) {
       case "PRODUCTS":
         return "table table-hover";
@@ -29,11 +28,12 @@ const Table = ({
         return "table table-hover";
       case "DET_VENTAS_DET":
         return "table table-hover";
+      case "SETTINGS":
+        return "table table-hover";
       default:
         return null;
     }
-  }
-
+  };
   return (
     <table className={style(type)} style={{ margin: 0, width: "100%" }}>
       {Object.keys(titles).length > 0 ? (

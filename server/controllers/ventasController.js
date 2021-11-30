@@ -20,7 +20,7 @@ ventas.saveRecipe = async (req, res) => {
       totalPesos,
       totalDolares,
       descuento,
-      cerrado: false,
+      procesado: false,
       ditails,
     };
 

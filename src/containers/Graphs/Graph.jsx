@@ -13,9 +13,17 @@ const Graph = ({ params }) => {
   const [moneda, setMoneda] = useState("pesos");
   const [data, setData] = useState([]);
 
-  let content = <p>Loading....</p>;
+  let content = (
+    <div
+      className="d-flex justify-content-center"
+      style={{ width: "1300px", height: "600px", verticalAlign: "center" }}
+    >
+      <div className="spinner-border" role="status">
+        <span className="sr-only">Loading...</span>
+      </div>
+    </div>
+  );
 
-  //const [content, setContent] = useState(<p>Loading....</p>);
   let datos = [];
   /*------------------------------------useEffect------------------------------------------ */
   useEffect(() => {

@@ -21,7 +21,6 @@ const Main = () => {
     if (response !== null) {
       let { data } = response;
       dispatch(setSettings(data));
-      console.log("data", data);
     }
   }, [isLoadding]);
 

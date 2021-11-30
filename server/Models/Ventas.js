@@ -16,7 +16,7 @@ const recipe = new Schema({
   totalPesos: { type: Number, require: true },
   totalDolares: { type: Number, require: true },
   descuento: { type: Number, require: true },
-  cerrado: { type: Boolean, require: true },
+  procesado: { type: Boolean, require: true },
   details: [{ type: detailsSchema, require: true }],
 });
 

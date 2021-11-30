@@ -28,9 +28,11 @@ const Nav = () => {
             </Link>
           </li>
           <li className="nav-item">
-            <span className="nav-link" href="#">
-              Settings
-            </span>
+            <Link to="/settings">
+              <span className="nav-link" href="#">
+                Settings
+              </span>
+            </Link>
           </li>
           <li className="nav-item">
             <Link to="/estadisticas">
