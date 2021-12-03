@@ -91,6 +91,7 @@ const SettingsList = ({ setEnable, saveChanges, setSaveChanges }) => {
       let title = "";
       if (name === "dolar") title = "Dolar de Referencia";
       else if (name === "porcLocal") title = "Porcentaje de aumento local";
+      else if (name === "porcNerd") title = "Porcentaje del nerd";
       else title = "Porcentaje de aumento Mercado Libre";
 
       items.push({ id: name, name: title, value: values[cont] });

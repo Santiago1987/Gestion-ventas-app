@@ -92,6 +92,7 @@ const useProductGRDFunctions = () => {
           console.log("error", err);
         });
       let { _id, descripcion, ingreso, prDolar, stock } = response;
+      console.log("response", response);
       if (_id === 0) return; //errrrorrr
       dispatch(
         updateProduct({ id: _id, descripcion, ingreso, prDolar, stock })

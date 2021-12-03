@@ -81,12 +81,10 @@ const Graph = ({ params }) => {
     if (type === "Bar") {
       //setContent(<BarGraph data={datos} />);
       content = <BarGraph data={datos} />;
-      return;
     }
     if (type === "Line") {
       //setContent(<LineGraph data={datos} />);
       content = <LineGraph data={datos} />;
-      return;
     }
   }
 
@@ -138,4 +136,4 @@ const Graph = ({ params }) => {
   );
 };
 
-export default React.memo(Graph);
+export default Graph;

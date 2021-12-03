@@ -26,7 +26,7 @@ stock.movement = async ({ cant, razon, id }) => {
   try {
     await Articulos.updateOne(
       { _id: id },
-      { stock: stkfinal, $push: { stockMove: newmov } }
+      { stock: stkfinal, $push: { stockMove: newmov }, ingreso: cant }
     );
   } catch (err) {
     console.log("stock error: ", err);

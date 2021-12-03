@@ -4,6 +4,7 @@ const ventas = require("../controllers/ventasController");
 const stock = require("../controllers/stockController");
 const settings = require("../controllers/settingsController");
 const estadisticas = require("../controllers/estadisticasController");
+const close = require("../controllers/closerController");
 
 const router = express.Router();
 
@@ -57,3 +58,7 @@ router.get(
   "/estadisticas/stock/ventas/detalle/:id",
   estadisticas.getDetallesVentas
 );
+
+//--------------------Closers-----------------------------------------
+//GET: obtenes listado de productos y totales
+router.get("/close/list", close.getData);
