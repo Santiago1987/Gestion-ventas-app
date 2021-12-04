@@ -18,6 +18,8 @@ const THead = ({ columns, type }) => {
         return "thead-dark";
       case "SETTINGS":
         return "thead-dark";
+      case "CLOSER":
+        return "thead-dark";
       default:
         return null;
     }

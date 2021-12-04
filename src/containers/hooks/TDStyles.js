@@ -9,7 +9,12 @@ const useTDStyles = () => {
         case "stock":
           return { width: "10%", textAlign: "center", verticalAlign: "middle" };
         case "descr":
-          return { width: "24%", textAlign: "start", verticalAlign: "middle" };
+          return {
+            width: "24%",
+            textAlign: "start",
+            verticalAlign: "middle",
+            fontWeight: "bold",
+          };
         case "PUS":
         case "PP":
         case "PL":
@@ -129,6 +134,49 @@ const useTDStyles = () => {
             verticalAlign: "middle",
             width: "20%",
             fontWeight: "bold",
+          };
+        default:
+          return undefined;
+      }
+    }
+
+    if (table === "CLOSER") {
+      switch (column) {
+        case "articulo":
+          return {
+            textAlign: "left",
+            verticalAlign: "middle",
+            width: "30%",
+            fontWeight: "bold",
+          };
+        case "cantidad":
+          return {
+            textAlign: "center",
+            verticalAlign: "middle",
+            width: "10%",
+            fontWeight: "bold",
+          };
+        case "precioPesos":
+          return {
+            textAlign: "center",
+            verticalAlign: "middle",
+            width: "20%",
+            fontWeight: "bold",
+          };
+        case "precioDolar":
+          return {
+            textAlign: "center",
+            verticalAlign: "middle",
+            width: "20%",
+            fontWeight: "bold",
+          };
+        case "precioNerd":
+          return {
+            textAlign: "center",
+            verticalAlign: "middle",
+            width: "20%",
+            fontWeight: "bold",
+            backgroundColor: "Cyan",
           };
         default:
           return undefined;

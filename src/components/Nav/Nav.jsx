@@ -42,7 +42,9 @@ const Nav = () => {
             </Link>
           </li>
         </ul>
-        <span className="navbar-text">Cierre de periodo</span>
+        <Link to="/cierre">
+          <span className="cierre">Cierre de periodo</span>
+        </Link>
       </div>
     </nav>
   );

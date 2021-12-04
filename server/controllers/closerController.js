@@ -10,6 +10,8 @@ close.getData = async (req, res) => {
   let artList = [];
   let totalPes = 0;
   let totalDol = 0;
+  let totalN = 0;
+  let totalCant = 0;
 
   let lastClose = await Closers.find();
 
@@ -37,9 +39,11 @@ close.getData = async (req, res) => {
 
   await Promise.all(
     salesList.map(async (s) => {
-      let { _id, totalPesos, totalDolares } = s;
+      let { _id, totalPesos, totalDolares, totalNerd } = s;
+
       totalPes += totalPesos;
       totalDol += totalDolares;
+      totalN += totalNerd;
 
       let resdetail = await Ventas.findOne(
         { _id },
@@ -56,9 +60,18 @@ close.getData = async (req, res) => {
       let { details } = resdetail;
 
       details.map((d) => {
-        let { idArticle, descripcion, precioPesos, precioDolar, cantidad } = d;
+        let {
+          idArticle,
+          descripcion,
+          precioPesos,
+          precioDolar,
+          precioNerd,
+          cantidad,
+        } = d;
         let totp = precioPesos * cantidad;
         let totd = precioDolar * cantidad;
+        let totn = precioNerd * cantidad;
+        totalCant += cantidad;
 
         let index = artList.findIndex((a) => a.idArticle === idArticle);
 
@@ -68,6 +81,7 @@ close.getData = async (req, res) => {
             descripcion,
             precioPesos: totp,
             precioDolar: totd,
+            precioNerd: totn,
             cantidad,
           });
           return;
@@ -75,12 +89,21 @@ close.getData = async (req, res) => {
 
         artList[index].precioPesos += totp;
         artList[index].precioDolar += totd;
+        artList[index].precioNerd += totn;
         artList[index].cantidad += cantidad;
       });
     })
   );
 
-  let result = { fromDate, toDate, totalPes, totalDol, artList };
+  let result = {
+    fromDate,
+    toDate,
+    totalPes,
+    totalCant,
+    totalDol,
+    totalN,
+    artList,
+  };
 
   res.send(result).status(200);
 };

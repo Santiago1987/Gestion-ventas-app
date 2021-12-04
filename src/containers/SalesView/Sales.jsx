@@ -58,6 +58,7 @@ const Sales = () => {
           descripcion,
           precioPesos: precio,
           precioDolar: prod.prDolar,
+          precioNerd: parseFloat(prod.prDolar * dolar).toFixed(2),
           cant,
           total: precio * cant,
         });
@@ -71,11 +72,17 @@ const Sales = () => {
         return s.precioDolar * s.cant + acum;
       }, 0);
 
+      let totNerd = artLines.reduce((acum, s) => {
+        let { precioNerd, cant } = s;
+        return precioNerd * cant + acum;
+      }, 0);
+
       let ticket = {
         refNum: getRefNum(date, "001"),
         fecha: getFechaReverce(date),
         totalPesos: total,
         totalDolares: totUS,
+        totalNerd: totNerd,
         descuento: 0,
         lines: artLines,
       };

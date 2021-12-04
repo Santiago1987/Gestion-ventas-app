@@ -85,3 +85,65 @@
   overflow-y: auto;
   cursor: pointer;
 }
+
+.cierre {
+  text-decoration: none;
+  padding-right: 5rem;
+  padding-left: 5rem;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+/*------------------------------------------------------------------------------------------ */
+
+.closerTable {
+  max-height: 600px;
+  overflow-y: auto;
+  cursor: pointer;
+}
+
+.closerFooter {
+  display: grid;
+  grid-template-columns: 30% 10% 20% 20% 20%;
+  margin-top: 1rem;
+}
+
+.closerFooterComponents {
+  font-size: 20px;
+  padding: 0.75rem;
+  vertical-align: center;
+  font-weight: bold;
+}
+
+.closerFooterRowOne {
+  grid-row: 1;
+}
+
+.closerFooterTitle {
+  grid-column: 1;
+  margin-right: 10px;
+}
+
+.closerFooterCant {
+  grid-column: 2;
+  margin: auto;
+}
+
+.closerFooterTotP {
+  grid-column: 3;
+  margin: auto;
+}
+
+.closerFooterTotD {
+  grid-column: 4;
+  margin: auto;
+}
+
+.closerFooterTotN {
+  grid-column: 5;
+  margin: auto;
+}
+
+.closerFooterTotNerd {
+  grid-column: 5;
+  margin: auto;
+}

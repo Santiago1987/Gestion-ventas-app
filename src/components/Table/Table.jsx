@@ -30,6 +30,8 @@ const Table = ({
         return "table table-hover";
       case "SETTINGS":
         return "table table-hover";
+      case "CLOSER":
+        return "table table-hover";
       default:
         return null;
     }

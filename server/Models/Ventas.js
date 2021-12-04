@@ -7,6 +7,7 @@ const detailsSchema = new Schema({
   precioDolar: { type: Number, require: true },
   precioPesos: { type: Number, require: true },
   descripcion: { type: String, require: true },
+  precioNerd: { type: Number, require: true },
   total: { type: Number, require: true },
 });
 
@@ -15,6 +16,7 @@ const recipe = new Schema({
   fecha: { type: Date, required: true },
   totalPesos: { type: Number, require: true },
   totalDolares: { type: Number, require: true },
+  totalNerd: { type: Number, require: true },
   descuento: { type: Number, require: true },
   procesado: { type: Boolean, require: true },
   details: [{ type: detailsSchema, require: true }],

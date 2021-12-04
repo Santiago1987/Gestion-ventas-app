@@ -107,6 +107,23 @@ const useTHStyles = () => {
           return undefined;
       }
     }
+
+    if (type === "CLOSER") {
+      switch (column) {
+        case "articulo":
+          return { textAlign: "center", verticalAlign: "middle", width: "30%" };
+        case "cantitdad":
+          return { textAlign: "center", verticalAlign: "middle", width: "10%" };
+        case "precioPesos":
+          return { textAlign: "center", verticalAlign: "middle", width: "20%" };
+        case "precioDolar":
+          return { textAlign: "center", verticalAlign: "middle", width: "20%" };
+        case "precioNerd":
+          return { textAlign: "center", verticalAlign: "middle", width: "20%" };
+        default:
+          return undefined;
+      }
+    }
   };
 };
 

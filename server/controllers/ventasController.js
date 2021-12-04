@@ -10,7 +10,8 @@ ventas.saveRecipe = async (req, res) => {
   let stkupd = [];
   let ditails = [];
 
-  let { refNum, fecha, totalPesos, totalDolares, descuento, lines } = req.body;
+  let { refNum, fecha, totalPesos, totalDolares, descuento, lines, totalNerd } =
+    req.body;
   let error = "";
 
   try {
@@ -21,6 +22,7 @@ ventas.saveRecipe = async (req, res) => {
       totalDolares,
       descuento,
       procesado: false,
+      totalNerd,
       ditails,
     };
 
@@ -31,7 +33,15 @@ ventas.saveRecipe = async (req, res) => {
 
     await Promise.all(
       lines.map(async (ln) => {
-        let { id, descripcion, precioPesos, precioDolar, cant, total } = ln;
+        let {
+          id,
+          descripcion,
+          precioPesos,
+          precioDolar,
+          precioNerd,
+          cant,
+          total,
+        } = ln;
 
         let newLn = {
           idArticle: id,
@@ -39,6 +49,7 @@ ventas.saveRecipe = async (req, res) => {
           precioPesos,
           precioDolar,
           cantidad: cant,
+          precioNerd,
           total,
         };
 
