@@ -65,17 +65,16 @@ const Graph = ({ params }) => {
   /*------------------------------------------------------------------------------------ */
 
   if (data.length > 0) {
-    data.map((dat) => {
+    datos = data.map((dat) => {
       let { fecha, totalPesos, totalDolares } = dat;
 
       if (moneda === "pesos") {
-        datos.push({ fecha, total: totalPesos });
-        return;
+        return { fecha, total: totalPesos };
       }
       if (moneda === "dolar") {
-        datos.push({ fecha, total: totalDolares });
-        return;
+        return { fecha, total: totalDolares };
       }
+      return {};
     });
 
     if (type === "Bar") {

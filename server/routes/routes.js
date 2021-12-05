@@ -62,3 +62,6 @@ router.get(
 //--------------------Closers-----------------------------------------
 //GET: obtenes listado de productos y totales
 router.get("/close/list", close.getData);
+
+//POST: guardado de cierre de periodo
+router.post("/close/save", close.saveData);

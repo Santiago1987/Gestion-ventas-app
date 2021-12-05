@@ -86,7 +86,7 @@ const SettingsList = ({ setEnable, saveChanges, setSaveChanges }) => {
     let names = Object.keys(list);
     let values = Object.values(list);
     let cont = -1;
-    names.map((name) => {
+    items = names.map((name) => {
       cont++;
       let title = "";
       if (name === "dolar") title = "Dolar de Referencia";
@@ -94,7 +94,7 @@ const SettingsList = ({ setEnable, saveChanges, setSaveChanges }) => {
       else if (name === "porcNerd") title = "Porcentaje del nerd";
       else title = "Porcentaje de aumento Mercado Libre";
 
-      items.push({ id: name, name: title, value: values[cont] });
+      return { id: name, name: title, value: values[cont] };
     });
 
     content = (

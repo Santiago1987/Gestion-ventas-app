@@ -12,6 +12,7 @@ close.getData = async (req, res) => {
   let totalDol = 0;
   let totalN = 0;
   let totalCant = 0;
+  let salesIDs = [];
 
   let lastClose = await Closers.find();
 
@@ -19,7 +20,11 @@ close.getData = async (req, res) => {
     let firstSale = await Ventas.find().sort({ _id: -1 }).limit(1);
     let { fecha } = firstSale[0];
     fromDate = fecha;
+  } else {
+    let { toDate } = lastClose;
+    fromDate = toDate;
   }
+
   let frDate = moment(fromDate).add(-1, "days");
 
   try {
@@ -44,6 +49,7 @@ close.getData = async (req, res) => {
       totalPes += totalPesos;
       totalDol += totalDolares;
       totalN += totalNerd;
+      salesIDs.push(_id);
 
       let resdetail = await Ventas.findOne(
         { _id },
@@ -103,9 +109,64 @@ close.getData = async (req, res) => {
     totalDol,
     totalN,
     artList,
+    salesIDs,
   };
 
   res.send(result).status(200);
+};
+
+close.saveData = async (req, res) => {
+  let toDate = moment(new Date()).add(-3, "hours");
+  let result = {};
+
+  let { fromDate, totalPes, totalCant, totalDol, totalN, artList, salesIDs } =
+    req.body;
+
+  let details = artList.map((art) => {
+    let { idArticle, precioPesos, precioDolar, precioNerd, cantidad } = art;
+    return {
+      idArticulo: idArticle,
+      cantidad,
+      totalUSD: precioDolar,
+      totalPesos: precioPesos,
+      totalNerd: precioNerd,
+    };
+  });
+
+  let salesList = salesIDs.map((s) => ({ idReceipt: s }));
+
+  let closer = {
+    fromDate,
+    toDate,
+    totalPesos: totalPes,
+    totalCantidad: totalCant,
+    totalDolar: totalDol,
+    totalSuppl: totalN,
+    details,
+    salesList,
+  };
+
+  try {
+    let newCloser = new Closers(closer);
+    result = await newCloser.save();
+
+    let { salesList } = result;
+
+    if (salesList.length > 0) {
+      salesList.map(async (s) => {
+        let { idReceipt } = s;
+        let res = await Ventas.updateOne(
+          { _id: idReceipt },
+          { procesado: true }
+        );
+      });
+    }
+  } catch (err) {
+    console.log(err);
+  }
+
+  res.send(closer).status(200);
+  return;
 };
 
 module.exports = close;

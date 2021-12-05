@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 
 const SalesTop = ({ dolar }) => {
   const [value, setValue] = useState(0);

@@ -49,11 +49,11 @@ const Sales = () => {
       let date = new Date();
       let artLines = [];
 
-      salesProducts.map((p) => {
+      artLines = salesProducts.map((p) => {
         let { id, descripcion, precio, cant } = p;
         let prod = Products.find((pr) => pr.id === id);
 
-        artLines.push({
+        return {
           id,
           descripcion,
           precioPesos: precio,
@@ -61,7 +61,7 @@ const Sales = () => {
           precioNerd: parseFloat(prod.prDolar * dolar).toFixed(2),
           cant,
           total: precio * cant,
-        });
+        };
       });
 
       let total = salesProducts.reduce((acum, s) => {
@@ -104,6 +104,7 @@ const Sales = () => {
         dispatch(
           updateProduct({ id: _id, descripcion, ingreso, prDolar, stock })
         );
+        return;
       });
 
       dispatch(removeAllSalesProducts());
@@ -122,14 +123,6 @@ const Sales = () => {
     )}${addZero(date.getDate())}${addZero(date.getHours())}${addZero(
       date.getMinutes()
     )}`;
-  };
-
-  const getFecha = (date) => {
-    return `${addZero(date.getDate())}-${addZero(
-      date.getMonth() + 1
-    )}-${date.getFullYear()} ${addZero(date.getHours())}:${addZero(
-      date.getMinutes()
-    )}:${addZero(date.getSeconds())}`;
   };
 
   const getFechaReverce = (date) => {
