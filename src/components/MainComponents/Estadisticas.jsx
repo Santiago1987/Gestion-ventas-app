@@ -10,8 +10,6 @@ import moment from "moment";
 import Stock from "../../containers/Stock/Stock";
 
 const Estadisticas = () => {
-  const [refresh, setFresh] = useState(false);
-
   const [frDate, setFrDate] = useState(
     moment(new Date()).add(-1, "months").format("YYYY-MM-DD")
   );
@@ -28,10 +26,6 @@ const Estadisticas = () => {
       params: { frDate, toDate, detalle },
     });
   }, [frDate, toDate]);
-
-  const handleOnClickRefresh = (ref) => {
-    setFresh(ref);
-  };
 
   const handleOnChangeFrDate = (e) => {
     let { value } = e.target;
@@ -77,16 +71,12 @@ const Estadisticas = () => {
   if (opcion === "Ventas") {
     content = (
       <>
-        <div className="filters">
-          <Filtros
-            refresh={refresh}
-            handleOnClickRefresh={handleOnClickRefresh}
-            frDate={frDate}
-            toDate={toDate}
-            handleOnChangeFrDate={handleOnChangeFrDate}
-            handleOnChangeToDate={handleOnChangeToDate}
-          />
-        </div>
+        <Filtros
+          frDate={frDate}
+          toDate={toDate}
+          handleOnChangeFrDate={handleOnChangeFrDate}
+          handleOnChangeToDate={handleOnChangeToDate}
+        />
         <div className="grafico">
           <Graph params={params} />
         </div>
@@ -105,16 +95,13 @@ const Estadisticas = () => {
   if (opcion === "detVentas") {
     content = (
       <>
-        <div className="filters">
-          <Filtros
-            refresh={refresh}
-            handleOnClickRefresh={handleOnClickRefresh}
-            frDate={frDate}
-            toDate={toDate}
-            handleOnChangeFrDate={handleOnChangeFrDate}
-            handleOnChangeToDate={handleOnChangeToDate}
-          />
-        </div>
+        <Filtros
+          frDate={frDate}
+          toDate={toDate}
+          handleOnChangeFrDate={handleOnChangeFrDate}
+          handleOnChangeToDate={handleOnChangeToDate}
+        />
+
         <div className="container-fluid">
           <VentasDetalle params={params} />
         </div>

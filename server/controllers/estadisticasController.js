@@ -133,8 +133,6 @@ estdisticas.getMovimientosStock = async (req, res) => {
     return;
   }
 
-  console.log("response", response);
-
   let { stockMove } = response;
 
   if (stockMove.length > 0) {

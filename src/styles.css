@@ -13,15 +13,13 @@
 .estadisticas {
   display: grid;
   grid-template-columns: 10% 90%;
-  grid-template-rows: 10% 90%;
   height: calc(100vh - 56px);
 }
 /*------------------------------------------------------------------------------------------ */
 .options {
   grid-row: 1 / span 2;
   grid-column: 1;
-  background-color: rgba(161, 168, 167, 0.733);
-  height: 100%;
+  background-color: rgba(219, 223, 222, 0.87);
   overflow: auto;
 }
 
@@ -29,7 +27,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  border: 1px solid black;
+  border-right: 1px solid black;
   height: 100%;
 }
 
@@ -37,31 +35,41 @@
 
 .filters {
   grid-column: 2;
-  /*border: 1px solid black;*/
-  padding: 10px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  min-height: 75px;
+  grid-row: 1;
+  display: inline-flex;
+  justify-content: space-between;
+  width: 60%;
+}
+
+.filtroTitle {
+  font-size: 2rem;
+  font-weight: bold;
+  padding: 0.5rem;
+  margin-bottom: 0rem;
+}
+
+.filtbutton {
+  margin-bottom: 0px;
 }
 
 /*------------------------------------------------------------------------------------------ */
 .grafico {
   grid-column: 2;
+  grid-row: 2;
   height: 100%;
   overflow: auto;
   display: grid;
   grid-template-columns: 80% 20%;
+  border-top: 1px solid black;
 }
 
 .chart {
   grid-column: 1;
-  border: 1px solid black;
 }
 
 .datos {
   overflow: auto;
-  border: 1px solid black;
+  border-left: 1px solid black;
   grid-column: 2;
 }
 
@@ -71,12 +79,14 @@
   display: flex;
   flex-direction: row;
   vertical-align: middle;
-  justify-content: space-between;
+  justify-content: space-around;
   width: 40%;
 }
 
 .lab {
-  font-size: 25px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-top: 1rem;
 }
 
 /*------------------------------------------------------------------------------------------ */

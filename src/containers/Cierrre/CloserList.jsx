@@ -174,7 +174,7 @@ const CloserList = () => {
           Total para proveedor
         </label>
         <label className="closerFooterComponents closerFooterTotNerd">
-          {totalNerd}
+          {totalNerd !== 0 ? totalNerd : ""}
         </label>
       </div>
       <div className="closerFooter">
@@ -182,7 +182,7 @@ const CloserList = () => {
           Ganancias totales
         </label>
         <label className="closerFooterComponents closerFooterTotNerd">
-          {header.totalPes ? header.totalPes - totalNerd : 0}
+          {header.totalPes ? header.totalPes - totalNerd : ""}
         </label>
       </div>
       <Modal
