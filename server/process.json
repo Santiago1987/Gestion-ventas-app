@@ -1,0 +1,16 @@
+{
+  "apps": [
+    {
+      "name": "helectronicHerServer",
+      "script": "./index.js",
+      "env": {
+        "PORT": "3030",
+        "NODE_ENV": "development"
+      },
+      "env_production": {
+        "PORT": "3030",
+        "NODE_ENV": "production"
+      }
+    }
+  ]
+}

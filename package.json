@@ -1,6 +1,7 @@
 {
   "name": "gestion-ventas-app",
   "version": "0.1.0",
+  "homepage": ".",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
@@ -60,6 +61,5 @@
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Santiago1987/Gestion-ventas-app/issues"
-  },
-  "homepage": "."
+  }
 }
