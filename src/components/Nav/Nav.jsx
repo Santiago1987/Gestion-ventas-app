@@ -5,7 +5,8 @@ const Nav = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <a className="navbar-brand" href="#">
-        Eletronica Heritier
+        Eletronica Heritier{" "}
+        <sub style={{ fontSize: "small", fontStyle: "italic" }}>Beta 1.0</sub>
       </a>
       <button
         className="navbar-toggler"

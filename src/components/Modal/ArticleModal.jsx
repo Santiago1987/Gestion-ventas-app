@@ -78,7 +78,7 @@ const ArticleModal = ({ btnType, handleOnSubmit, handleOnCancel }) => {
           <div className="d-flex flex-md-row justify-content-around">
             <button
               type="button"
-              className="btn btn-success w-50"
+              className="btn btn-success w-50 m-2"
               onClick={() =>
                 handleOnSubmit(btnType, {
                   id: selectedProd.id,
@@ -93,7 +93,7 @@ const ArticleModal = ({ btnType, handleOnSubmit, handleOnCancel }) => {
             </button>
             <button
               type="button"
-              className="btn btn-danger w-50"
+              className="btn btn-danger w-50 m-2"
               onClick={() => handleOnCancel(btnType, { id: selectedProd.id })}
             >
               Cancelar
